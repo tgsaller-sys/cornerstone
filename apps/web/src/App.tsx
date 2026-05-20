@@ -50,24 +50,6 @@ function getErrorMessage(caught: unknown, fallback: string): string {
   return fallback;
 }
 
-function pickSkipLabel(): string {
-  const roll = Math.random();
-
-  if (roll < 0.7) {
-    return "Pass";
-  }
-
-  if (roll < 0.8) {
-    return "Pass-o";
-  }
-
-  if (roll < 0.9) {
-    return "Skip";
-  }
-
-  return "Knucle-rap";
-}
-
 interface OpponentHandProps {
   readonly cardCount: number;
   readonly isSkipped: boolean;
@@ -121,7 +103,6 @@ export function App() {
   const [syncMode, setSyncMode] = useState<"local" | "remote">("local");
   const [actionStatus, setActionStatus] = useState<string | null>(null);
   const [passNotice, setPassNotice] = useState<string | null>(null);
-  const [skipLabel, setSkipLabel] = useState(() => pickSkipLabel());
   const [deckSearchCardId, setDeckSearchCardId] = useState<CardId>("letters-a");
   const [discardSearchCardId, setDiscardSearchCardId] = useState<CardId>("letters-a");
   const lastPassNoticeKey = useRef<string | null>(null);
@@ -212,7 +193,7 @@ export function App() {
       return undefined;
     }
 
-    setPassNotice(`${actingPlayerName} passes.`);
+    setPassNotice(`${actingPlayerName} ends their turn.`);
   }, [game.id, game.lastEvent, game.players, game.version]);
 
   useEffect(() => {
@@ -226,10 +207,6 @@ export function App() {
 
     return () => window.clearTimeout(timeoutId);
   }, [passNotice]);
-
-  useEffect(() => {
-    setSkipLabel(pickSkipLabel());
-  }, [game.currentTurn, game.currentLeadingPlay]);
 
   useEffect(() => {
     const firstSearchableCardId = searchableCardIds[0];
@@ -616,7 +593,7 @@ export function App() {
                 </button>
                 <button type="button" disabled={!isActiveTurn || game.currentLeadingPlay === null} onClick={skipTurn}>
                   <SkipForward size={18} aria-hidden="true" />
-                  {skipLabel}
+                  End Turn
                 </button>
               </>
             )}
