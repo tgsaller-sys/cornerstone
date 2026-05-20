@@ -3,6 +3,8 @@ import { Play, RefreshCw, RotateCcw, Search, Send, Shuffle, SkipForward, Users }
 import { useEffect, useMemo, useRef, useState } from "react";
 import { CardView } from "@cornerstone3/ui";
 import {
+  getAvailableDecks,
+  getDefaultDeckId,
   isBombPlay,
   reduceGameAction,
   sortCardsForPlay,
@@ -90,6 +92,8 @@ export function App() {
   const localPlayerId = useUiStore((state) => state.localPlayerId);
   const playerName = useUiStore((state) => state.playerName);
   const setPlayerName = useUiStore((state) => state.setPlayerName);
+  const selectedDeckId = useUiStore((state) => state.selectedDeckId);
+  const setSelectedDeckId = useUiStore((state) => state.setSelectedDeckId);
   const maxCardsPerPlayer = useUiStore((state) => state.maxCardsPerPlayer);
   const setMaxCardsPerPlayer = useUiStore((state) => state.setMaxCardsPerPlayer);
   const lobbyCode = useUiStore((state) => state.lobbyCode);
@@ -106,8 +110,14 @@ export function App() {
   const [deckSearchCardId, setDeckSearchCardId] = useState<CardId>("letters-a");
   const [discardSearchCardId, setDiscardSearchCardId] = useState<CardId>("letters-a");
   const lastPassNoticeKey = useRef<string | null>(null);
+  const availableDecks = useMemo(() => getAvailableDecks(), []);
+  const effectiveSelectedDeckId = availableDecks.some((deck) => deck.id === selectedDeckId)
+    ? selectedDeckId
+    : getDefaultDeckId();
   const preferredPlayerName = playerName.trim() || `Player ${localPlayerId.slice(0, 4)}`;
-  const [game, setGame] = useState(() => createDemoGame(localPlayerId, preferredPlayerName, createLobbyCode()));
+  const [game, setGame] = useState(() =>
+    createDemoGame(localPlayerId, preferredPlayerName, createLobbyCode(), effectiveSelectedDeckId)
+  );
   const localPlayer = game.players.find((player) => player.id === localPlayerId) ?? game.players[0];
   const activePlayerId = localPlayer?.id ?? "";
   const activeHand = game.hands[activePlayerId] ?? [];
@@ -289,7 +299,7 @@ export function App() {
   }
 
   function savePlayerName() {
-    void dispatch({ type: "join", player: createPlayer(localPlayerId, preferredPlayerName) });
+    void dispatch({ type: "join", player: createPlayer(localPlayerId, preferredPlayerName, effectiveSelectedDeckId) });
   }
 
   function playSelectedCards() {
@@ -324,7 +334,7 @@ export function App() {
     clearSelection();
     setError(null);
     setSyncMode("local");
-    setGame(createDemoGame(localPlayerId, preferredPlayerName, createLobbyCode()));
+    setGame(createDemoGame(localPlayerId, preferredPlayerName, createLobbyCode(), effectiveSelectedDeckId));
   }
 
   async function createLobby() {
@@ -338,12 +348,12 @@ export function App() {
 
       if (authStatus !== "anonymous") {
         setSyncMode("local");
-        setGame(createDemoGame(localPlayerId, preferredPlayerName, nextCode));
+        setGame(createDemoGame(localPlayerId, preferredPlayerName, nextCode, effectiveSelectedDeckId));
         setActionStatus(null);
         return;
       }
 
-      const nextGame = createLobbyGame(localPlayerId, preferredPlayerName, window.crypto.randomUUID());
+      const nextGame = createLobbyGame(localPlayerId, preferredPlayerName, window.crypto.randomUUID(), effectiveSelectedDeckId);
       const remoteGame = await createRemoteGame(nextCode, nextGame);
       setSyncMode("remote");
       setGame(remoteGame);
@@ -370,7 +380,7 @@ export function App() {
 
       if (authStatus !== "anonymous") {
         setSyncMode("local");
-        setGame(createDemoGame(localPlayerId, preferredPlayerName, nextCode));
+        setGame(createDemoGame(localPlayerId, preferredPlayerName, nextCode, effectiveSelectedDeckId));
         setActionStatus(null);
         return;
       }
@@ -387,7 +397,7 @@ export function App() {
         existingPlayer === undefined
           ? {
               type: "join",
-              player: createPlayer(localPlayerId, preferredPlayerName)
+              player: createPlayer(localPlayerId, preferredPlayerName, effectiveSelectedDeckId)
             }
           : {
               type: "set-connection",
@@ -454,6 +464,20 @@ export function App() {
             <button type="button" onClick={savePlayerName}>
               Save Name
             </button>
+            <label className="deck-choice-control">
+              <span>Deck</span>
+              <select
+                value={effectiveSelectedDeckId}
+                onChange={(event) => setSelectedDeckId(event.currentTarget.value)}
+                aria-label="Deck"
+              >
+                {availableDecks.map((deck) => (
+                  <option key={deck.id} value={deck.id}>
+                    {deck.title}
+                  </option>
+                ))}
+              </select>
+            </label>
             <button type="button" onClick={() => void createLobby()}>
               Create Lobby
             </button>

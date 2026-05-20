@@ -303,6 +303,7 @@ button {
 .deck-actions button,
 .lobby-controls button,
 .lobby-controls input,
+.deck-choice-control,
 .deck-search-control,
 .max-cards-control {
   display: inline-flex;
@@ -319,6 +320,11 @@ button {
 }
 
 .max-cards-control {
+  gap: 0.5rem;
+  background: rgb(255 255 255 / 0.72);
+}
+
+.deck-choice-control {
   gap: 0.5rem;
   background: rgb(255 255 255 / 0.72);
 }
@@ -354,6 +360,15 @@ button {
   border: 0;
   padding: 0;
   background: transparent;
+}
+
+.deck-choice-control select {
+  min-inline-size: 8rem;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 800;
 }
 
 .deck-search-control select {

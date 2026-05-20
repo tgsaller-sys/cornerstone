@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { CardId, PlayerId } from "@cornerstone3/game";
+import type { CardId, DeckId, PlayerId } from "@cornerstone3/game";
 
 const defaultMaxCardsPerPlayer = 5;
 const minMaxCardsPerPlayer = 1;
@@ -8,11 +8,13 @@ const maxMaxCardsPerPlayer = 52;
 interface UiState {
   readonly localPlayerId: PlayerId;
   readonly playerName: string;
+  readonly selectedDeckId: DeckId;
   readonly maxCardsPerPlayer: number;
   readonly selectedCardIds: readonly CardId[];
   readonly lobbyCode: string;
   readonly error: string | null;
   readonly setPlayerName: (playerName: string) => void;
+  readonly setSelectedDeckId: (deckId: DeckId) => void;
   readonly setMaxCardsPerPlayer: (maxCardsPerPlayer: number) => void;
   readonly setLobbyCode: (lobbyCode: string) => void;
   readonly toggleCard: (cardId: CardId) => void;
@@ -40,6 +42,10 @@ function createInitialPlayerName(): string {
   return window.localStorage.getItem("cornerstone3.playerName") ?? window.localStorage.getItem("vc.playerName") ?? "";
 }
 
+function createInitialSelectedDeckId(): DeckId {
+  return window.localStorage.getItem("cornerstone3.selectedDeckId") ?? "letters";
+}
+
 function createInitialMaxCardsPerPlayer(): number {
   const storedValue = Number(
     window.localStorage.getItem("cornerstone3.startingCards") ?? window.localStorage.getItem("vc.maxCardsPerPlayer")
@@ -60,6 +66,7 @@ function normalizeMaxCardsPerPlayer(maxCardsPerPlayer: number): number {
 export const useUiStore = create<UiState>((set) => ({
   localPlayerId: createLocalPlayerId(),
   playerName: createInitialPlayerName(),
+  selectedDeckId: createInitialSelectedDeckId(),
   maxCardsPerPlayer: createInitialMaxCardsPerPlayer(),
   selectedCardIds: [],
   lobbyCode: "",
@@ -67,6 +74,10 @@ export const useUiStore = create<UiState>((set) => ({
   setPlayerName: (playerName) => {
     window.localStorage.setItem("cornerstone3.playerName", playerName);
     set({ playerName });
+  },
+  setSelectedDeckId: (selectedDeckId) => {
+    window.localStorage.setItem("cornerstone3.selectedDeckId", selectedDeckId);
+    set({ selectedDeckId });
   },
   setMaxCardsPerPlayer: (maxCardsPerPlayer) => {
     const nextMaxCardsPerPlayer = normalizeMaxCardsPerPlayer(maxCardsPerPlayer);

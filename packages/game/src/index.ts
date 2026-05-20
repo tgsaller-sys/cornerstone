@@ -3,6 +3,8 @@ export {
   createAllCards,
   createDeck,
   createDeckForPlayerIndex,
+  getAvailableDecks,
+  getDefaultDeckId,
   highestCardForPlay,
   sortCardsForPlay
 } from "./cards";
@@ -28,6 +30,7 @@ export type {
   Card,
   CardArt,
   CardId,
+  DeckDefinition,
   DeckId,
   GameAction,
   GameEvent,

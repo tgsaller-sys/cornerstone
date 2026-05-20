@@ -1,5 +1,5 @@
 import cardCatalog from "./cardCatalog.json";
-import type { Card, CardArt, CardId, DeckId } from "./types";
+import type { Card, CardArt, CardId, DeckDefinition, DeckId } from "./types";
 
 interface CatalogCard {
   readonly id: CardId;
@@ -33,6 +33,23 @@ export function createDeck(deckId: DeckId = catalogDecks[0]?.id ?? "letters"): r
     ...card,
     deckId: deck.id
   }));
+}
+
+export function getAvailableDecks(): readonly DeckDefinition[] {
+  return catalogDecks.map((deck) => ({
+    id: deck.id,
+    title: deck.title
+  }));
+}
+
+export function getDefaultDeckId(): DeckId {
+  const deck = catalogDecks[0];
+
+  if (deck === undefined) {
+    throw new Error("Card catalog must include at least one deck.");
+  }
+
+  return deck.id;
 }
 
 export function createDeckForPlayerIndex(playerIndex: number): readonly Card[] {

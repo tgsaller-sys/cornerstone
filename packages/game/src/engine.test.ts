@@ -10,9 +10,9 @@ import {
 import type { CardId, GameState, Player } from ".";
 
 const players: readonly Player[] = [
-  { id: "player-a", name: "Ada", connected: true, joinedAt: "2026-01-01T00:00:00.000Z" },
-  { id: "player-b", name: "Ben", connected: true, joinedAt: "2026-01-01T00:01:00.000Z" },
-  { id: "player-c", name: "Cyd", connected: true, joinedAt: "2026-01-01T00:02:00.000Z" }
+  { id: "player-a", name: "Ada", deckId: "letters", connected: true, joinedAt: "2026-01-01T00:00:00.000Z" },
+  { id: "player-b", name: "Ben", deckId: "numbers", connected: true, joinedAt: "2026-01-01T00:01:00.000Z" },
+  { id: "player-c", name: "Cyd", deckId: "letters", connected: true, joinedAt: "2026-01-01T00:02:00.000Z" }
 ];
 
 function lobbyWithPlayers(count = 2): GameState {
@@ -96,11 +96,32 @@ describe("starting a game", () => {
   });
 
   it("alternates custom deck templates for extra players", () => {
-    const state = startedGame(3, 3);
+    const playersWithoutChoices = players.map(({ deckId: _deckId, ...player }) => player);
+    const game = playersWithoutChoices.slice(0, 3).reduce((state, player) => {
+      return assertValidTransition(reduceGameAction(state, { type: "join", player }));
+    }, createInitialGameState("fallback-decks"));
+    const state = assertValidTransition(
+      reduceGameAction(game, { type: "start", actorId: "player-a", seed: 42, startingHandSize: 3 })
+    );
 
     expect(state.hands["player-a"]?.every((card) => card.deckId === "letters")).toBe(true);
     expect(state.hands["player-b"]?.every((card) => card.deckId === "numbers")).toBe(true);
     expect(state.hands["player-c"]?.every((card) => card.deckId === "letters")).toBe(true);
+  });
+
+  it("uses each player's chosen deck", () => {
+    const game = [
+      { id: "player-a", name: "Ada", deckId: "numbers", connected: true, joinedAt: "2026-01-01T00:00:00.000Z" },
+      { id: "player-b", name: "Ben", deckId: "numbers", connected: true, joinedAt: "2026-01-01T00:01:00.000Z" }
+    ].reduce((state, player) => {
+      return assertValidTransition(reduceGameAction(state, { type: "join", player }));
+    }, createInitialGameState("chosen-decks"));
+    const state = assertValidTransition(
+      reduceGameAction(game, { type: "start", actorId: "player-a", seed: 42, startingHandSize: 3 })
+    );
+
+    expect(state.hands["player-a"]?.every((card) => card.deckId === "numbers")).toBe(true);
+    expect(state.hands["player-b"]?.every((card) => card.deckId === "numbers")).toBe(true);
   });
 });
 

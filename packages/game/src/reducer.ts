@@ -1,9 +1,9 @@
 import { createShuffledDeck, shuffleDeck } from "./deck";
-import { createDeckForPlayerIndex } from "./cards";
+import { createDeck, createDeckForPlayerIndex } from "./cards";
 import { allOtherPlayersSkipped, nextEligiblePlayerId, nextPlayerId } from "./turns";
 import { setPlayerConnection, upsertPlayer } from "./state";
 import { validatePlay, validateSkip } from "./rules";
-import type { Card, CardId, GameAction, GameState, PlayerId, RuleValidator, ValidationResult } from "./types";
+import type { Card, CardId, GameAction, GameState, Player, PlayerId, RuleValidator, ValidationResult } from "./types";
 
 export interface TransitionResult {
   readonly state: GameState;
@@ -52,7 +52,7 @@ function requirePlayingTurn(state: GameState, actorId: PlayerId): ValidationResu
 }
 
 function dealPlayerDecks(
-  players: readonly PlayerId[],
+  players: readonly Player[],
   seed: number,
   startingHandSize: number
 ): {
@@ -64,11 +64,21 @@ function dealPlayerDecks(
   const decks: Record<PlayerId, readonly Card[]> = {};
   const discardPiles: Record<PlayerId, readonly Card[]> = {};
 
-  players.forEach((playerId, playerIndex) => {
-    const playerDeck = createShuffledDeck(seed + playerIndex, createDeckForPlayerIndex(playerIndex));
-    hands[playerId] = playerDeck.slice(0, startingHandSize);
-    decks[playerId] = playerDeck.slice(startingHandSize);
-    discardPiles[playerId] = [];
+  players.forEach((player, playerIndex) => {
+    let deckTemplate = createDeckForPlayerIndex(playerIndex);
+
+    if (player.deckId !== undefined) {
+      try {
+        deckTemplate = createDeck(player.deckId);
+      } catch {
+        deckTemplate = createDeckForPlayerIndex(playerIndex);
+      }
+    }
+
+    const playerDeck = createShuffledDeck(seed + playerIndex, deckTemplate);
+    hands[player.id] = playerDeck.slice(0, startingHandSize);
+    decks[player.id] = playerDeck.slice(startingHandSize);
+    discardPiles[player.id] = [];
   });
 
   return { hands, decks, discardPiles };
@@ -129,7 +139,7 @@ export function reduceGameAction(
       }
 
       const turnOrder = state.players.map((player) => player.id);
-      const { hands, decks, discardPiles } = dealPlayerDecks(turnOrder, action.seed, startingHandSize);
+      const { hands, decks, discardPiles } = dealPlayerDecks(state.players, action.seed, startingHandSize);
       const startingPlayerId = turnOrder[0] ?? null;
 
       return {

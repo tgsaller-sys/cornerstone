@@ -13,11 +13,17 @@ export interface Card {
   readonly art: CardArt;
 }
 
+export interface DeckDefinition {
+  readonly id: DeckId;
+  readonly title: string;
+}
+
 export type PlayerId = string;
 
 export interface Player {
   readonly id: PlayerId;
   readonly name: string;
+  readonly deckId?: DeckId;
   readonly connected: boolean;
   readonly joinedAt: string;
 }
