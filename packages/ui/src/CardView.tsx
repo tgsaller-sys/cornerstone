@@ -73,7 +73,7 @@ export function CardView({ card, selected = false, disabled = false, onClick }: 
   const tapAndHoverProps = disabled
     ? {}
     : {
-        whileHover: { y: -8 },
+        whileHover: selected ? {} : { y: -8 },
         whileTap: { scale: 0.96 }
       };
 
@@ -81,9 +81,10 @@ export function CardView({ card, selected = false, disabled = false, onClick }: 
     <motion.button
       layout
       {...tapAndHoverProps}
-      animate={{ y: selected ? -24 : 0 }}
+      animate={{ scale: selected ? 1.75 : 1, y: 0 }}
       className={`cornerstone-card cornerstone-card-${card.art} ${selected ? "is-selected" : ""}`}
       disabled={disabled}
+      style={{ zIndex: selected ? 10 : 1 }}
       type="button"
       onClick={() => onClick?.(card)}
       aria-pressed={selected}

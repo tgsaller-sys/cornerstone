@@ -1,4 +1,5 @@
 .cornerstone-card {
+  position: relative;
   inline-size: clamp(5.1rem, 8.5vw, 7rem);
   aspect-ratio: 120 / 168;
   border: 0;
@@ -7,6 +8,7 @@
   background: transparent;
   cursor: pointer;
   filter: drop-shadow(0 12px 18px rgb(20 26 35 / 0.2));
+  transform-origin: center;
 }
 
 .cornerstone-card:disabled {
