@@ -591,7 +591,7 @@ export function App() {
                   <Send size={18} aria-hidden="true" />
                   Play {selectedCards.length}
                 </button>
-                <button type="button" disabled={!isActiveTurn || game.currentLeadingPlay === null} onClick={skipTurn}>
+                <button type="button" disabled={!isActiveTurn} onClick={skipTurn}>
                   <SkipForward size={18} aria-hidden="true" />
                   End Turn
                 </button>

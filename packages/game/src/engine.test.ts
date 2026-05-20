@@ -96,6 +96,17 @@ describe("starting a game", () => {
 });
 
 describe("turn actions", () => {
+  it("allows the current player to end their turn before any cards are played", () => {
+    const state = startedGame();
+    const result = reduceGameAction(state, { type: "skip", actorId: "player-a" });
+
+    expect(result.validation.ok).toBe(true);
+    expect(result.state.currentTurn).toBe("player-b");
+    expect(result.state.currentLeadingPlay).toBeNull();
+    expect(result.state.skippedPlayers).toEqual([]);
+    expect(result.state.lastEvent).toEqual({ type: "skip", playerId: "player-a" });
+  });
+
   it("plays one or more cards into the player's discard pile and writes a play event", () => {
     const state = startedGame();
     const actorId = state.currentTurn ?? "";

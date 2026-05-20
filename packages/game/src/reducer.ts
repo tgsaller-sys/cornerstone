@@ -333,12 +333,21 @@ export function reduceGameAction(
       }
 
       const currentLeadingPlayer = state.currentLeadingPlay?.playerId;
+
+      if (currentLeadingPlayer === undefined) {
+        return {
+          state: bumpVersion({
+            ...state,
+            currentTurn: nextPlayerId(state.turnOrder, action.actorId),
+            lastEvent: { type: "skip", playerId: action.actorId }
+          }),
+          validation: { ok: true }
+        };
+      }
+
       const skippedPlayers = [...new Set([...state.skippedPlayers, action.actorId])];
 
-      if (
-        currentLeadingPlayer !== undefined &&
-        allOtherPlayersSkipped(state.turnOrder, currentLeadingPlayer, skippedPlayers)
-      ) {
+      if (allOtherPlayersSkipped(state.turnOrder, currentLeadingPlayer, skippedPlayers)) {
         return {
           state: bumpVersion({
             ...state,

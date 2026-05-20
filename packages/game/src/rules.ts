@@ -98,9 +98,5 @@ export function validateSkip(state: GameState, actorId: PlayerId): ValidationRes
     return { ok: false, reason: "It is not this player's turn." };
   }
 
-  if (state.currentLeadingPlay === null) {
-    return { ok: false, reason: "The leading player cannot skip before any cards are played." };
-  }
-
   return { ok: true };
 }
