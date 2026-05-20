@@ -81,6 +81,10 @@
   color: currentColor;
 }
 
+.cornerstone-card-art-image {
+  pointer-events: none;
+}
+
 .cornerstone-card-glyph-line {
   fill: none;
   stroke: currentColor;

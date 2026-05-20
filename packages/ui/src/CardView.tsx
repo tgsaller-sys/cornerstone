@@ -1,6 +1,17 @@
 import { motion } from "framer-motion";
 import type { Card } from "@cornerstone3/game";
+import bowUrl from "./assets/card-art/bow.png";
+import shieldUrl from "./assets/card-art/shield.png";
+import swordUrl from "./assets/card-art/sword.png";
+import wingedShoeUrl from "./assets/card-art/winged-shoe.png";
 import "./cards.css";
+
+const cardArtUrls = {
+  bow: bowUrl,
+  shield: shieldUrl,
+  sword: swordUrl,
+  "winged-shoe": wingedShoeUrl
+} satisfies Partial<Record<Card["art"], string>>;
 
 export interface CardViewProps {
   readonly card: Card;
@@ -59,6 +70,22 @@ function WingedShoeGlyph() {
 }
 
 function CardGlyph({ card }: { readonly card: Card }) {
+  const artUrl = cardArtUrls[card.art];
+
+  if (artUrl !== undefined) {
+    return (
+      <image
+        className="cornerstone-card-art-image"
+        href={artUrl}
+        x="24"
+        y="24"
+        width="72"
+        height="72"
+        preserveAspectRatio="xMidYMid meet"
+      />
+    );
+  }
+
   return (
     <g className={`cornerstone-card-glyph cornerstone-card-glyph-${card.art}`} transform="translate(0 2)">
       {card.art === "sword" ? <SwordGlyph /> : null}
