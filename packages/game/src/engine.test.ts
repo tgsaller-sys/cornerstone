@@ -151,6 +151,30 @@ describe("turn actions", () => {
     expect(result.state.decks[actorId]?.some((nextCard) => nextCard.id === cardInDeck?.id)).toBe(false);
   });
 
+  it("searches the current player's discard pile for a card and moves it into their hand", () => {
+    const state = startedGame();
+    const actorId = state.currentTurn ?? "";
+    const playedCard = state.hands[actorId]?.[0];
+
+    expect(playedCard).toBeDefined();
+
+    const afterPlay = assertValidTransition(
+      reduceGameAction(state, {
+        type: "play-cards",
+        actorId,
+        cardIds: playedCard === undefined ? [] : [playedCard.id]
+      })
+    );
+    const result = reduceGameAction(
+      { ...afterPlay, currentTurn: actorId },
+      { type: "search-discard", actorId, cardId: playedCard?.id ?? "letters-a" }
+    );
+
+    expect(result.validation.ok).toBe(true);
+    expect(result.state.hands[actorId]).toContainEqual(playedCard);
+    expect(result.state.discardPiles[actorId]?.some((nextCard) => nextCard.id === playedCard?.id)).toBe(false);
+  });
+
   it("shuffles the current player's discard pile into their deck", () => {
     const state = startedGame();
     const actorId = state.currentTurn ?? "";

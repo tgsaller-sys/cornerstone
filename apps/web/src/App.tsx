@@ -107,6 +107,7 @@ export function App() {
   const [passNotice, setPassNotice] = useState<string | null>(null);
   const [skipLabel, setSkipLabel] = useState(() => pickSkipLabel());
   const [deckSearchCardId, setDeckSearchCardId] = useState<CardId>("letters-a");
+  const [discardSearchCardId, setDiscardSearchCardId] = useState<CardId>("letters-a");
   const lastPassNoticeKey = useRef<string | null>(null);
   const preferredPlayerName = playerName.trim() || `Player ${localPlayerId.slice(0, 4)}`;
   const [game, setGame] = useState(() => createDemoGame(localPlayerId, preferredPlayerName, createLobbyCode()));
@@ -117,6 +118,10 @@ export function App() {
   const activeDiscardPile = game.discardPiles[activePlayerId] ?? [];
   const sortedActiveHand = useMemo(() => sortCardsForPlay(activeHand), [activeHand]);
   const searchableCardIds = useMemo(() => sortCardsForPlay(activeDeck).map((card) => card.id), [activeDeck]);
+  const searchableDiscardCardIds = useMemo(
+    () => sortCardsForPlay(activeDiscardPile).map((card) => card.id),
+    [activeDiscardPile]
+  );
   const opponents = useMemo(
     () => game.players.filter((player) => player.id !== localPlayerId),
     [game.players, localPlayerId]
@@ -219,6 +224,14 @@ export function App() {
   }, [deckSearchCardId, searchableCardIds]);
 
   useEffect(() => {
+    const firstSearchableDiscardCardId = searchableDiscardCardIds[0];
+
+    if (firstSearchableDiscardCardId !== undefined && !searchableDiscardCardIds.includes(discardSearchCardId)) {
+      setDiscardSearchCardId(firstSearchableDiscardCardId);
+    }
+  }, [discardSearchCardId, searchableDiscardCardIds]);
+
+  useEffect(() => {
     let cancelled = false;
 
     async function authenticate() {
@@ -308,6 +321,10 @@ export function App() {
 
   function searchDeck() {
     void dispatch({ type: "search-deck", actorId: activePlayerId, cardId: deckSearchCardId });
+  }
+
+  function searchDiscard() {
+    void dispatch({ type: "search-discard", actorId: activePlayerId, cardId: discardSearchCardId });
   }
 
   function resetDemo() {
@@ -616,6 +633,7 @@ export function App() {
               </button>
               <label className="deck-search-control">
                 <Search size={18} aria-hidden="true" />
+                <span>Search deck</span>
                 <select
                   value={deckSearchCardId}
                   onChange={(event) => setDeckSearchCardId(event.currentTarget.value as CardId)}
@@ -631,7 +649,27 @@ export function App() {
               </label>
               <button type="button" disabled={!isActiveTurn || activeDeck.length === 0} onClick={searchDeck}>
                 <Search size={18} aria-hidden="true" />
-                Search
+                Search Deck
+              </button>
+              <label className="deck-search-control">
+                <Search size={18} aria-hidden="true" />
+                <span>Search discard</span>
+                <select
+                  value={discardSearchCardId}
+                  onChange={(event) => setDiscardSearchCardId(event.currentTarget.value as CardId)}
+                  aria-label="Card to search for in discard"
+                  disabled={activeDiscardPile.length === 0}
+                >
+                  {searchableDiscardCardIds.map((cardId) => (
+                    <option key={cardId} value={cardId}>
+                      {activeDiscardPile.find((card) => card.id === cardId)?.title ?? cardId}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <button type="button" disabled={!isActiveTurn || activeDiscardPile.length === 0} onClick={searchDiscard}>
+                <Search size={18} aria-hidden="true" />
+                Search Discard
               </button>
             </section>
           ) : null}

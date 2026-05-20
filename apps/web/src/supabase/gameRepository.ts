@@ -13,6 +13,7 @@ function actorIdForAction(action: GameAction): string {
     case "shuffle-deck":
     case "shuffle-discard-into-deck":
     case "search-deck":
+    case "search-discard":
     case "skip":
       return action.actorId;
   }

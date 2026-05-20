@@ -294,6 +294,37 @@ export function reduceGameAction(
       };
     }
 
+    case "search-discard": {
+      const turnValidation = requirePlayingTurn(state, action.actorId);
+
+      if (!turnValidation.ok) {
+        return { state, validation: turnValidation };
+      }
+
+      const discardPile = state.discardPiles[action.actorId] ?? [];
+      const foundCard = discardPile.find((card) => card.id === action.cardId);
+
+      if (foundCard === undefined) {
+        return { state, validation: { ok: false, reason: "That card is not in your discard pile." } };
+      }
+
+      return {
+        state: bumpVersion({
+          ...state,
+          hands: {
+            ...state.hands,
+            [action.actorId]: [...(state.hands[action.actorId] ?? []), foundCard]
+          },
+          discardPiles: {
+            ...state.discardPiles,
+            [action.actorId]: removeCardById(discardPile, foundCard.id)
+          },
+          lastEvent: { type: "search-discard", playerId: action.actorId, cardId: foundCard.id }
+        }),
+        validation: { ok: true }
+      };
+    }
+
     case "skip": {
       const validation = validateSkip(state, action.actorId);
 

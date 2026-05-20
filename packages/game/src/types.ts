@@ -63,6 +63,11 @@ export type GameEvent =
       readonly type: "search-deck";
       readonly playerId: PlayerId;
       readonly cardId: CardId;
+    }
+  | {
+      readonly type: "search-discard";
+      readonly playerId: PlayerId;
+      readonly cardId: CardId;
     };
 
 export interface GameState {
@@ -121,6 +126,11 @@ export type GameAction =
     }
   | {
       readonly type: "search-deck";
+      readonly actorId: PlayerId;
+      readonly cardId: CardId;
+    }
+  | {
+      readonly type: "search-discard";
       readonly actorId: PlayerId;
       readonly cardId: CardId;
     }
