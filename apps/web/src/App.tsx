@@ -579,105 +579,109 @@ export function App() {
         </section>
 
         <section className="hand-panel" aria-label="Your hand">
-          <div className="hand-actions">
-            {game.phase === "lobby" ? (
-              <button type="button" onClick={startGame}>
-                <Play size={18} aria-hidden="true" />
-                Start
-              </button>
-            ) : (
-              <>
-                <button type="button" disabled={!isActiveTurn || selectedCards.length === 0} onClick={playSelectedCards}>
-                  <Send size={18} aria-hidden="true" />
-                  Play {selectedCards.length}
-                </button>
-                <button type="button" disabled={!isActiveTurn} onClick={skipTurn}>
-                  <SkipForward size={18} aria-hidden="true" />
-                  End Turn
-                </button>
-              </>
-            )}
-            {syncMode === "local" ? (
-              <button type="button" onClick={resetDemo} aria-label="Reset demo">
-                <RotateCcw size={18} aria-hidden="true" />
-              </button>
-            ) : null}
+          <div className="hand-layout">
+            <motion.div layout className="hand">
+              {sortedActiveHand.map((card) => (
+                <CardView
+                  key={card.id}
+                  card={card}
+                  selected={selectedCardIds.includes(card.id)}
+                  disabled={game.phase !== "playing" || !isActiveTurn}
+                  onClick={(nextCard) => toggleCard(nextCard.id)}
+                />
+              ))}
+            </motion.div>
+
+            <aside className="turn-controls" aria-label="Turn controls">
+              <div className="hand-actions">
+                {game.phase === "lobby" ? (
+                  <button type="button" onClick={startGame}>
+                    <Play size={18} aria-hidden="true" />
+                    Start
+                  </button>
+                ) : (
+                  <>
+                    <button type="button" disabled={!isActiveTurn || selectedCards.length === 0} onClick={playSelectedCards}>
+                      <Send size={18} aria-hidden="true" />
+                      Play {selectedCards.length}
+                    </button>
+                    <button type="button" disabled={!isActiveTurn} onClick={skipTurn}>
+                      <SkipForward size={18} aria-hidden="true" />
+                      End Turn
+                    </button>
+                  </>
+                )}
+                {syncMode === "local" ? (
+                  <button type="button" onClick={resetDemo} aria-label="Reset demo">
+                    <RotateCcw size={18} aria-hidden="true" />
+                  </button>
+                ) : null}
+              </div>
+
+              {game.phase === "playing" ? (
+                <section className="deck-actions" aria-label="Deck actions">
+                  <span className="zone-count">Deck {activeDeck.length}</span>
+                  <span className="zone-count">Discard {activeDiscardPile.length}</span>
+                  <button type="button" disabled={!isActiveTurn || activeDeck.length === 0} onClick={drawCard}>
+                    <RefreshCw size={18} aria-hidden="true" />
+                    Draw
+                  </button>
+                  <button type="button" disabled={!isActiveTurn || activeDeck.length < 2} onClick={shuffleActiveDeck}>
+                    <Shuffle size={18} aria-hidden="true" />
+                    Shuffle Deck
+                  </button>
+                  <button
+                    type="button"
+                    disabled={!isActiveTurn || activeDiscardPile.length === 0}
+                    onClick={shuffleDiscardIntoDeck}
+                  >
+                    <Shuffle size={18} aria-hidden="true" />
+                    Discard to Deck
+                  </button>
+                  <label className="deck-search-control">
+                    <Search size={18} aria-hidden="true" />
+                    <span>Search deck</span>
+                    <select
+                      value={deckSearchCardId}
+                      onChange={(event) => setDeckSearchCardId(event.currentTarget.value as CardId)}
+                      aria-label="Card to search for"
+                      disabled={activeDeck.length === 0}
+                    >
+                      {searchableCardIds.map((cardId) => (
+                        <option key={cardId} value={cardId}>
+                          {activeDeck.find((card) => card.id === cardId)?.title ?? cardId}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <button type="button" disabled={!isActiveTurn || activeDeck.length === 0} onClick={searchDeck}>
+                    <Search size={18} aria-hidden="true" />
+                    Search Deck
+                  </button>
+                  <label className="deck-search-control">
+                    <Search size={18} aria-hidden="true" />
+                    <span>Search discard</span>
+                    <select
+                      value={discardSearchCardId}
+                      onChange={(event) => setDiscardSearchCardId(event.currentTarget.value as CardId)}
+                      aria-label="Card to search for in discard"
+                      disabled={activeDiscardPile.length === 0}
+                    >
+                      {searchableDiscardCardIds.map((cardId) => (
+                        <option key={cardId} value={cardId}>
+                          {activeDiscardPile.find((card) => card.id === cardId)?.title ?? cardId}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <button type="button" disabled={!isActiveTurn || activeDiscardPile.length === 0} onClick={searchDiscard}>
+                    <Search size={18} aria-hidden="true" />
+                    Search Discard
+                  </button>
+                </section>
+              ) : null}
+            </aside>
           </div>
-
-          {game.phase === "playing" ? (
-            <section className="deck-actions" aria-label="Deck actions">
-              <span className="zone-count">Deck {activeDeck.length}</span>
-              <span className="zone-count">Discard {activeDiscardPile.length}</span>
-              <button type="button" disabled={!isActiveTurn || activeDeck.length === 0} onClick={drawCard}>
-                <RefreshCw size={18} aria-hidden="true" />
-                Draw
-              </button>
-              <button type="button" disabled={!isActiveTurn || activeDeck.length < 2} onClick={shuffleActiveDeck}>
-                <Shuffle size={18} aria-hidden="true" />
-                Shuffle Deck
-              </button>
-              <button
-                type="button"
-                disabled={!isActiveTurn || activeDiscardPile.length === 0}
-                onClick={shuffleDiscardIntoDeck}
-              >
-                <Shuffle size={18} aria-hidden="true" />
-                Discard to Deck
-              </button>
-              <label className="deck-search-control">
-                <Search size={18} aria-hidden="true" />
-                <span>Search deck</span>
-                <select
-                  value={deckSearchCardId}
-                  onChange={(event) => setDeckSearchCardId(event.currentTarget.value as CardId)}
-                  aria-label="Card to search for"
-                  disabled={activeDeck.length === 0}
-                >
-                  {searchableCardIds.map((cardId) => (
-                    <option key={cardId} value={cardId}>
-                      {activeDeck.find((card) => card.id === cardId)?.title ?? cardId}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <button type="button" disabled={!isActiveTurn || activeDeck.length === 0} onClick={searchDeck}>
-                <Search size={18} aria-hidden="true" />
-                Search Deck
-              </button>
-              <label className="deck-search-control">
-                <Search size={18} aria-hidden="true" />
-                <span>Search discard</span>
-                <select
-                  value={discardSearchCardId}
-                  onChange={(event) => setDiscardSearchCardId(event.currentTarget.value as CardId)}
-                  aria-label="Card to search for in discard"
-                  disabled={activeDiscardPile.length === 0}
-                >
-                  {searchableDiscardCardIds.map((cardId) => (
-                    <option key={cardId} value={cardId}>
-                      {activeDiscardPile.find((card) => card.id === cardId)?.title ?? cardId}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <button type="button" disabled={!isActiveTurn || activeDiscardPile.length === 0} onClick={searchDiscard}>
-                <Search size={18} aria-hidden="true" />
-                Search Discard
-              </button>
-            </section>
-          ) : null}
-
-          <motion.div layout className="hand">
-            {sortedActiveHand.map((card) => (
-              <CardView
-                key={card.id}
-                card={card}
-                selected={selectedCardIds.includes(card.id)}
-                disabled={game.phase !== "playing" || !isActiveTurn}
-                onClick={(nextCard) => toggleCard(nextCard.id)}
-              />
-            ))}
-          </motion.div>
           {error !== null ? <p className="error-text">{error}</p> : null}
           {game.winnerId !== null ? <p className="winner-text">Winner: {game.winnerId}</p> : null}
         </section>
