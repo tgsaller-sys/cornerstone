@@ -34,6 +34,22 @@ function applyAction(state: GameState, action: GameAction): GameState {
   return result.state;
 }
 
+function getErrorMessage(caught: unknown, fallback: string): string {
+  if (caught instanceof Error) {
+    return caught.message;
+  }
+
+  if (typeof caught === "object" && caught !== null && "message" in caught) {
+    const message = (caught as { readonly message?: unknown }).message;
+
+    if (typeof message === "string" && message.length > 0) {
+      return message;
+    }
+  }
+
+  return fallback;
+}
+
 function pickSkipLabel(): string {
   const roll = Math.random();
 
@@ -250,7 +266,7 @@ export function App() {
         }
 
         setAuthStatus("local");
-        setError(caught instanceof Error ? caught.message : "Anonymous sign-in failed.");
+        setError(getErrorMessage(caught, "Anonymous sign-in failed."));
       }
     }
 
@@ -287,7 +303,7 @@ export function App() {
       setError(null);
     } catch (caught) {
       setActionStatus(null);
-      setError(caught instanceof Error ? caught.message : "Action failed.");
+      setError(getErrorMessage(caught, "Action failed."));
     }
   }
 
@@ -357,7 +373,7 @@ export function App() {
       setActionStatus(null);
     } catch (caught) {
       setActionStatus(null);
-      setError(caught instanceof Error ? caught.message : "Could not create lobby.");
+      setError(getErrorMessage(caught, "Could not create lobby."));
     }
   }
 
@@ -407,7 +423,7 @@ export function App() {
       setActionStatus(null);
     } catch (caught) {
       setActionStatus(null);
-      setError(caught instanceof Error ? caught.message : "Could not join lobby.");
+      setError(getErrorMessage(caught, "Could not join lobby."));
     }
   }
 
