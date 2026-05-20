@@ -27,13 +27,9 @@ export function createLobbyGame(localPlayerId: string, playerName: string, gameI
 
 export function createDemoGame(localPlayerId: string, playerName: string, lobbyCode: string): GameState {
   const localPlayer = createPlayer(localPlayerId, playerName);
-  const guestPlayer = createPlayer("local-guest", "Local Guest");
 
   const game = createInitialGameState(lobbyCode);
-  return [localPlayer, guestPlayer].reduce(
-    (state, player) => assertValidTransition(reduceGameAction(state, { type: "join", player })),
-    game
-  );
+  return assertValidTransition(reduceGameAction(game, { type: "join", player: localPlayer }));
 }
 
 export function dispatchLocalAction(state: GameState, action: GameAction): GameState {

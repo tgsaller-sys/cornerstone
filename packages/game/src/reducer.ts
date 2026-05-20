@@ -113,8 +113,8 @@ export function reduceGameAction(
         return { state, validation: { ok: false, reason: "Game has already started." } };
       }
 
-      if (state.players.length < 2) {
-        return { state, validation: { ok: false, reason: "At least two players are required." } };
+      if (state.players.length < 1) {
+        return { state, validation: { ok: false, reason: "At least one player is required." } };
       }
 
       if (!state.players.some((player) => player.id === action.actorId)) {

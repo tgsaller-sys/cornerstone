@@ -74,6 +74,15 @@ describe("shuffling", () => {
 });
 
 describe("starting a game", () => {
+  it("allows a solo player to start", () => {
+    const state = startedGame(1, 5);
+
+    expect(state.players).toHaveLength(1);
+    expect(state.currentTurn).toBe("player-a");
+    expect(state.hands["player-a"]).toHaveLength(5);
+    expect(state.decks["player-a"]).toHaveLength(5);
+  });
+
   it("gives each player their own custom deck and requested hand size", () => {
     const state = startedGame(2, 5);
 
@@ -96,6 +105,32 @@ describe("starting a game", () => {
 });
 
 describe("turn actions", () => {
+  it("lets a solo player end their turn and keep the turn", () => {
+    const state = startedGame(1);
+    const result = reduceGameAction(state, { type: "skip", actorId: "player-a" });
+
+    expect(result.validation.ok).toBe(true);
+    expect(result.state.currentTurn).toBe("player-a");
+    expect(result.state.lastEvent).toEqual({ type: "skip", playerId: "player-a" });
+  });
+
+  it("lets a solo player play cards and keep the turn", () => {
+    const state = startedGame(1);
+    const playedCard = state.hands["player-a"]?.[0];
+
+    expect(playedCard).toBeDefined();
+
+    const result = reduceGameAction(state, {
+      type: "play-cards",
+      actorId: "player-a",
+      cardIds: playedCard === undefined ? [] : [playedCard.id]
+    });
+
+    expect(result.validation.ok).toBe(true);
+    expect(result.state.currentTurn).toBe("player-a");
+    expect(result.state.discardPiles["player-a"]).toContainEqual(playedCard);
+  });
+
   it("allows the current player to end their turn before any cards are played", () => {
     const state = startedGame();
     const result = reduceGameAction(state, { type: "skip", actorId: "player-a" });
