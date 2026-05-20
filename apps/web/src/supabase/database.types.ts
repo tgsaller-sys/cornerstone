@@ -1,4 +1,4 @@
-import type { GameAction, GameState } from "@vc/game";
+import type { GameAction, GameState } from "@cornerstone3/game";
 
 export type Json = string | number | boolean | null | { readonly [key: string]: Json | undefined } | readonly Json[];
 

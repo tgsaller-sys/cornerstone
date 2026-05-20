@@ -1,9 +1,9 @@
-import { createShuffledDeck, dealForVc, dealForVcWithMaxCards } from "./deck";
-import { sortCardsForPlay } from "./cards";
+import { createShuffledDeck, shuffleDeck } from "./deck";
+import { createDeckForPlayerIndex } from "./cards";
 import { allOtherPlayersSkipped, nextEligiblePlayerId, nextPlayerId } from "./turns";
 import { setPlayerConnection, upsertPlayer } from "./state";
 import { validatePlay, validateSkip } from "./rules";
-import type { Card, GameAction, GameState, RuleValidator, ValidationResult } from "./types";
+import type { Card, CardId, GameAction, GameState, PlayerId, RuleValidator, ValidationResult } from "./types";
 
 export interface TransitionResult {
   readonly state: GameState;
@@ -23,41 +23,55 @@ function removeCardsFromHand(hand: readonly Card[], playedCards: readonly Card[]
   return hand.filter((card) => !playedIds.has(card.id));
 }
 
-function findPlayerWithCard(hands: Readonly<Record<string, readonly Card[]>>, cardId: string): string | null {
-  for (const [playerId, hand] of Object.entries(hands)) {
-    if (hand.some((card) => card.id === cardId)) {
-      return playerId;
-    }
-  }
-
-  return null;
+function removeCardById(cards: readonly Card[], cardId: CardId): readonly Card[] {
+  return cards.filter((card) => card.id !== cardId);
 }
 
-function findOpeningCard(hands: Readonly<Record<string, readonly Card[]>>): Card | null {
-  const cards = Object.values(hands).flat();
-  return cards.find((card) => card.id === "spades-3") ?? sortCardsForPlay(cards).at(0) ?? null;
-}
-
-function findOpeningPlayer(hands: Readonly<Record<string, readonly Card[]>>): string | null {
-  const openingCard = findOpeningCard(hands);
-
-  if (openingCard === null) {
-    return null;
-  }
-
-  return findPlayerWithCard(hands, openingCard.id);
-}
-
-function validateMaxCardsPerPlayer(maxCardsPerPlayer: number | undefined): ValidationResult {
-  if (maxCardsPerPlayer === undefined) {
+function validateStartingHandSize(startingHandSize: number | undefined): ValidationResult {
+  if (startingHandSize === undefined) {
     return { ok: true };
   }
 
-  if (!Number.isInteger(maxCardsPerPlayer) || maxCardsPerPlayer < 1 || maxCardsPerPlayer > 52) {
-    return { ok: false, reason: "Max cards per player must be a whole number from 1 to 52." };
+  if (!Number.isInteger(startingHandSize) || startingHandSize < 1 || startingHandSize > 52) {
+    return { ok: false, reason: "Starting cards must be a whole number from 1 to 52." };
   }
 
   return { ok: true };
+}
+
+function requirePlayingTurn(state: GameState, actorId: PlayerId): ValidationResult {
+  if (state.phase !== "playing") {
+    return { ok: false, reason: "The game is not in progress." };
+  }
+
+  if (state.currentTurn !== actorId) {
+    return { ok: false, reason: "It is not this player's turn." };
+  }
+
+  return { ok: true };
+}
+
+function dealPlayerDecks(
+  players: readonly PlayerId[],
+  seed: number,
+  startingHandSize: number
+): {
+  readonly hands: Readonly<Record<PlayerId, readonly Card[]>>;
+  readonly decks: Readonly<Record<PlayerId, readonly Card[]>>;
+  readonly discardPiles: Readonly<Record<PlayerId, readonly Card[]>>;
+} {
+  const hands: Record<PlayerId, readonly Card[]> = {};
+  const decks: Record<PlayerId, readonly Card[]> = {};
+  const discardPiles: Record<PlayerId, readonly Card[]> = {};
+
+  players.forEach((playerId, playerIndex) => {
+    const playerDeck = createShuffledDeck(seed + playerIndex, createDeckForPlayerIndex(playerIndex));
+    hands[playerId] = playerDeck.slice(0, startingHandSize);
+    decks[playerId] = playerDeck.slice(startingHandSize);
+    discardPiles[playerId] = [];
+  });
+
+  return { hands, decks, discardPiles };
 }
 
 /**
@@ -107,26 +121,26 @@ export function reduceGameAction(
         return { state, validation: { ok: false, reason: "Only a joined player can start the game." } };
       }
 
-      const maxCardsValidation = validateMaxCardsPerPlayer(action.maxCardsPerPlayer);
+      const startingHandSize = action.startingHandSize ?? action.maxCardsPerPlayer ?? 5;
+      const startingHandValidation = validateStartingHandSize(startingHandSize);
 
-      if (!maxCardsValidation.ok) {
-        return { state, validation: maxCardsValidation };
+      if (!startingHandValidation.ok) {
+        return { state, validation: startingHandValidation };
       }
 
       const turnOrder = state.players.map((player) => player.id);
-      const deck = createShuffledDeck(action.seed);
-      const hands =
-        action.maxCardsPerPlayer === undefined
-          ? dealForVc(turnOrder, deck)
-          : dealForVcWithMaxCards(turnOrder, deck, action.maxCardsPerPlayer);
-      const startingPlayerId = findOpeningPlayer(hands);
+      const { hands, decks, discardPiles } = dealPlayerDecks(turnOrder, action.seed, startingHandSize);
+      const startingPlayerId = turnOrder[0] ?? null;
 
       return {
         state: bumpVersion({
           ...state,
           phase: "playing",
           hands,
+          decks,
+          discardPiles,
           deck: [],
+          discardPile: [],
           currentTurn: startingPlayerId,
           currentLeadingPlay: null,
           skippedPlayers: [],
@@ -148,19 +162,136 @@ export function reduceGameAction(
         ...state.hands,
         [action.actorId]: removeCardsFromHand(state.hands[action.actorId] ?? [], validation.cards)
       };
+      const nextDiscardPiles = {
+        ...state.discardPiles,
+        [action.actorId]: [...(state.discardPiles[action.actorId] ?? []), ...validation.cards]
+      };
       const nextState: GameState = {
         ...state,
         hands: nextHands,
+        discardPiles: nextDiscardPiles,
         discardPile: [...state.discardPile, { playerId: action.actorId, cards: validation.cards }],
         currentLeadingPlay: { playerId: action.actorId, cards: validation.cards },
-        lastEvent: { type: "play", playerId: action.actorId },
+        lastEvent: { type: "play", playerId: action.actorId, cardTitles: validation.cards.map((card) => card.title) },
         skippedPlayers: state.skippedPlayers,
         currentTurn: nextEligiblePlayerId(state.turnOrder, action.actorId, state.skippedPlayers),
-        phase: nextHands[action.actorId]?.length === 0 ? "finished" : state.phase,
-        winnerId: nextHands[action.actorId]?.length === 0 ? action.actorId : state.winnerId
+        phase: state.phase,
+        winnerId: state.winnerId
       };
 
       return { state: bumpVersion(nextState), validation: { ok: true } };
+    }
+
+    case "draw-card": {
+      const turnValidation = requirePlayingTurn(state, action.actorId);
+
+      if (!turnValidation.ok) {
+        return { state, validation: turnValidation };
+      }
+
+      const deck = state.decks[action.actorId] ?? [];
+      const drawnCard = deck[0];
+
+      if (drawnCard === undefined) {
+        return { state, validation: { ok: false, reason: "Your deck is empty." } };
+      }
+
+      return {
+        state: bumpVersion({
+          ...state,
+          hands: {
+            ...state.hands,
+            [action.actorId]: [...(state.hands[action.actorId] ?? []), drawnCard]
+          },
+          decks: {
+            ...state.decks,
+            [action.actorId]: deck.slice(1)
+          },
+          lastEvent: { type: "draw", playerId: action.actorId }
+        }),
+        validation: { ok: true }
+      };
+    }
+
+    case "shuffle-deck": {
+      const turnValidation = requirePlayingTurn(state, action.actorId);
+
+      if (!turnValidation.ok) {
+        return { state, validation: turnValidation };
+      }
+
+      return {
+        state: bumpVersion({
+          ...state,
+          decks: {
+            ...state.decks,
+            [action.actorId]: shuffleDeck(state.decks[action.actorId] ?? [], action.seed)
+          },
+          lastEvent: { type: "shuffle-deck", playerId: action.actorId }
+        }),
+        validation: { ok: true }
+      };
+    }
+
+    case "shuffle-discard-into-deck": {
+      const turnValidation = requirePlayingTurn(state, action.actorId);
+
+      if (!turnValidation.ok) {
+        return { state, validation: turnValidation };
+      }
+
+      const discardPile = state.discardPiles[action.actorId] ?? [];
+
+      if (discardPile.length === 0) {
+        return { state, validation: { ok: false, reason: "Your discard pile is empty." } };
+      }
+
+      return {
+        state: bumpVersion({
+          ...state,
+          decks: {
+            ...state.decks,
+            [action.actorId]: shuffleDeck([...(state.decks[action.actorId] ?? []), ...discardPile], action.seed)
+          },
+          discardPiles: {
+            ...state.discardPiles,
+            [action.actorId]: []
+          },
+          lastEvent: { type: "recycle-discard", playerId: action.actorId }
+        }),
+        validation: { ok: true }
+      };
+    }
+
+    case "search-deck": {
+      const turnValidation = requirePlayingTurn(state, action.actorId);
+
+      if (!turnValidation.ok) {
+        return { state, validation: turnValidation };
+      }
+
+      const deck = state.decks[action.actorId] ?? [];
+      const foundCard = deck.find((card) => card.id === action.cardId);
+
+      if (foundCard === undefined) {
+        return { state, validation: { ok: false, reason: "That card is not in your deck." } };
+      }
+
+      return {
+        state: bumpVersion({
+          ...state,
+          hands: {
+            ...state.hands,
+            [action.actorId]: [...(state.hands[action.actorId] ?? []), foundCard]
+          },
+          decks: {
+            ...state.decks,
+            [action.actorId]: removeCardById(deck, foundCard.id)
+          },
+          lastEvent: { type: "search-deck", playerId: action.actorId, cardId: foundCard.id }
+        }),
+        validation: { ok: true }
+      };
     }
 
     case "skip": {

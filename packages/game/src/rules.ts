@@ -1,4 +1,4 @@
-import { compareCardsForPlay, findCardsById, highestCardForPlay, rankValue, sortCardsForPlay } from "./cards";
+import { findCardsById } from "./cards";
 import type {
   Card,
   CardId,
@@ -19,218 +19,42 @@ export const allowAnyOwnedCards: RuleValidator = (_state, _actorId, cards) => {
   return { ok: true };
 };
 
-function sameRank(cards: readonly Card[]): boolean {
-  const firstRank = cards[0]?.rank;
-  return firstRank !== undefined && cards.every((card) => card.rank === firstRank);
-}
-
-function getMultipleKind(length: number): PlayShape["kind"] | null {
-  switch (length) {
-    case 1:
-      return "single";
-    case 2:
-      return "double";
-    case 3:
-      return "triple";
-    case 4:
-      return "quad";
-    default:
-      return null;
-  }
-}
-
-function straightHighRank(cards: readonly Card[]): Card["rank"] | null {
-  if (cards.length < 3) {
-    return null;
-  }
-
-  if (cards.some((card) => card.rank === "2")) {
-    return null;
-  }
-
-  const sorted = sortCardsForPlay(cards);
-  const values = sorted.map((card) => rankValue(card.rank));
-
-  if (new Set(values).size !== values.length) {
-    return null;
-  }
-
-  for (let index = 1; index < values.length; index += 1) {
-    const previous = values[index - 1];
-    const current = values[index];
-
-    if (previous === undefined || current === undefined || current !== previous + 1) {
-      return null;
-    }
-  }
-
-  return sorted[sorted.length - 1]?.rank ?? null;
-}
-
-function doubleStraightHighCard(cards: readonly Card[]): Card | null {
-  if (cards.length < 6 || cards.length % 2 !== 0 || cards.some((card) => card.rank === "2")) {
-    return null;
-  }
-
-  const byRank = new Map<Card["rank"], readonly Card[]>();
-
-  for (const card of cards) {
-    byRank.set(
-      card.rank,
-      [...(byRank.get(card.rank) ?? []), card].sort(compareCardsForPlay)
-    );
-  }
-
-  if ([...byRank.values()].some((rankCards) => rankCards.length !== 2)) {
-    return null;
-  }
-
-  const rankValues = [...byRank.keys()].map(rankValue).sort((left, right) => left - right);
-
-  for (let index = 1; index < rankValues.length; index += 1) {
-    const previous = rankValues[index - 1];
-    const current = rankValues[index];
-
-    if (previous === undefined || current === undefined || current !== previous + 1) {
-      return null;
-    }
-  }
-
-  return highestCardForPlay(cards);
-}
-
 export function identifyPlayShape(cards: readonly Card[]): PlayShape | null {
-  if (cards.length === 0) {
+  const highCard = cards.at(-1);
+
+  if (highCard === undefined) {
     return null;
   }
 
-  const multipleKind = getMultipleKind(cards.length);
-
-  if (multipleKind !== null && sameRank(cards)) {
-    const highCard = highestCardForPlay(cards);
-
-    if (highCard === null) {
-      return null;
-    }
-
-    return {
-      kind: multipleKind,
-      length: cards.length,
-      highRank: highCard.rank,
-      highCard
-    };
-  }
-
-  const highStraightRank = straightHighRank(cards);
-
-  if (highStraightRank !== null) {
-    const highCard = highestCardForPlay(cards);
-
-    if (highCard === null) {
-      return null;
-    }
-
-    return {
-      kind: "straight",
-      length: cards.length,
-      highRank: highStraightRank,
-      highCard
-    };
-  }
-
-  const highDoubleStraightCard = doubleStraightHighCard(cards);
-
-  if (highDoubleStraightCard !== null) {
-    return {
-      kind: "double-straight-bomb",
-      length: cards.length,
-      highRank: highDoubleStraightCard.rank,
-      highCard: highDoubleStraightCard
-    };
-  }
-
-  return null;
+  return {
+    kind: "custom",
+    length: cards.length,
+    highCard
+  };
 }
 
 function playShapeForPlayedSet(playedSet: PlayedSet): PlayShape | null {
   return identifyPlayShape(playedSet.cards);
 }
 
-export function isBombShape(shape: PlayShape): boolean {
-  return shape.kind === "quad" || shape.kind === "double-straight-bomb";
+export function isBombShape(_shape: PlayShape): boolean {
+  return false;
 }
 
-export function isBombPlay(cards: readonly Card[]): boolean {
-  const shape = identifyPlayShape(cards);
-  return shape !== null && isBombShape(shape);
+export function isBombPlay(_cards: readonly Card[]): boolean {
+  return false;
 }
 
-function isSingleTwo(shape: PlayShape): boolean {
-  return shape.kind === "single" && shape.highCard.rank === "2";
-}
-
-function openingCardForState(state: GameState): Card | null {
-  const cards = Object.values(state.hands).flat();
-  return cards.find((card) => card.id === "spades-3") ?? sortCardsForPlay(cards).at(0) ?? null;
-}
-
-export const validateVcPlay: RuleValidator = (state, _actorId, cards) => {
-  const nextShape = identifyPlayShape(cards);
-
-  if (nextShape === null) {
-    return {
-      ok: false,
-      reason: "Play singles, same-rank doubles/triples/quads, or straights of 3 or more cards."
-    };
-  }
-
-  if (state.discardPile.length === 0 && state.currentLeadingPlay === null) {
-    const openingCard = openingCardForState(state);
-
-    if (openingCard !== null && !cards.some((card) => card.id === openingCard.id)) {
-      return { ok: false, reason: `The first play must include the ${openingCard.rank} of ${openingCard.suit}.` };
-    }
-  }
-
-  if (state.currentLeadingPlay === null) {
-    if (nextShape.kind === "double-straight-bomb") {
-      return { ok: false, reason: "A double-straight bomb can only be played on a single 2." };
-    }
-
-    return { ok: true };
-  }
-
-  const leadingShape = playShapeForPlayedSet(state.currentLeadingPlay);
-
-  if (leadingShape === null) {
-    return { ok: false, reason: "The current leading play has an invalid shape." };
-  }
-
-  if (isSingleTwo(leadingShape) && isBombShape(nextShape)) {
-    return { ok: true };
-  }
-
-  if (nextShape.kind === "double-straight-bomb" && leadingShape.kind !== "double-straight-bomb") {
-    return { ok: false, reason: "A double-straight bomb can only be played on a single 2." };
-  }
-
-  if (nextShape.kind !== leadingShape.kind || nextShape.length !== leadingShape.length) {
-    return { ok: false, reason: "Play the same format as the current leading play or skip." };
-  }
-
-  if (compareCardsForPlay(nextShape.highCard, leadingShape.highCard) <= 0) {
-    return { ok: false, reason: "Play higher cards than the current leading play or skip." };
-  }
-
-  return { ok: true };
-};
+export const validateCornerstone3Play: RuleValidator = allowAnyOwnedCards;
 
 export function validatePlay(
   state: GameState,
   actorId: PlayerId,
   cardIds: readonly CardId[],
-  validators: readonly RuleValidator[] = [validateVcPlay]
+  validators: readonly RuleValidator[] = [allowAnyOwnedCards]
 ): PlayValidationResult {
+  void playShapeForPlayedSet;
+
   if (state.phase !== "playing") {
     return { ok: false, reason: "The game is not in progress." };
   }

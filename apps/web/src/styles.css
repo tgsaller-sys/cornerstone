@@ -36,6 +36,7 @@ button {
 .top-bar,
 .players-strip,
 .hand-actions,
+.deck-actions,
 .lobby-controls {
   display: flex;
   align-items: center;
@@ -284,8 +285,10 @@ button {
 }
 
 .hand-actions button,
+.deck-actions button,
 .lobby-controls button,
 .lobby-controls input,
+.deck-search-control,
 .max-cards-control {
   display: inline-flex;
   align-items: center;
@@ -306,6 +309,7 @@ button {
 }
 
 .hand-actions button,
+.deck-actions button,
 .lobby-controls button {
   cursor: pointer;
 }
@@ -331,7 +335,32 @@ button {
   background: transparent;
 }
 
-.hand-actions button:disabled {
+.deck-search-control select {
+  max-inline-size: 10rem;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 800;
+}
+
+.deck-actions {
+  justify-content: start;
+  flex-wrap: wrap;
+}
+
+.zone-count {
+  min-block-size: 2.5rem;
+  border: 1px solid rgb(23 32 47 / 0.16);
+  border-radius: 8px;
+  padding: 0.55rem 0.8rem;
+  background: rgb(255 255 255 / 0.72);
+  color: #3e4856;
+  font-weight: 900;
+}
+
+.hand-actions button:disabled,
+.deck-actions button:disabled {
   color: #9aa1aa;
   cursor: not-allowed;
 }
@@ -343,7 +372,7 @@ button {
 }
 
 .hand > * + * {
-  margin-inline-start: clamp(-2.4rem, -4vw, -1.2rem);
+  margin-inline-start: clamp(-1.6rem, -2.6vw, -0.75rem);
 }
 
 .error-text,

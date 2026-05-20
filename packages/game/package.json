@@ -1,5 +1,5 @@
 {
-  "name": "@vc/game",
+  "name": "@cornerstone3/game",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -7,9 +7,9 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "check": "tsc -p tsconfig.json --noEmit",
-    "test": "vitest run"
+    "build": "node ../../node_modules/typescript/bin/tsc -p tsconfig.json",
+    "check": "node ../../node_modules/typescript/bin/tsc -p tsconfig.json --noEmit",
+    "test": "node ./node_modules/vitest/vitest.mjs run"
   },
   "devDependencies": {
     "vitest": "^3.1.4"

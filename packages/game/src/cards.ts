@@ -1,17 +1,52 @@
-import type { Card, CardId, Rank, Suit } from "./types";
+import cardCatalog from "./cardCatalog.json";
+import type { Card, CardArt, CardId, DeckId } from "./types";
 
-export const suits: readonly Suit[] = ["clubs", "diamonds", "hearts", "spades"];
-export const ranks: readonly Rank[] = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
-export const playSuitOrder: readonly Suit[] = ["spades", "clubs", "diamonds", "hearts"];
-export const playRankOrder: readonly Rank[] = ["3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A", "2"];
+interface CatalogCard {
+  readonly id: CardId;
+  readonly title: string;
+  readonly shortDescription: string;
+  readonly longDescription: string;
+  readonly art: CardArt;
+}
 
-export function createDeck(): readonly Card[] {
-  return suits.flatMap((suit) =>
-    ranks.map((rank) => {
-      const id: CardId = `${suit}-${rank}`;
-      return { id, suit, rank };
-    })
-  );
+interface CatalogDeck {
+  readonly id: DeckId;
+  readonly title: string;
+  readonly cards: readonly CatalogCard[];
+}
+
+const catalogDecks = cardCatalog.decks as readonly CatalogDeck[];
+const cardOrder = new Map(
+  catalogDecks.flatMap((deck, deckIndex) =>
+    deck.cards.map((card, cardIndex) => [card.id, deckIndex * 100 + cardIndex] as const)
+  )
+);
+
+export function createDeck(deckId: DeckId = catalogDecks[0]?.id ?? "letters"): readonly Card[] {
+  const deck = catalogDecks.find((nextDeck) => nextDeck.id === deckId);
+
+  if (deck === undefined) {
+    throw new Error(`Unknown deck ${deckId}.`);
+  }
+
+  return deck.cards.map((card) => ({
+    ...card,
+    deckId: deck.id
+  }));
+}
+
+export function createDeckForPlayerIndex(playerIndex: number): readonly Card[] {
+  const deck = catalogDecks[playerIndex % catalogDecks.length];
+
+  if (deck === undefined) {
+    throw new Error("Card catalog must include at least one deck.");
+  }
+
+  return createDeck(deck.id);
+}
+
+export function createAllCards(): readonly Card[] {
+  return catalogDecks.flatMap((deck) => createDeck(deck.id));
 }
 
 export function findCardsById(cards: readonly Card[], ids: readonly CardId[]): readonly Card[] {
@@ -20,13 +55,7 @@ export function findCardsById(cards: readonly Card[], ids: readonly CardId[]): r
 }
 
 export function compareCardsForPlay(left: Card, right: Card): number {
-  const rankDifference = playRankOrder.indexOf(left.rank) - playRankOrder.indexOf(right.rank);
-
-  if (rankDifference !== 0) {
-    return rankDifference;
-  }
-
-  return playSuitOrder.indexOf(left.suit) - playSuitOrder.indexOf(right.suit);
+  return (cardOrder.get(left.id) ?? Number.MAX_SAFE_INTEGER) - (cardOrder.get(right.id) ?? Number.MAX_SAFE_INTEGER);
 }
 
 export function sortCardsForPlay(cards: readonly Card[]): readonly Card[] {
@@ -35,8 +64,4 @@ export function sortCardsForPlay(cards: readonly Card[]): readonly Card[] {
 
 export function highestCardForPlay(cards: readonly Card[]): Card | null {
   return sortCardsForPlay(cards).at(-1) ?? null;
-}
-
-export function rankValue(rank: Rank): number {
-  return playRankOrder.indexOf(rank);
 }

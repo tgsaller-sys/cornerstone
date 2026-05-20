@@ -1,0 +1,156 @@
+{
+  "decks": [
+    {
+      "id": "letters",
+      "title": "Letter Deck",
+      "cards": [
+        {
+          "id": "letters-a",
+          "title": "Card A",
+          "shortDescription": "Card Letter A",
+          "longDescription": "Card A does this",
+          "art": "sword"
+        },
+        {
+          "id": "letters-b",
+          "title": "Card B",
+          "shortDescription": "Card Letter B",
+          "longDescription": "Card B does this",
+          "art": "sword"
+        },
+        {
+          "id": "letters-c",
+          "title": "Card C",
+          "shortDescription": "Card Letter C",
+          "longDescription": "Card C does this",
+          "art": "sword"
+        },
+        {
+          "id": "letters-d",
+          "title": "Card D",
+          "shortDescription": "Card Letter D",
+          "longDescription": "Card D does this",
+          "art": "sword"
+        },
+        {
+          "id": "letters-e",
+          "title": "Card E",
+          "shortDescription": "Card Letter E",
+          "longDescription": "Card E does this",
+          "art": "sword"
+        },
+        {
+          "id": "letters-f",
+          "title": "Card F",
+          "shortDescription": "Card Letter F",
+          "longDescription": "Card F does this",
+          "art": "shield"
+        },
+        {
+          "id": "letters-g",
+          "title": "Card G",
+          "shortDescription": "Card Letter G",
+          "longDescription": "Card G does this",
+          "art": "shield"
+        },
+        {
+          "id": "letters-h",
+          "title": "Card H",
+          "shortDescription": "Card Letter H",
+          "longDescription": "Card H does this",
+          "art": "shield"
+        },
+        {
+          "id": "letters-i",
+          "title": "Card I",
+          "shortDescription": "Card Letter I",
+          "longDescription": "Card I does this",
+          "art": "shield"
+        },
+        {
+          "id": "letters-j",
+          "title": "Card J",
+          "shortDescription": "Card Letter J",
+          "longDescription": "Card J does this",
+          "art": "shield"
+        }
+      ]
+    },
+    {
+      "id": "numbers",
+      "title": "Number Deck",
+      "cards": [
+        {
+          "id": "numbers-1",
+          "title": "Card 1",
+          "shortDescription": "Card Letter 1",
+          "longDescription": "Card 1 does this",
+          "art": "bow"
+        },
+        {
+          "id": "numbers-2",
+          "title": "Card 2",
+          "shortDescription": "Card Letter 2",
+          "longDescription": "Card 2 does this",
+          "art": "bow"
+        },
+        {
+          "id": "numbers-3",
+          "title": "Card 3",
+          "shortDescription": "Card Letter 3",
+          "longDescription": "Card 3 does this",
+          "art": "bow"
+        },
+        {
+          "id": "numbers-4",
+          "title": "Card 4",
+          "shortDescription": "Card Letter 4",
+          "longDescription": "Card 4 does this",
+          "art": "bow"
+        },
+        {
+          "id": "numbers-5",
+          "title": "Card 5",
+          "shortDescription": "Card Letter 5",
+          "longDescription": "Card 5 does this",
+          "art": "bow"
+        },
+        {
+          "id": "numbers-6",
+          "title": "Card 6",
+          "shortDescription": "Card Letter 6",
+          "longDescription": "Card 6 does this",
+          "art": "winged-shoe"
+        },
+        {
+          "id": "numbers-7",
+          "title": "Card 7",
+          "shortDescription": "Card Letter 7",
+          "longDescription": "Card 7 does this",
+          "art": "winged-shoe"
+        },
+        {
+          "id": "numbers-8",
+          "title": "Card 8",
+          "shortDescription": "Card Letter 8",
+          "longDescription": "Card 8 does this",
+          "art": "winged-shoe"
+        },
+        {
+          "id": "numbers-9",
+          "title": "Card 9",
+          "shortDescription": "Card Letter 9",
+          "longDescription": "Card 9 does this",
+          "art": "winged-shoe"
+        },
+        {
+          "id": "numbers-10",
+          "title": "Card 10",
+          "shortDescription": "Card Letter 10",
+          "longDescription": "Card 10 does this",
+          "art": "winged-shoe"
+        }
+      ]
+    }
+  ]
+}

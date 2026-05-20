@@ -6,6 +6,8 @@ export function createInitialGameState(id: string): GameState {
     phase: "lobby",
     players: [],
     hands: {},
+    decks: {},
+    discardPiles: {},
     deck: [],
     discardPile: [],
     currentTurn: null,

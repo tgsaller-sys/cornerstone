@@ -5,7 +5,7 @@ import {
   type GameAction,
   type GameState,
   type Player
-} from "@vc/game";
+} from "@cornerstone3/game";
 
 export function createPlayer(playerId: string, name: string): Player {
   const now = new Date().toISOString();

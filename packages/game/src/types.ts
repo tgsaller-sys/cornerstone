@@ -1,26 +1,16 @@
-export type Suit = "clubs" | "diamonds" | "hearts" | "spades";
+export type CardArt = "bow" | "shield" | "sword" | "winged-shoe";
 
-export type Rank =
-  | "A"
-  | "2"
-  | "3"
-  | "4"
-  | "5"
-  | "6"
-  | "7"
-  | "8"
-  | "9"
-  | "10"
-  | "J"
-  | "Q"
-  | "K";
+export type CardId = string;
 
-export type CardId = `${Suit}-${Rank}`;
+export type DeckId = string;
 
 export interface Card {
   readonly id: CardId;
-  readonly suit: Suit;
-  readonly rank: Rank;
+  readonly deckId: DeckId;
+  readonly title: string;
+  readonly shortDescription: string;
+  readonly longDescription: string;
+  readonly art: CardArt;
 }
 
 export type PlayerId = string;
@@ -37,12 +27,11 @@ export interface PlayedSet {
   readonly cards: readonly Card[];
 }
 
-export type PlayKind = "single" | "double" | "triple" | "quad" | "straight" | "double-straight-bomb";
+export type PlayKind = "custom";
 
 export interface PlayShape {
   readonly kind: PlayKind;
   readonly length: number;
-  readonly highRank: Rank;
   readonly highCard: Card;
 }
 
@@ -56,6 +45,24 @@ export type GameEvent =
   | {
       readonly type: "play";
       readonly playerId: PlayerId;
+      readonly cardTitles: readonly string[];
+    }
+  | {
+      readonly type: "draw";
+      readonly playerId: PlayerId;
+    }
+  | {
+      readonly type: "shuffle-deck";
+      readonly playerId: PlayerId;
+    }
+  | {
+      readonly type: "recycle-discard";
+      readonly playerId: PlayerId;
+    }
+  | {
+      readonly type: "search-deck";
+      readonly playerId: PlayerId;
+      readonly cardId: CardId;
     };
 
 export interface GameState {
@@ -63,6 +70,8 @@ export interface GameState {
   readonly phase: GamePhase;
   readonly players: readonly Player[];
   readonly hands: Readonly<Record<PlayerId, readonly Card[]>>;
+  readonly decks: Readonly<Record<PlayerId, readonly Card[]>>;
+  readonly discardPiles: Readonly<Record<PlayerId, readonly Card[]>>;
   readonly deck: readonly Card[];
   readonly discardPile: readonly PlayedSet[];
   readonly currentTurn: PlayerId | null;
@@ -88,12 +97,32 @@ export type GameAction =
       readonly type: "start";
       readonly actorId: PlayerId;
       readonly seed: number;
+      readonly startingHandSize?: number;
       readonly maxCardsPerPlayer?: number;
     }
   | {
       readonly type: "play-cards";
       readonly actorId: PlayerId;
       readonly cardIds: readonly CardId[];
+    }
+  | {
+      readonly type: "draw-card";
+      readonly actorId: PlayerId;
+    }
+  | {
+      readonly type: "shuffle-deck";
+      readonly actorId: PlayerId;
+      readonly seed: number;
+    }
+  | {
+      readonly type: "shuffle-discard-into-deck";
+      readonly actorId: PlayerId;
+      readonly seed: number;
+    }
+  | {
+      readonly type: "search-deck";
+      readonly actorId: PlayerId;
+      readonly cardId: CardId;
     }
   | {
       readonly type: "skip";

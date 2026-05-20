@@ -1,15 +1,16 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { Play, RotateCcw, Send, SkipForward, Users } from "lucide-react";
+import { Play, RefreshCw, RotateCcw, Search, Send, Shuffle, SkipForward, Users } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { CardView } from "@vc/ui";
+import { CardView } from "@cornerstone3/ui";
 import {
   isBombPlay,
   reduceGameAction,
   sortCardsForPlay,
+  type CardId,
   type GameAction,
   type GameState,
   type Player
-} from "@vc/game";
+} from "@cornerstone3/game";
 import { createDemoGame, createLobbyGame, createPlayer } from "./lib/localGame";
 import { createLobbyCode } from "./lib/lobbyCode";
 import {
@@ -105,13 +106,17 @@ export function App() {
   const [actionStatus, setActionStatus] = useState<string | null>(null);
   const [passNotice, setPassNotice] = useState<string | null>(null);
   const [skipLabel, setSkipLabel] = useState(() => pickSkipLabel());
+  const [deckSearchCardId, setDeckSearchCardId] = useState<CardId>("letters-a");
   const lastPassNoticeKey = useRef<string | null>(null);
   const preferredPlayerName = playerName.trim() || `Player ${localPlayerId.slice(0, 4)}`;
   const [game, setGame] = useState(() => createDemoGame(localPlayerId, preferredPlayerName, createLobbyCode()));
   const localPlayer = game.players.find((player) => player.id === localPlayerId) ?? game.players[0];
   const activePlayerId = localPlayer?.id ?? "";
   const activeHand = game.hands[activePlayerId] ?? [];
+  const activeDeck = game.decks[activePlayerId] ?? [];
+  const activeDiscardPile = game.discardPiles[activePlayerId] ?? [];
   const sortedActiveHand = useMemo(() => sortCardsForPlay(activeHand), [activeHand]);
+  const searchableCardIds = useMemo(() => sortCardsForPlay(activeDeck).map((card) => card.id), [activeDeck]);
   const opponents = useMemo(
     () => game.players.filter((player) => player.id !== localPlayerId),
     [game.players, localPlayerId]
@@ -167,20 +172,26 @@ export function App() {
       : null;
 
   useEffect(() => {
-    if (game.lastEvent?.type !== "skip") {
+    if (game.lastEvent?.type !== "skip" && game.lastEvent?.type !== "play") {
       return undefined;
     }
 
-    const noticeKey = `${game.id}-${game.version}-${game.lastEvent.playerId}`;
+    const noticeKey = `${game.id}-${game.version}-${game.lastEvent.playerId}-${game.lastEvent.type}`;
 
     if (lastPassNoticeKey.current === noticeKey) {
       return undefined;
     }
 
     lastPassNoticeKey.current = noticeKey;
-    const passingPlayerName =
+    const actingPlayerName =
       game.players.find((player) => player.id === game.lastEvent?.playerId)?.name ?? "A player";
-    setPassNotice(`${passingPlayerName} passes.`);
+
+    if (game.lastEvent.type === "play") {
+      setPassNotice(`${actingPlayerName} plays ${game.lastEvent.cardTitles.join(", ")}.`);
+      return undefined;
+    }
+
+    setPassNotice(`${actingPlayerName} passes.`);
   }, [game.id, game.lastEvent, game.players, game.version]);
 
   useEffect(() => {
@@ -198,6 +209,14 @@ export function App() {
   useEffect(() => {
     setSkipLabel(pickSkipLabel());
   }, [game.currentTurn, game.currentLeadingPlay]);
+
+  useEffect(() => {
+    const firstSearchableCardId = searchableCardIds[0];
+
+    if (firstSearchableCardId !== undefined && !searchableCardIds.includes(deckSearchCardId)) {
+      setDeckSearchCardId(firstSearchableCardId);
+    }
+  }, [deckSearchCardId, searchableCardIds]);
 
   useEffect(() => {
     let cancelled = false;
@@ -260,7 +279,7 @@ export function App() {
   }
 
   function startGame() {
-    void dispatch({ type: "start", actorId: activePlayerId, seed: Date.now(), maxCardsPerPlayer });
+    void dispatch({ type: "start", actorId: activePlayerId, seed: Date.now(), startingHandSize: maxCardsPerPlayer });
   }
 
   function savePlayerName() {
@@ -273,6 +292,22 @@ export function App() {
 
   function skipTurn() {
     void dispatch({ type: "skip", actorId: activePlayerId });
+  }
+
+  function drawCard() {
+    void dispatch({ type: "draw-card", actorId: activePlayerId });
+  }
+
+  function shuffleActiveDeck() {
+    void dispatch({ type: "shuffle-deck", actorId: activePlayerId, seed: Date.now() });
+  }
+
+  function shuffleDiscardIntoDeck() {
+    void dispatch({ type: "shuffle-discard-into-deck", actorId: activePlayerId, seed: Date.now() });
+  }
+
+  function searchDeck() {
+    void dispatch({ type: "search-deck", actorId: activePlayerId, cardId: deckSearchCardId });
   }
 
   function resetDemo() {
@@ -361,12 +396,12 @@ export function App() {
 
   return (
     <main className="app-shell">
-      <section className="tabletop" aria-label="VC game table">
+      <section className="tabletop" aria-label="Cornerstone 3 game table">
         <header className="top-bar">
           <div>
             <p className="eyebrow">Lobby {game.id}</p>
             <p className="build-head">HEAD {buildHead}</p>
-            <h1>VC</h1>
+            <h1>Cornerstone 3</h1>
             <p className="lobby-status">{lobbyStatus}</p>
           </div>
           <div className="status-cluster" aria-label="Game status">
@@ -424,7 +459,7 @@ export function App() {
               Join
             </button>
             <label className="max-cards-control">
-              <span>Max cards</span>
+              <span>Starting cards</span>
               <input
                 type="number"
                 min={1}
@@ -432,7 +467,7 @@ export function App() {
                 step={1}
                 value={maxCardsPerPlayer}
                 onChange={(event) => setMaxCardsPerPlayer(event.currentTarget.valueAsNumber)}
-                aria-label="Maximum cards per player"
+                aria-label="Starting cards per player"
               />
             </label>
           </section>
@@ -558,6 +593,48 @@ export function App() {
               </button>
             ) : null}
           </div>
+
+          {game.phase === "playing" ? (
+            <section className="deck-actions" aria-label="Deck actions">
+              <span className="zone-count">Deck {activeDeck.length}</span>
+              <span className="zone-count">Discard {activeDiscardPile.length}</span>
+              <button type="button" disabled={!isActiveTurn || activeDeck.length === 0} onClick={drawCard}>
+                <RefreshCw size={18} aria-hidden="true" />
+                Draw
+              </button>
+              <button type="button" disabled={!isActiveTurn || activeDeck.length < 2} onClick={shuffleActiveDeck}>
+                <Shuffle size={18} aria-hidden="true" />
+                Shuffle Deck
+              </button>
+              <button
+                type="button"
+                disabled={!isActiveTurn || activeDiscardPile.length === 0}
+                onClick={shuffleDiscardIntoDeck}
+              >
+                <Shuffle size={18} aria-hidden="true" />
+                Discard to Deck
+              </button>
+              <label className="deck-search-control">
+                <Search size={18} aria-hidden="true" />
+                <select
+                  value={deckSearchCardId}
+                  onChange={(event) => setDeckSearchCardId(event.currentTarget.value as CardId)}
+                  aria-label="Card to search for"
+                  disabled={activeDeck.length === 0}
+                >
+                  {searchableCardIds.map((cardId) => (
+                    <option key={cardId} value={cardId}>
+                      {activeDeck.find((card) => card.id === cardId)?.title ?? cardId}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <button type="button" disabled={!isActiveTurn || activeDeck.length === 0} onClick={searchDeck}>
+                <Search size={18} aria-hidden="true" />
+                Search
+              </button>
+            </section>
+          ) : null}
 
           <motion.div layout className="hand">
             {sortedActiveHand.map((card) => (

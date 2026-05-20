@@ -1,4 +1,4 @@
-import { reduceGameAction, type GameAction, type GameState } from "@vc/game";
+import { reduceGameAction, type GameAction, type GameState } from "@cornerstone3/game";
 import { supabase } from "./client";
 
 function actorIdForAction(action: GameAction): string {
@@ -9,6 +9,10 @@ function actorIdForAction(action: GameAction): string {
       return action.playerId;
     case "start":
     case "play-cards":
+    case "draw-card":
+    case "shuffle-deck":
+    case "shuffle-discard-into-deck":
+    case "search-deck":
     case "skip":
       return action.actorId;
   }

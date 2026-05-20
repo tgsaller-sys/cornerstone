@@ -41,10 +41,10 @@ importers:
       '@supabase/supabase-js':
         specifier: ^2.49.8
         version: 2.105.4
-      '@vc/game':
+      '@cornerstone3/game':
         specifier: workspace:*
         version: link:../../packages/game
-      '@vc/ui':
+      '@cornerstone3/ui':
         specifier: workspace:*
         version: link:../../packages/ui
       '@vitejs/plugin-react':
@@ -84,7 +84,7 @@ importers:
 
   packages/ui:
     dependencies:
-      '@vc/game':
+      '@cornerstone3/game':
         specifier: workspace:*
         version: link:../game
       framer-motion:

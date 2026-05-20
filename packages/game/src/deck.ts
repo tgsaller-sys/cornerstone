@@ -1,4 +1,4 @@
-import { createDeck, sortCardsForPlay } from "./cards";
+import { createDeck } from "./cards";
 import { seededRandom } from "./random";
 import type { Card, PlayerId } from "./types";
 
@@ -42,102 +42,18 @@ export function dealEqually(
   };
 }
 
-function extraRecipientIds(players: readonly PlayerId[], firstExtraIndex: number, extraCount: number): readonly PlayerId[] {
-  return Array.from({ length: extraCount }, (_value, offset) => {
-    const player = players[(firstExtraIndex + offset) % players.length];
-
-    if (player === undefined) {
-      throw new Error("Cannot deal extra cards without players.");
-    }
-
-    return player;
-  });
-}
-
-function dealWithExtraStart(
+export function dealForCornerstone3(
   players: readonly PlayerId[],
-  deck: readonly Card[],
-  firstExtraIndex: number
+  deck: readonly Card[]
 ): Readonly<Record<PlayerId, readonly Card[]>> {
-  const handSize = Math.floor(deck.length / players.length);
-  const extraCount = deck.length % players.length;
-  const extraRecipients = new Set(extraRecipientIds(players, firstExtraIndex, extraCount));
-  const hands = Object.fromEntries(players.map((playerId) => [playerId, [] as Card[]]));
-  let deckIndex = 0;
-
-  players.forEach((playerId) => {
-    const nextHandSize = handSize + (extraRecipients.has(playerId) ? 1 : 0);
-    hands[playerId] = deck.slice(deckIndex, deckIndex + nextHandSize);
-    deckIndex += nextHandSize;
-  });
-
-  return hands;
-}
-
-function findPlayerWithCard(hands: Readonly<Record<PlayerId, readonly Card[]>>, cardId: string): PlayerId | null {
-  for (const [playerId, hand] of Object.entries(hands)) {
-    if (hand.some((card) => card.id === cardId)) {
-      return playerId;
-    }
-  }
-
-  return null;
-}
-
-function limitDeckForDeal(deck: readonly Card[], maxCardsPerPlayer: number, playerCount: number): readonly Card[] {
-  const cardCount = Math.min(deck.length, Math.max(1, Math.floor(maxCardsPerPlayer)) * playerCount);
-  return deck.slice(0, cardCount);
-}
-
-function openingCardId(cards: readonly Card[]): string | null {
-  if (cards.some((card) => card.id === "spades-3")) {
-    return "spades-3";
-  }
-
-  return sortCardsForPlay(cards).at(0)?.id ?? null;
-}
-
-function findOpeningPlayer(hands: Readonly<Record<PlayerId, readonly Card[]>>): PlayerId | null {
-  const nextOpeningCardId = openingCardId(Object.values(hands).flat());
-
-  if (nextOpeningCardId === null) {
-    return null;
-  }
-
-  return findPlayerWithCard(hands, nextOpeningCardId);
-}
-
-/**
- * Deals every card for VC. When cards cannot divide evenly, extra cards begin
- * with the player who receives the 3 of spades and continue in turn order.
- */
-export function dealForVc(players: readonly PlayerId[], deck: readonly Card[]): Readonly<Record<PlayerId, readonly Card[]>> {
   if (players.length === 0) {
     throw new Error("Cannot deal cards without players.");
   }
 
-  const extraCount = deck.length % players.length;
-
-  if (extraCount === 0) {
-    return dealWithExtraStart(players, deck, 0);
-  }
-
-  for (let firstExtraIndex = 0; firstExtraIndex < players.length; firstExtraIndex += 1) {
-    const hands = dealWithExtraStart(players, deck, firstExtraIndex);
-    const holderId = findOpeningPlayer(hands);
-
-    if (holderId === players[firstExtraIndex]) {
-      return hands;
-    }
-  }
-
-  throw new Error("Could not assign extra cards to the opening player.");
+  return dealEqually(players, deck).hands;
 }
 
-/**
- * Deals a VC game with an optional cap on each player's starting hand.
- */
-export function dealForVcWithMaxCards(
+export function dealForCornerstone3WithMaxCards(
   players: readonly PlayerId[],
   deck: readonly Card[],
   maxCardsPerPlayer: number
@@ -146,9 +62,10 @@ export function dealForVcWithMaxCards(
     throw new Error("Cannot deal cards without players.");
   }
 
-  return dealForVc(players, limitDeckForDeal(deck, maxCardsPerPlayer, players.length));
+  const cardCount = Math.min(deck.length, Math.max(1, Math.floor(maxCardsPerPlayer)) * players.length);
+  return dealForCornerstone3(players, deck.slice(0, cardCount));
 }
 
-export function createShuffledDeck(seed: number): readonly Card[] {
-  return shuffleDeck(createDeck(), seed);
+export function createShuffledDeck(seed: number, deck: readonly Card[] = createDeck()): readonly Card[] {
+  return shuffleDeck(deck, seed);
 }

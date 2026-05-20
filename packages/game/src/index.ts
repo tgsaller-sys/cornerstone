@@ -1,14 +1,18 @@
 export {
   compareCardsForPlay,
+  createAllCards,
   createDeck,
+  createDeckForPlayerIndex,
   highestCardForPlay,
-  playRankOrder,
-  playSuitOrder,
-  ranks,
-  sortCardsForPlay,
-  suits
+  sortCardsForPlay
 } from "./cards";
-export { createShuffledDeck, dealEqually, dealForVc, dealForVcWithMaxCards, shuffleDeck } from "./deck";
+export {
+  createShuffledDeck,
+  dealEqually,
+  dealForCornerstone3,
+  dealForCornerstone3WithMaxCards,
+  shuffleDeck
+} from "./deck";
 export { reduceGameAction, assertValidTransition } from "./reducer";
 export {
   allowAnyOwnedCards,
@@ -17,12 +21,14 @@ export {
   isBombShape,
   validatePlay,
   validateSkip,
-  validateVcPlay
+  validateCornerstone3Play
 } from "./rules";
 export { createInitialGameState } from "./state";
 export type {
   Card,
+  CardArt,
   CardId,
+  DeckId,
   GameAction,
   GameEvent,
   GamePhase,
@@ -33,8 +39,6 @@ export type {
   PlayKind,
   PlayShape,
   PlayValidationResult,
-  Rank,
   RuleValidator,
-  Suit,
   ValidationResult
 } from "./types";

@@ -1,4 +1,4 @@
-# VC Deployment Notes
+# Cornerstone 3 Deployment Notes
 
 ## Supabase
 
@@ -23,7 +23,7 @@ Supabase schema changes are not deployed by Vercel. If `supabase/schema.sql` cha
 2. Set the framework preset to Vite.
 3. Set the root directory to `apps/web`.
 4. Set the install command to `pnpm install`.
-5. Set the build command to `pnpm --filter @vc/web build`.
+5. Set the build command to `pnpm --filter @cornerstone3/web build`.
 6. Set the output directory to `apps/web/dist` if Vercel asks from the repo root, or `dist` if the project root is `apps/web`.
 7. Add the Supabase environment variables above.
 
@@ -32,7 +32,7 @@ Supabase schema changes are not deployed by Vercel. If `supabase/schema.sql` cha
 For fully authoritative multiplayer, route actions through a Supabase Edge Function or PostgREST RPC that:
 
 1. Reads the current `games.state` and `version`.
-2. Imports or bundles `@vc/game`.
+2. Imports or bundles `@cornerstone3/game`.
 3. Calls `reduceGameAction`.
 4. Writes the validated next state with a version match.
 5. Returns the validated state to the client.

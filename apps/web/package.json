@@ -1,19 +1,19 @@
 {
-  "name": "@vc/web",
+  "name": "@cornerstone3/web",
   "version": "0.1.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "node ../../scripts/write-build-info.mjs && tsc -p tsconfig.json && vite build",
-    "check": "tsc -p tsconfig.json --noEmit",
-    "preview": "vite preview"
+    "dev": "node ./node_modules/vite/bin/vite.js",
+    "build": "node ../../scripts/write-build-info.mjs && node ../../node_modules/typescript/bin/tsc -p tsconfig.json && node ./node_modules/vite/bin/vite.js build",
+    "check": "node ../../node_modules/typescript/bin/tsc -p tsconfig.json --noEmit",
+    "preview": "node ./node_modules/vite/bin/vite.js preview"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.8",
     "@vitejs/plugin-react": "^4.5.0",
-    "@vc/game": "workspace:*",
-    "@vc/ui": "workspace:*",
+    "@cornerstone3/game": "workspace:*",
+    "@cornerstone3/ui": "workspace:*",
     "framer-motion": "^12.12.1",
     "lucide-react": "^0.511.0",
     "react": "^19.1.0",

@@ -1,7 +1,7 @@
 import { create } from "zustand";
-import type { CardId, PlayerId } from "@vc/game";
+import type { CardId, PlayerId } from "@cornerstone3/game";
 
-const defaultMaxCardsPerPlayer = 13;
+const defaultMaxCardsPerPlayer = 5;
 const minMaxCardsPerPlayer = 1;
 const maxMaxCardsPerPlayer = 52;
 
@@ -21,24 +21,29 @@ interface UiState {
 }
 
 function createLocalPlayerId(): PlayerId {
-  const existing = window.localStorage.getItem("vc.localPlayerId") ?? window.sessionStorage.getItem("vc.localPlayerId");
+  const existing =
+    window.localStorage.getItem("cornerstone3.localPlayerId") ??
+    window.localStorage.getItem("vc.localPlayerId") ??
+    window.sessionStorage.getItem("vc.localPlayerId");
 
   if (existing !== null) {
-    window.localStorage.setItem("vc.localPlayerId", existing);
+    window.localStorage.setItem("cornerstone3.localPlayerId", existing);
     return existing;
   }
 
   const next = window.crypto.randomUUID();
-  window.localStorage.setItem("vc.localPlayerId", next);
+  window.localStorage.setItem("cornerstone3.localPlayerId", next);
   return next;
 }
 
 function createInitialPlayerName(): string {
-  return window.localStorage.getItem("vc.playerName") ?? "";
+  return window.localStorage.getItem("cornerstone3.playerName") ?? window.localStorage.getItem("vc.playerName") ?? "";
 }
 
 function createInitialMaxCardsPerPlayer(): number {
-  const storedValue = Number(window.localStorage.getItem("vc.maxCardsPerPlayer"));
+  const storedValue = Number(
+    window.localStorage.getItem("cornerstone3.startingCards") ?? window.localStorage.getItem("vc.maxCardsPerPlayer")
+  );
   return Number.isInteger(storedValue) && storedValue >= minMaxCardsPerPlayer && storedValue <= maxMaxCardsPerPlayer
     ? storedValue
     : defaultMaxCardsPerPlayer;
@@ -60,12 +65,12 @@ export const useUiStore = create<UiState>((set) => ({
   lobbyCode: "",
   error: null,
   setPlayerName: (playerName) => {
-    window.localStorage.setItem("vc.playerName", playerName);
+    window.localStorage.setItem("cornerstone3.playerName", playerName);
     set({ playerName });
   },
   setMaxCardsPerPlayer: (maxCardsPerPlayer) => {
     const nextMaxCardsPerPlayer = normalizeMaxCardsPerPlayer(maxCardsPerPlayer);
-    window.localStorage.setItem("vc.maxCardsPerPlayer", String(nextMaxCardsPerPlayer));
+    window.localStorage.setItem("cornerstone3.startingCards", String(nextMaxCardsPerPlayer));
     set({ maxCardsPerPlayer: nextMaxCardsPerPlayer });
   },
   setLobbyCode: (lobbyCode) => set({ lobbyCode: lobbyCode.toUpperCase() }),

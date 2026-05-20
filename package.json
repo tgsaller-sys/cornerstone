@@ -1,5 +1,5 @@
 {
-  "name": "vc-browser-game",
+  "name": "cornerstone-3",
   "private": true,
   "type": "module",
   "scripts": {
@@ -7,7 +7,7 @@
     "check": "pnpm -r check",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "test": "pnpm --filter @vc/game test"
+    "test": "pnpm --filter @cornerstone3/game test"
   },
   "devDependencies": {
     "@eslint/js": "^9.27.0",
