@@ -20,6 +20,10 @@ export interface CardViewProps {
   readonly onClick?: (card: Card) => void;
 }
 
+function normalizeTag(value: string): string {
+  return value.trim().toLowerCase().replace(/[^a-z0-9]+/g, "");
+}
+
 function SwordGlyph() {
   return (
     <>
@@ -98,7 +102,9 @@ function CardGlyph({ card }: { readonly card: Card }) {
 
 export function CardView({ card, selected = false, disabled = false, onClick }: CardViewProps) {
   const classLabel = card.classTitle ?? card.classId ?? "";
-  const tagsLabel = card.tags?.join(" - ") ?? "";
+  const classTagValues = new Set([card.classTitle, card.classId].filter((value): value is string => value !== undefined).map(normalizeTag));
+  const visibleTags = card.tags?.filter((tag) => !classTagValues.has(normalizeTag(tag))) ?? [];
+  const tagsLabel = visibleTags.join(" - ");
   const titleText = [classLabel, tagsLabel, card.longDescription].filter((text) => text.length > 0).join("\n");
   const tapAndHoverProps = disabled
     ? {}
