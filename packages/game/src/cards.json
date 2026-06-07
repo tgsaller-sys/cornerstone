@@ -1,1433 +1,2136 @@
-[
-  {
-    "class": "Ascetic",
-    "level": "Base",
-    "name": "Disarming Strike",
-    "action_type": "Full (Steps)",
-    "tags": [
-      "Attack",
-      "Ascetic",
-      "Melee",
-      "Physical"
-    ],
-    "text": "You strike with the intent to stymie an opponent’s ability to fight back. You target a creature in an adjacent space:\nStep One. The next time the target deals damage to another, the damage dealt is reduced by 1d4 + AL.\nStep Two. You deal 1d4 damage cause the target to be Weakened.\nStep Three. You deal 1d4 + AL damage and cause one of the target’s weapons to be Disarmed."
-  },
-  {
-    "class": "Ascetic",
-    "level": "Base",
-    "name": "Empty Step",
-    "action_type": "Full (Steps)",
-    "tags": [
-      "Ascetic"
-    ],
-    "text": "You calm your spirit and prepare for the next step.\nStep One. You do nothing.\nStep Two. You do nothing.\nStep Three. You do nothing."
-  },
-  {
-    "class": "Ascetic",
-    "level": "Base",
-    "name": "Rapid Strikes",
-    "action_type": "Full (Steps)",
-    "tags": [
-      "Quickdraw"
-    ],
-    "text": "Attack, Ascetic, Melee, Physical.\nYou strike hard and fast, using momentum to your advantage. You target a creature in an adjacent space:\nStep One. You deal 1d4 + AL bludgeoning damage.\nStep Two. You deal 1d6 + AL bludgeoning damage.\nStep Three. You deal 1d8 + AL bludgeoning damage."
-  },
-  {
-    "class": "Ascetic",
-    "level": "Base",
-    "name": "Swift Step",
-    "action_type": "Full (Steps)",
-    "tags": [
-      "Ascetic",
-      "Movement"
-    ],
-    "text": "You dart across the battlefield:\nStep One. You move 1 space.\nStep Two. You move 1 space Sneakily.\nStep Three. You move 2 spaces Sneakily."
-  },
-  {
-    "class": "Ascetic",
-    "level": "2nd Level",
-    "name": "Rushing Wave",
-    "action_type": "Full (Steps)",
-    "tags": [
-      "Attack",
-      "Ascetic",
-      "Melee",
-      "Physical"
-    ],
-    "text": "You sweep across the battlefield towards an enemy.\nStep One. You move 1 space towards a hostile target Sneakily.\nStep Two. You move 1 space towards a hostile target Sneakily and become Strengthened AL.\nStep Three. You move 1 space towards a hostile target Sneakily and become and deal 1d6 + 2AL to the target, and can push the target 1 space."
-  },
-  {
-    "class": "Ascetic",
-    "level": "2nd Level",
-    "name": "River Stone",
-    "action_type": "Reaction when you take damage from an Attack",
-    "tags": [
-      "Attack",
-      "Ascetic",
-      "Melee",
-      "Physical",
-      "Shielding"
-    ],
-    "text": "You grant yourself 1d6 + AL Shield Points before taking the attack’s damage, and can then use the Step One of an Ascetic Card currently in your hand. This card is discarded, but the follow-up is not."
-  },
-  {
-    "class": "Ascetic",
-    "level": "3rd Level",
-    "name": "Crane’s Wings",
-    "action_type": "Full (Steps)",
-    "tags": [
-      "Attack",
-      "Ascetic",
-      "Melee",
-      "Physical"
-    ],
-    "text": "You make a dynamic, gravity defying leap.\nStep One. You leap 1 space. If you would end this movement in an occupied space, you can then leap 1 additional space to an unoccupied space.\nStep Two. You leap up to 2 spaces If you would move over a target as part of this movement, they are granted the Taunted Condition.\nStep Three. You leap up to 2 spaces If you would move over a target as part of this movement, they are granted the Vulnerable Condition."
-  },
-  {
-    "class": "Barbarian",
-    "level": "Base",
-    "name": "Callous Taunt",
-    "action_type": "Full + Reaction",
-    "tags": [
-      "Attack",
-      "Barbarian",
-      "Melee Weapon",
-      "Physical",
-      "Taunting"
-    ],
-    "text": "Rather than throwing a blow, you hurtle an insult at a creature within 6 squares of you, causing the creature to be Taunted. You can then choose to hold onto this card to use it’s Reaction: If the creature moves into a space adjacent to you before the start of your next turn, you can deal 1d8 + BL damage to it as a Reaction–if it doesn’t, you can gain a Rage Token at the start of your next turn."
-  },
-  {
-    "class": "Barbarian",
-    "level": "Base",
-    "name": "Energizing Strike",
-    "action_type": "Full",
-    "tags": [
-      "Attack",
-      "Barbarian",
-      "Melee Weapon",
-      "Physical",
-      "Self Healing"
-    ],
-    "text": "Channeling your inner rage to both attack and bolster yourself, you strike at a creature in an adjacent square. That creature takes 1d8 + BL damage and you regain 1d4 + BL Stamina Points. You can also then spend Rage Points to regain an additional 2 SP per Rage Token spent."
-  },
-  {
-    "class": "Barbarian",
-    "level": "Base",
-    "name": "Enrage",
-    "action_type": "Free",
-    "tags": [
-      "Frightening",
-      "Barbarian",
-      "Spoken",
-      "Ranged"
-    ],
-    "text": "You gain stacks of the Permanently Exposed Condition equal to twice your level, but also gain stacks of the Permanently Strengthened Condition equal to four times your Level. This card then becomes a Passive Card, which you can discard as a Free Action on your turns going forwards to lose both Conditions."
-  },
-  {
-    "class": "Barbarian",
-    "level": "Base",
-    "name": "Reckless Assault",
-    "action_type": "Full",
-    "tags": [
-      "Attack",
-      "Barbarian",
-      "Melee Weapon",
-      "Physical",
-      "Self Damaging"
-    ],
-    "text": "Forgoing caution, you strike heedless of damage to come at a creature in an adjacent square. That creature takes 2d12 + BL damage. However, the next time you take damage from an Attack before the end of your next turn, you take an additional 1d6 + BL damage but gain a Rage Token."
-  },
-  {
-    "class": "Barbarian",
-    "level": "10th Level",
-    "name": "Roaring Execution",
-    "action_type": "Full",
-    "tags": [
-      "Attack",
-      "Barbarian",
-      "Melee Weapon",
-      "Physical"
-    ],
-    "text": "You tear into a target in an adjacent space, dealing 10d12 + BL damage. Any damage bonus gained from Rage Tokens is tripled for this ability. If this damage reduces its target to 0 SP, you double your current Rage Tokens. If the target survives, they gain 2 Stacks of the Demoralized condition. This card is then Exiled unless you expend all of your Rage Tokens (including those gained from this card) to cause it to simply be Discarded."
-  },
-  {
-    "class": "Barbarian",
-    "level": "10th Level",
-    "name": "Raging Juggernaut",
-    "action_type": "Free",
-    "tags": [
-      "Barbarian",
-      "Melee",
-      "Physical"
-    ],
-    "text": "Until the end of your next turn, all damage you would have taken is reduced to 0. If that damage would have been dealt by a creature in an adjacent space, you instead deal damage to them equal to the damage that would have been dealt to you. Any creature who takes damage in this way gains 1 Stack of the Demoralized Condition, though they can only gain one stack in this way per turn. Additionally, you gain 5 Rage Tokens. This card is then Exiled."
-  },
-  {
-    "class": "Barbarian",
-    "level": "10th Level",
-    "name": "Titan’s Step",
-    "action_type": "Full",
-    "tags": [
-      "Area Effect",
-      "Barbarian",
-      "Melee Weapon",
-      "Physical"
-    ],
-    "text": "You slam your weapon into the earth with such ferocity that it cracks and breaks, sending chunks of stone and rock crashing into your enemies. Creatures within 3 spaces take 5d12 + TL bludgeoning damage, take a stack of the Demoralized condition, and are Slowed. Additionally, you can spend 5 Rage Tokens to cause them to gain a second stack of Slowed, and 5 more for a third. This card is then Exiled."
-  },
-  {
-    "class": "Comrade",
-    "level": "Base",
-    "name": "Quickdraw",
-    "action_type": "Full",
-    "tags": [
-      "Blessed",
-      "Comrade",
-      "Healing",
-      "Spoken"
-    ],
-    "text": "You call out words of support to a target within 5 spaces. They regain 1d8 + CL SP.\nTreat. You leave behind a thoughtful gift which grants a stack of the Blessed condition."
-  },
-  {
-    "class": "Comrade",
-    "level": "Base",
-    "name": "Oil Spill",
-    "action_type": "Full",
-    "tags": [
-      "Comrade",
-      "Temporary Vulnerable"
-    ],
-    "text": "You spill a flask of oil at the feet of a target in an adjacent space, granting it the Temporary Vulnerable condition..\nTrick. You toss out the remainder of the oil, which grants the Temporary Vulnerable condition."
-  },
-  {
-    "class": "Comrade",
-    "level": "Base",
-    "name": "Pan Strike",
-    "action_type": "Full",
-    "tags": [
-      "Attack",
-      "Comrade",
-      "Item",
-      "Melee",
-      "Physical"
-    ],
-    "text": "You strike a foe with some common household object currently carried, drawing it as part of this action if not already equipped. A target in an adjacent space takes 1d4 + CL, and is Stunned until the end of its next turn.\nTreat. You leave behind a tasty morsel which restores 1d4 + CL SP."
-  },
-  {
-    "class": "Comrade",
-    "level": "Base",
-    "name": "Quick Wit",
-    "action_type": "Free",
-    "tags": [
-      "Comrade",
-      "Improvised"
-    ],
-    "text": "You take an Improvised Action!."
-  },
-  {
-    "class": "Entertainers",
-    "level": "Base",
-    "name": "Crashing Chord",
-    "action_type": "Full",
-    "tags": [
-      "Area Effect",
-      "Entertainer",
-      "Ethereal",
-      "Instrument",
-      "Magic",
-      "Musical"
-    ],
-    "text": "You release a cacophony of noise which blasts away a creature of your choice in an adjacent space, dealing sonic damage equal to your EL and pushing them 1 space. If you had an ongoing performance, you can choose to end it to deal either a bonus 1d10 damage, or to have the chord target all spaces adjacent to you."
-  },
-  {
-    "class": "Entertainers",
-    "level": "Base",
-    "name": "Daunting Tempo",
-    "action_type": "Full",
-    "tags": [
-      "Entertainer",
-      "Ethereal",
-      "Frightened",
-      "Instrument",
-      "Magic",
-      "Musical",
-      "Ranged Effect"
-    ],
-    "text": "An enemy of your choice within 5 spaces takes 1d6 + EL Psychic damage, and is Frightened.\nFrightening Performance. Enemies who start their turn within 2 spaces of you must choose to either be Frightened until the end of their turn or take Psychic damage equal to your EL.\nEncore"
-  },
-  {
-    "class": "Entertainers",
-    "level": "Base",
-    "name": "Quickdraw",
-    "action_type": "Free",
-    "tags": [
-      "Entertainer",
-      "Self"
-    ],
-    "text": "Pick one Entertainer card you’ve used this turn–rather than being discarded, it is returned to your hand."
-  },
-  {
-    "class": "Entertainers",
-    "level": "Base",
-    "name": "Invigorating Medley",
-    "action_type": "Full",
-    "tags": [
-      "Area Effect",
-      "Entertainer",
-      "Excited",
-      "Instrument",
-      "Magic",
-      "Musical"
-    ],
-    "text": "Allies of your choice (including yourself) within 3 spaces are invigorated, gaining the Stamina Points equal to 1d6 + EL as well as the Excited Condition, the latter of which they lose after successfully drawing an additional card by it.\nExciting Performance. Allies who start their turn within 2 spaces of you can choose to be Excited until the end of their turn or to regain SP equal to your EL."
-  },
-  {
-    "class": "Entertainers",
-    "level": "2nd Level",
-    "name": "Alluring Note",
-    "action_type": "Full",
-    "tags": [
-      "Charmed",
-      "Entertainer",
-      "Ethereal",
-      "Musical",
-      "Ranged Effect"
-    ],
-    "text": "An enemy of your choice within 3 spaces is Charmed by you–and so distracted that the next time it takes damage, it takes additional damage of that type equal to 1d6 per Entertainer Level.\nCharming Performance. Enemies who start their turn within 2 spaces of you must choose to either be Charmed until the end of their turn or take Psychic damage equal to 2 + EL."
-  },
-  {
-    "class": "Entertainers",
-    "level": "10th Level",
-    "name": "Crescendo",
-    "action_type": "Full",
-    "tags": [
-      "Entertainer",
-      "Ethereal",
-      "Instrument",
-      "Musical",
-      "Ranged Effect"
-    ],
-    "text": "You put on a performance to fully stop the show, unleashing a sonic cataclysm towards a target within 5 spaces. They take 10d8 + EL damage and take 2 Stacks of the Enchanted condition. If you had an ongoing Performance, it ends, but its effect is triggered on your target Three times in a row. This card is then Exiled."
-  },
-  {
-    "class": "Entertainers",
-    "level": "10th Level",
-    "name": "Symphonic Fusion",
-    "action_type": "Full",
-    "tags": [
-      "Quickdraw"
-    ],
-    "text": "Entertainer, Self.\nSpectral instruments and ghostly notes join your own performance, countless melodies harmonizing into one indescribable sound. For the duration of Combat, you can maintain any number of Performances simultaneously. If using two Performances which would grant the same condition, only one stack is granted in this way. Should multiple Performances cause damage or healing, those effects do stack. As part of using this card, pick two performances found on your cards–you begin those performances immediately.\nThis card is then Exiled."
-  },
-  {
-    "class": "Entertainers",
-    "level": "10th Level",
-    "name": "De Capo",
-    "action_type": "Full",
-    "tags": [
-      "Area Effect",
-      "Entertainer",
-      "Ethereal",
-      "Healing",
-      "Instrument",
-      "Musical"
-    ],
-    "text": "For a moment, you draw the world into silence–then, with impossibly bombastic renewed effort, you strike a cosmic chord. Targets of your choice (including yourself) within 10 squares regain 10d6 + EL Stamina Points, and lose up to 10 Stacks of Negative Conditions currently affecting them. These targets can also choose to shuffle their Discard Pile and hand back into their Deck, then redraw their hand as though Combat were only beginning, possibly pulling out Quickdraw Cards.\nThis Card is then Exiled."
-  },
-  {
-    "class": "Illusionist",
-    "level": "Base",
-    "name": "Duplication",
-    "action_type": "Full",
-    "tags": [
-      "Quickdraw"
-    ],
-    "text": "Duplication, Illusionist, Magical, Miscellaneous.\nYou briefly transform into a translucent duplicate of a creature within 5 spaces, repeating their last taken Full Action from your own space. If damage is dealt, it is halved, and if a Condition is inflicted, it lasts only until the start of your next turn unless it would otherwise be shorter."
-  },
-  {
-    "class": "Illusionist",
-    "level": "Base",
-    "name": "Ghost Hand",
-    "action_type": "Full",
-    "tags": [
-      "Bonus Damage",
-      "Illusionist",
-      "Magical"
-    ],
-    "text": "You conjure some ghostly noise or a phantom sensation over the shoulder of a target within 5 spaces–that target is distracted, taking additional damage equal to 1d8 + Il the next time it is hit by an Attack."
-  },
-  {
-    "class": "Illusionist",
-    "level": "Base",
-    "name": "Multiply",
-    "action_type": "Full",
-    "tags": [
-      "Defensive",
-      "Illusionist",
-      "Magical"
-    ],
-    "text": "You duplicate a target within 3 spaces, creating two copies which share their space. If targeted by an Attack while at least one persists, the Attack has a 50% chance of striking one of the copies, dealing no damage but destroying that illusion."
-  },
-  {
-    "class": "Illusionist",
-    "level": "Base",
-    "name": "Terrifying Form",
-    "action_type": "Full",
-    "tags": [
-      "Frightened",
-      "Illusionist",
-      "Magical"
-    ],
-    "text": "For a moment, you adopt a horrific visage which causes a target within 3 spaces to take 1d6 + IL psychic damage and gain a Stack of the Frightened Condition."
-  },
-  {
-    "class": "Knight",
-    "level": "Base",
-    "name": "Oath of Odium",
-    "action_type": "Free",
-    "tags": [
-      "Bonus Damage",
-      "Frightened",
-      "Knight",
-      "Spoken"
-    ],
-    "text": "You call out a threat to a target within 5 spaces, swearing your righteous wrath will befall them. They gain a stack of the Frightened Condition and are marked as your Sworn Enemy. As your Sworn Enemy, you are Safeguarded against all stacks of the Frightened or Charmed condition they might apply to you."
-  },
-  {
-    "class": "Knight",
-    "level": "Base",
-    "name": "Oath of Protection",
-    "action_type": "Full",
-    "tags": [
-      "Knight",
-      "Shielding",
-      "Spoken",
-      "Total Ward"
-    ],
-    "text": "You swear to protect an ally within 5 spaces, designating them your Sworn Charge. They are Totally Warded for a value equal to your Knight Level while your Sworn Charge, and gain Shield Points equal to 1d6 + KL whenever you end your turn adjacent to them."
-  },
-  {
-    "class": "Knight",
-    "level": "Base",
-    "name": "Stalwart Strike",
-    "action_type": "Full",
-    "tags": [
-      "Attack",
-      "Knight",
-      "Melee Weapon",
-      "Physical",
-      "Shielding"
-    ],
-    "text": "You release a brave strike against an adjacent target, dealing 1d6 + KL damage and gaining 1d6 + KL Shield Points. If your Sworn Charge is adjacent to you or the target, they also gain those Shield Points."
-  },
-  {
-    "class": "Knight",
-    "level": "Base",
-    "name": "Stoic Strike",
-    "action_type": "Full",
-    "tags": [
-      "Attack",
-      "Knight",
-      "Melee Weapon",
-      "Physical",
-      "Shielding"
-    ],
-    "text": "You release a dignified strike against an adjacent target, dealing 1d6 + KL damage. If targeting your Sworn enemy, this Strike instead deals 2d6 + 2 (KL)."
-  },
-  {
-    "class": "Monks",
-    "level": "Base",
-    "name": "Quickdraw",
-    "action_type": "Full",
-    "tags": [
-      "Monk",
-      "Scry"
-    ],
-    "text": "You Scry 3. You can choose to play any of these cards–that aren’t Reactions–in addition to the usual Scrying options."
-  },
-  {
-    "class": "Monks",
-    "level": "Base",
-    "name": "Healing Touch",
-    "action_type": "Full",
-    "tags": [
-      "Magic",
-      "Monk",
-      "Scry",
-      "Spoken"
-    ],
-    "text": "You restore 2d8 + ML SP to an adjacent target."
-  },
-  {
-    "class": "Monks",
-    "level": "Base",
-    "name": "Thorns of the Devout",
-    "action_type": "Full",
-    "tags": [
-      "Magic",
-      "Monk",
-      "Spoken",
-      "Total Ward"
-    ],
-    "text": "You grant a target within 3 spaces Stacks of the Totally Warded Condition equal to 2 + ML, which last until the start of your next turn. Whenever they would be dealt damage in that time, the dealer also takes 2 + ML Dark or Radiant damage (your choice when you use this card)."
-  },
-  {
-    "class": "Monks",
-    "level": "Base",
-    "name": "Warding Words",
-    "action_type": "Full (or Free)",
-    "tags": [
-      "Magic",
-      "Monk",
-      "Scry",
-      "Spoken"
-    ],
-    "text": "You encant a spell of protection over your allies–targets of your choice within 2 spaces of you reduce the next instance of damage they take by 1d6 + ML. You can then Scry 2."
-  },
-  {
-    "class": "Necromancer",
-    "level": "Base",
-    "name": "Bone-Min",
-    "action_type": "Full",
-    "tags": [
-      "Quickdraw"
-    ],
-    "text": "Attack (Minion), Magic, Movement (Minion), Necromancer, Summoning.\nYou call on forces of death to summon a skeletal minion, who has hit points equal to 5 + NL, a level equal to your own. The Bone-Min appears in an unoccupied space within 2 spaces of you, and as part of this card he can either move 2 spaces or Attack a creature in an adjacent space for 1d6 + NL slashing damage.\nUndead Minion. Your minion can move up to 2 spaces and Attack a creature in an adjacent space for 1d6 + NL damage."
-  },
-  {
-    "class": "Necromancer",
-    "level": "Base",
-    "name": "Grave Touch",
-    "action_type": "Full.",
-    "tags": [
-      "Attack",
-      "Healing",
-      "Magic",
-      "Necromancer",
-      "Shield (Minion)"
-    ],
-    "text": "You reach out to a target in an adjacent space, dealing 1d6 + NL lifedrain damage and regain Stamina Points equal to the damage dealt.\nUndead Minion. Your minion can move up to 2 spaces and guard an ally–any damage they take until the start of your next turn is reduced by 1d6, and the Minion can choose to reduce the damage to 0 by taking the damage itself. If the minion perishes, the protection ends.."
-  },
-  {
-    "class": "Necromancer",
-    "level": "Base",
-    "name": "Sacrifice",
-    "action_type": "Reaction when you are hit by an Attack",
-    "tags": [
-      "Defensive",
-      "Magic",
-      "Necromancer"
-    ],
-    "text": "If one of your Undead Minions is within 2 spaces of you, they can leap into the way of the blow, reducing the damage dealt to 0 at the cost of taking double the damage that would have been dealt to you."
-  },
-  {
-    "class": "Necromancer",
-    "level": "Base",
-    "name": "Strangling Shadow",
-    "action_type": "Full",
-    "tags": [
-      "Attack",
-      "Magic",
-      "Necromancer",
-      "Ranged",
-      "Restrained (+ Minion)"
-    ],
-    "text": "You send out your shadow to cling to the legs of a creature within 3 spaces, dealing 1d6 + NL dark damage and causing them to take a stack of the Restrained Condition until the start of your next turn. If the creature moves while it has this stack, you can deal damage to it equal to your Necromancer Level\nUndead Minion. Your minion can move up to 2 spaces and cause an enemy to take a stack of the Restrained Condition so long as it is adjacent to this minion."
-  },
-  {
-    "class": "Potioneer",
-    "level": "Base",
-    "name": "Catalyze",
-    "action_type": "Free",
-    "tags": [
-      "Quickdraw"
-    ],
-    "text": "Alchemical, Potioneer.\nYou transform a Reagent you possess into a Blinding, Burning, Excited, Hastened, Slowed, Sickened, Strengthened 5, or Weakened Reagent. If you currently possess no reagents, you instead create a Generic Reagent."
-  },
-  {
-    "class": "Potioneer",
-    "level": "Base",
-    "name": "Glue Trap",
-    "action_type": "Full",
-    "tags": [
-      "Alchemical",
-      "Area",
-      "Potioneer",
-      "Slowing"
-    ],
-    "text": "You retrieve a satchel of sticky glue that detonates upon impact, throwing it to a space within 5 spaces, where it fills that space with adhesive. By spending a Generic Reagent, you can instead cause it to fill that space and all adjacent spaces. Creatures who start their turn in, or move into one of the spaces on their turn, are Slowed by the glue, and do not lose stacks of that condition if they end their turn within the affected area.\nSticky Reagent. You gain a reagent which can be used to apply the Slowed condition."
-  },
-  {
-    "class": "Potioneer",
-    "level": "Base",
-    "name": "Healing Daught",
-    "action_type": "Full or Reaction when an ally starts their turn.",
-    "tags": [
-      "Alchemical",
-      "Healing",
-      "Potioneer"
-    ],
-    "text": "You draw a simple restorative potion from your pouch, either drinking it yourself or tossing it to an ally within 5 spaces, who can drink it immediately as a free action. The consumer regains Stamina Points equal to 1d8 plus your Potioneer Level.\nPanacea. You can spend Positive Condition Reagents to also apply that condition alongside the SP granted by this card. By spending a Generic Reagent as part of this card’s use, the Consumer can also remove one Card from their hand, including Penatly Cards.\nPotion Dregs. You gain a Regeneration 2 Reagent."
-  },
-  {
-    "class": "Potioneer",
-    "level": "Base",
-    "name": "Protomatter Bomb",
-    "action_type": "Full",
-    "tags": [
-      "Alchemical",
-      "Attack",
-      "Potioneer"
-    ],
-    "text": "Without taking the time to properly formulate a destructive bomb, you hurl a vial filled with unbound reagents towards a target within 5 spaces. They take damage equal to 1d6 + PL. Roll an additional d6. This roll determines the type of damage dealt.\nStench.\nSonic.\nCold.\nFire.\nLightning.\nShrapnel.\nMoldable. You can spend a Condition Reagent on this card to cause it to apply a stack of that condition in addition to damage.\nBomb Residue. You gain a Generic Reagent."
-  },
-  {
-    "class": "Ranger",
-    "level": "Base",
-    "name": "Closing Fangs",
-    "action_type": "Full",
-    "tags": [
-      "Attack",
-      "Melee (Weapon + Natural)",
-      "Physical",
-      "Ranger"
-    ],
-    "text": "Both you and your beast strike at targets in spaces adjacent to each of you, possibly even the same target. You deal 1d6 + RL damage, and your companion deals 1d6 + RL damage."
-  },
-  {
-    "class": "Ranger",
-    "level": "Base",
-    "name": "Hidden Strength",
-    "action_type": "Reaction at the Start of your own Turn",
-    "tags": [
-      "Magic",
-      "Ranger",
-      "Strengthened",
-      "Weakened"
-    ],
-    "text": "Either you, your beast, or both take two stacks of the Weakened Condition until the start of your next turn, at which time those afflicted lose the condition and gain the Double Strength Condition."
-  },
-  {
-    "class": "Ranger",
-    "level": "Base",
-    "name": "Hop and Swap",
-    "action_type": "Full",
-    "tags": [
-      "Attack",
-      "Movement",
-      "Physical",
-      "Ranger"
-    ],
-    "text": "Either you or your beast move one space–if you are adjacent, you can switch spaces. After this movement, you or your beast can attack an adjacent enemy for 1d8 + RL damage."
-  },
-  {
-    "class": "Ranger",
-    "level": "Base",
-    "name": "Rush Past",
-    "action_type": "Full",
-    "tags": [
-      "Dazed",
-      "Movement",
-      "Physical",
-      "Ranger"
-    ],
-    "text": "Either you or your beast move two spaces–as part of this movement, you can make one target you are or become adjacent Dazed."
-  },
-  {
-    "class": "Thief",
-    "level": "Base",
-    "name": "Quickdraw",
-    "action_type": "Full or Free (Burned Bridge).",
-    "tags": [
-      "Thief",
-      "Temporarily Quickened"
-    ],
-    "text": "You dedicate your turn to plotting your next move. You draw an additional card and gain the Quickened and Hastened 2 conditions at the start of your next turn, losing both at the end of your next turn.\nBurned Bridge. You immediately gain the Temporarily Quickened Condition and can move 2 spaces."
-  },
-  {
-    "class": "Thief",
-    "level": "Base",
-    "name": "Dodge Roll",
-    "action_type": "Reaction upon taking damage.",
-    "tags": [
-      "Defensive",
-      "Sneaky Movement",
-      "Thief"
-    ],
-    "text": "You minimize the damage of a blow by rolling with it, or rolling mostly out of the way, reducing the damage taken by 1d8 + ThL and Sneakily moving 1 space.\nBurned Bridge. You Sneakily roll through a creature’s space to a space on the opposite side."
-  },
-  {
-    "class": "Thief",
-    "level": "Base",
-    "name": "Pocket Sand",
-    "action_type": "Full",
-    "tags": [
-      "Blinded",
-      "Bonus Damage",
-      "Melee",
-      "Physical",
-      "Sneaky Movement",
-      "Thief"
-    ],
-    "text": "You whip a handful of dirt or sand into the face of a target, inflicting a stack of the Blinded Condition. The next time that creature takes damage while Blinded in this way, they take an additional 1d6 + ThL.\nBackup Plan. You simply toss the sand to cover your escape, Sneakily moving 1 space."
-  },
-  {
-    "class": "Thief",
-    "level": "Base",
-    "name": "Swipe",
-    "action_type": "Full",
-    "tags": [
-      "Disarmed",
-      "Melee",
-      "Physical",
-      "Thief"
-    ],
-    "text": "Pairing a quick strike with a quick hand, you deal 1d6 + ThL, then either grant an item on their person the Disarmed Condition or steal an item from the target’s Action Belt, or their Coin Purse.\nBackup Plan. You cause one of the weapons of a target in an Adjacent space to gain two stacks of Disarmed."
-  },
-  {
-    "class": "Warlord",
-    "level": "Base",
-    "name": "Call to Arms",
-    "action_type": "Full",
-    "tags": [
-      "Attack",
-      "Melee Weapon",
-      "Physical",
-      "Warlord"
-    ],
-    "text": "You slash at an adjacent foe, directing allies to follow suit; you deal 1d10 + WaL damage, and the creature gains a stack of the Vulnerable Condition until the start of your next turn.\nCommand. You command an ally to strike at a creature, dealing 1d10 + WaL damage to it with the type and range determined by any of their Base Cards, Class or Fighting Style. This damage type can be chosen from one of the Base Cards of their Fighting Style. The next time you deal damage to it, it takes additional damage as though it had a stack of the Vulnerable Condition."
-  },
-  {
-    "class": "Warlord",
-    "level": "Base",
-    "name": "Analysis",
-    "action_type": "Free",
-    "tags": [
-      "Predicted",
-      "Warlord"
-    ],
-    "text": "You cause a target within 5 spaces to gain the Predicted Condition.\nRally!"
-  },
-  {
-    "class": "Warlord",
-    "level": "Base",
-    "name": "Quickdraw",
-    "action_type": "Full",
-    "tags": [
-      "Warlord"
-    ],
-    "text": "All allies within 3 spaces of you can move up to 2 spaces directly closer to you, regain 1d6 + WaL Stamina Points, and gain 1d6 + WaL Shield Points. This card is then Exiled."
-  },
-  {
-    "class": "Warlord",
-    "level": "Base",
-    "name": "Sundering Slash",
-    "action_type": "Full",
-    "tags": [
-      "Quickdraw"
-    ],
-    "text": "Attack, Melee Weapon, Physical, Warlord.\nYou slash a creature in an adjacent space, dealing 1d8 + WaL damage. If the damage is reduced in any way–including being blocked by Shield Points–you can also cause a weapon on the target to be Disarmed.\nCommand. You command an Ally to Attack a target in an adjacent space, dealing 1d8 + WaL damage."
-  },
-  {
-    "class": "Wizard",
-    "level": "Base",
-    "name": "Bursting Magelight",
-    "action_type": "Full (or Free)",
-    "tags": [
-      "Attack",
-      "Blinded",
-      "Wizard",
-      "Spoken"
-    ],
-    "text": "Creating a potent illuminating sphere, you hurl it towards a target within 5 spaces, who is Blinded. You can then choose to spend a Mana Token to detonate the sphere, either in a burst of radiance or searing light. With the former, creatures in adjacent spaces are also Blinded, and with the latter the creature takes 1d6 + WiL Light damage.\nGather Mana. Alternatively, as a Free Action you can discard this card to gather 1 Mana Token."
-  },
-  {
-    "class": "Wizard",
-    "level": "Base",
-    "name": "Hurl Tome",
-    "action_type": "Full (or Free)",
-    "tags": [
-      "Magic",
-      "Spoken",
-      "Wizard"
-    ],
-    "text": "You speak life into a tome and hurl it towards a target within 3 squares. They take 1d6 + WiL bludgeoning damage before it returns to your possession. By spending one or more Mana Tokens, you can cause it to remain animated to harass the target, dealing an additional 1d6 bludgeoning damage whenever it takes a Full Action or Moves (you decide which when you spend the mana Tokens). It remains for a number of their turns equal to the Mana Tokens you spend, then returns to your possession.\nGather Mana. Alternatively, as a Free Action you can discard this card to gather 1 Mana Token."
-  },
-  {
-    "class": "Wizard",
-    "level": "Base",
-    "name": "Ignition",
-    "action_type": "Full (or Free)",
-    "tags": [
-      "Attack",
-      "Magic",
-      "Wizard",
-      "Spoken"
-    ],
-    "text": "You conjure a shower of sparks which set a target within 3 spaces ablaze, dealing 1d8 + WiL fire damage. By spending a Mana Token, you can cause the target to have the Burning (1d6) Condition.\nGather Mana. Alternatively, as a Free Action you can discard this card to gather 1 Mana Token."
-  },
-  {
-    "class": "Wizard",
-    "level": "Base",
-    "name": "Magic Shield",
-    "action_type": "Reaction upon taking Damage (or Free)",
-    "tags": [
-      "Magic",
-      "Wizard",
-      "Shielding",
-      "Spoken"
-    ],
-    "text": "You conjure a magic barrier, granting yourself 1d6 + WiL Shield Points before taking the provoking damage. You can also gain an additional 5 ShP for each Mana Token you spend as part of using this card–you can take Free Actions to discard Wizard Cards as part of this reaction.\nGather Mana. Alternatively, as a Free Action you can discard this card to gather 1 Mana Token."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Rushing Gale",
-    "action_type": "Full",
-    "tags": [
-      "Quickdraw"
-    ],
-    "text": "Area, Pushing, Spoken, Wizard.\nYou conjure a gale to blow creatures away, targeting three adjacent spaces all of which must be within 5 spaces of you. Creatures in those spaces are all blown the same direction. If pushed into a wall or another creature not affected by this card, they take 1d6 + WL bludgeoning (or CS) damage. If pushed into a creature, the damage is split equally between the two, extra in favor of the pushed creature.\nGather Mana. Alternatively, as a Full Action you can discard this card to gather 3 Mana Tokens.\nAbilities\nAbilities are flexible tools used to interact with the world wherever more specific rules aren’t in play.\nSecondary Abilities\nThese abilities affect Improvised Actions, and are used in a majority of out-of-combat situations where a chance of failure arises. These abilities are grained in stages. An untrained but able creature uses a d10 for checks with Secondary Abiltiies–a trained creature (Stage 2) uses a d20, a well trained creature (Stage 3) uses a d20 and adds half of their Total or Class Level, depending on the source, a very well trained creature (Stage 4) uses a d20 and adds their whole Level, and an incredibly talented and well trained creature (Stage 5) uses a d20 and adds double, or even triple their level depending on the source.\nAlacrity. A creature’s speed, including assuredness of foot as well as reflexes.\nAscetic\nBarbarian\nRanger\nCleverness. A creature’s wit, including their ability to understand and disable traps, devise tricks, and detect the tricks of others.\nIllusionist\nPotionier\nThief\nWarlord\nInsight. A creature’s ability to derive meaning from their senses, picking up on patterns in their surroundings, detecting deception from creatures, or noticing small details.\nAscetic\nComrade\nEntertainer\nKnight\nMonk\nPotioneer\nWizard\nMight. A creature’s physical strength, affecting their ability to lift things, pry open bars, or leap great distances.\nBarbarian\nKnight\nWarlord\nStealth. A creature’s ability to remain undetected, a combination of self control and situational awareness.\nEntertainer\nNecromancer\nRanger\nThief\nSorcery. A sense for magic, used to detect and manipulate raw ether, as well as to determine knowledge of words of power and true names.\nIllusionist\nMonk\nNecromancer\nWizard\nAbility Checks\nAn ability check is a simple affair–when a character attempts an action utilizing their Unique or Secondary Abilities which has a reasonable chance of failure–as determined by the DM–they roll a die (typically a d20) attempting to meet or surpass a value set by the DM. The DM will usually share the difficulty of a task as estimated by your character, which is accurate unless there are hidden factors at play. An easy task would provide a high chance of success, and a difficult task would have a low chance of success. On a success, the character accomplishes their goal. Beating the value by a significant margin might prompt even further reward by the DM. On a failure, the character doesn’t accomplish their goal, suffering a penalty that might simply be wasting time, but could be more disastrous. The further below the value rolled, the worse this penalty–within reason.\nThough a Check can have any value, the most common guidelines are as follows.\nEasy. A character with Alacrity rolls to catch chickens. The DM decides, since this isn’t hard, the value required to succeed is only a 5.\nAverage. A character with Cleverness rolls to disarm a trap set by smugglers. The DM decides that since the smugglers have done so using cheap materials, the value required to succeed is only a 10.\nHard. A character with Might attempts to heft an entire wagon briefly. The DM decides that the character’s strength is capable of this, but it won’t be easy, setting the value to succeed at a 15.\nFormidable. A character with Sorcery seeks to decipher an ancient text containing a lost ritual. The DM decides that since the knowledge of both the ritual, its people, and even the writings are lost, this is extremely difficult. The only way to succeed is a 20.\nIncredible. A character with Insight attempts to discern the facial expressions of the inscrutable sphinx–a task made difficult not only by the beast’s legendary status, but also by the simple fact that it’s face is hidden by a mask of stone. As such, the DM decides the value to succeed is a 25–impossible for many, but some adventurers may be capable of succeeding thanks to Class Features or items.\nNigh Impossible. A character with Stealth attempts to walk directly through the line of sight of a sleepless eye, an eldritch creature which never needs to blink or rest. The DM decides the value for success is a 30, impossible for all but the most talented characters–and even for them, it’s a stretch.\nAiding. When a Character makes an Ability Check, another ally who isn’t preoccupied–when in combat, aiding usually requires holding your action in order to do so as a reaction–can attempt to aid them in some fashion, assuming they can concoct a reasonable means by which they could actually help out. When they do so, the check maker gains a bonus to their roll equal to the aider’s Total Level, plus a die determined by the DM based on how helpful they perceive the given aid to be. Multiple creatures can aid the same check, allowing the bonuses to stack.\nSome examples:\nA barbarian is attempting to heft a heavy stone.\nUnhelpful. The group’s wizard attempts to explain the physics of leverage. Both the DM and the barbarian’s player agree that this doesn’t help, and the roll is unaffected.\nHelpful. The group’s entertainer plays a rousing melody, invigorating the body and spirit of the barbarian. The DM decides that this is a valid way of motivating the barbarian, so the roll is granted a 1d4 + TL bonus.\nVery Helpful. The group’s warlord actually walks over and puts his muscles to work lifting beside the Barbarian. The DM decides that this is an exceptionally good way to ensure the rock is moved, so the roll is granted a 1d8 + TL bonus.\nLucky and Unlucky. Some features and circumstances will, rather than granting a bonus or penalty to the roll directly, allow the roll to be made twice and either the higher or lower result selected. This is called Lucky and Unlucky in short-hand.\nUntrained Abilities. Characters can attempt Ability Checks for all Abilities save Sorcery, even if they don't possess training in those Abilities. However, when doing so they use a d10 instead of a d20. Should the Ability Checks be a contest between two characters, one who is trained is always assumed to triumph over one who is not.\nFighting Styles\nA character can pick any of the following fighting styles, picking cards from them as they gain levels.\nThe fighting style options are as follows:\nArchery. A ranged fighting style which can utilize any solely ranged weapon, from bows and crossbows to atlatl and slings.\nStrengths: Ranged and Mobile\nWeapons: Bladeslingers, Bows, Crossbows, Hammer Huckers.\nGimmick: Restoring and Using Ammunition\nBumbling. A unique fighting style–often achieved by accident, in fact. This includes tumbling around enemies and creating opportunities for allies more often than dealing damage yourself.\nStrengths: Controlling and Supportive\nWeapons: Any nonmagical, most items.\nGimmick: Items used can be destroyed or Disarmed for additional benefits.\nChanting. A fighting style focused around using mystic enchantments to empower yourself and your allies.\nStrengths: Flexible and Supportive\nWeapons: Scrolls and Tomes\nGimmick: Each time you Chant during a Combat, the power of Chanting Cards increases slightly.\nDagger. Not limited to short blades, this fighting style involves the use of small and often concealed weapons to target vitals. Some cards include throwing these weapons.\nStrengths: Mobile and Opportunistic\nWeapons: Daggers and Light Blades\nGimmick: Gambling on Hit Chances for bonus damage.\nEvocation. Blasts of potent magic, fireballs and lightning bolts and the like.\nStrengths: Ranged and Area\nWeapons: Evocation Focuses (Staffs and Crystals)\nGimmick: When playing Cards, you can discard other Evocation Cards to use their area of effect or damage type for the current card instead of its usual area or damage type.\nFencing. The use of a single, one-handed weapon in making precise and effective strikes while deflecting enemy blows.\nStrengths: Defensive and Opportunistic\nWeapons: One-Handed Weapons (Longswords, Maces, Axes)\nGimmick: Mostly defensive cards apply Marks to Targets, which can be consumed to empower attacks against those targets for big damage.\nHeavy Weapon. A potent fighting style which uses heavy weapons to cleave through defenses and push foes back.\nStrengths: Powerful and Area\nWeapons: Heavy Weapons (Greatswords, Greataxes, Mauls)\nGimmick: Damage dice are naturally exploding.\nHealing. A supportive fighting style which largely involves restoring allies and removing their conditions while striking at the vitals of foes, using medicines as both boon and bane.\nStrengths: Restorative and Hindering\nWeapons: Healing Kits (Herbal Balms, Bandages, Medicines)\nGimmick: Healing Cards have a specific condition they can heal, but generically restore Stamina if a creature doesn’t have that condition.\nPolearm. A deadly fighting style which derives a great deal of strength from the use of charges and leaping attacks.\nStrengths: Powerful and Mobile\nWeapons: Polarms (Longspears, Glaives, Halberds)\nGimmick: Cards deal bonus damage based on distance moved\nSword and Shield. A highly respected fighting style which uses a shield and weapon, blending together defense and offense to great effect.\nStrengths: Defensive and Flexible\nWeapons: Any Fencing, and Shields\nGimmick: Cards have secondary options for more basic attacks and shielding\nStaff. An often dismissed fighting style, the whirling staffs of a master can ward off strikes, toppling foes by sweeping their legs and disarming them with deft strikes.\nStrengths: Defensive and Controlling\nWeapons: Staffs and Spears\nGimmick: Striking often applies conditions, and attacks against creatures with  conditions have bonus effects dependent on the condition.\nTwin Blade. A fighting style revolving around the use of a pair of weapons for deadly flurries of blades.\nStrengths: Powerful and Opportunistic\nWeapons: Any Fencing and Light Weapons\nGimmick: Cards can be played at a Stamina cost for additional benefits.\nUnarmed. A blend of martial arts which use the body itself as a weapon, striking with hand, foot, knee, elbow, and even head to incredible effect while contorting yourself out of harm’s way.\nStrengths: Mobile and Flexible\nWeapons: None Needed, but Bladed Knuckles and Punching Daggers can alter damage dealt\nGimmick: Cards grant Stances, which grant additional passive benefits\nWildcard.  Wild.\nWords of Power. Most ancient of magics, words of power are derived from the language of the architect, able to control the world itself–and the creatures within it. For a master of this art, to speak fire is to summon it, and to speak death is to cause it.\nStrengths: Flexible and Controlling\nWeapons: None\nGimmick: Cards have alternate effects when used on objects instead of creatures.\nArchery\nAssociated Special Damage Type: Varied\nArchery’s Base Cards are unique in that two are granted to all who pick the fighting style, but a third must be chosen from a secondary pool. From there, card pools will generally fall into three categories–long range, short range, and area effects.\nAmmunition. During Combat, a wielder can expend an Ammunition Token in order to use a Card with the Attack and Melee tags as though it had a Range of 5. These tokens are then lost. The Archery fighting style has options to recover spent Ammunition\nBase Cards:"
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Deft Aim",
-    "action_type": "Full.",
-    "tags": [
-      "Archery",
-      "Attack",
-      "Ranged",
-      "Physical"
-    ],
-    "text": "You aim around the defenses of a target within 5 spaces, dealing 1d8 + TL damage which deals double damage to Shield Points. If you expend an Ammunition Token, it instead either deals triple damage to Shield Points or bypasses them, your choice."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Retreat and Restock",
-    "action_type": "Full",
-    "tags": [
-      "Archery",
-      "Sneaky Movement"
-    ],
-    "text": "You take a deft Sneaky movement 1 space, then gain 1 Ammunition Token. If you choose not to move, you can instead gain 2 Ammunition Tokens.\nThird Base Card:"
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Long Shot",
-    "action_type": "Full",
-    "tags": [
-      "Archery",
-      "Attack",
-      "Ranged",
-      "Physical"
-    ],
-    "text": "You loose an arrow at a distant target within 10 spaces, dealing 1d6 + TL damage. If you expend an Ammunition Token, it deals an additional point of damage for each space between you and the target."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Ironhead",
-    "action_type": "Full",
-    "tags": [
-      "Area",
-      "Archery",
-      "Ranged",
-      "Physical"
-    ],
-    "text": "You loose a powerful arrow in a line up to five spaces long extending from you. The first two creatures in that line take 1d6 + TL damage. For each Ammunition Token you expend, you can affect the next creature in that line."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Point Blank",
-    "action_type": "Full",
-    "tags": [
-      "Archery",
-      "Attack",
-      "Melee",
-      "Physical"
-    ],
-    "text": "You loose an arrow at an adjacent target, dealing 1d10 + TL damage. If you expend an Ammunition Token, it deals an additional 1d10 damage.\n2nd Level Cards:\nBumbling\nAssociated Special Damage Type: Psychic\nThe Bumbling fighting style has no true associated weapons, but can utilize any. They also suffer no penalty for using improvised weapons–in fact, they are encouraged to, for many of their cards involve breaking the items used.\nBase Cards:"
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Accidental Defence",
-    "action_type": "Reaction when you or an ally takes damage from an attack.",
-    "tags": [
-      "Any Object"
-    ],
-    "text": "Lunging forward, perhaps intending to attack, perhaps by accident, you partially parry the damage, reducing the damage by 1d6 + Total Level. If a weapon was used, you can choose for it to become briefly stuck in whatever object you used, granting it a Disarmed stack, in return for your own object being destroyed."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Junk Toss",
-    "action_type": "Full",
-    "tags": [
-      "Any Object"
-    ],
-    "text": "You huck an object from your pack or person at a target within 3 spaces, dealing 1d4 + Total Level and causing them to be Temporary Vulnerable. Additionally, the next time the target takes damage from an ally of yours before the start of your next turn, they take an additional damage equal to your Total Level, and gain a second stack of the Temporary Vulnerable condition."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Slip and Stumble",
-    "action_type": "Reaction on taking damage.",
-    "tags": [
-      "Unarmed"
-    ],
-    "text": "Dodging damage more by happenstance than intent, you reduce damage taken by 1d6 + Total Level. In return for taking a stack of the Temporary Vulnerable Condition, you can also choose to Sneakily move 1 space.\n2nd Level Cards:\nChanting\nAssociated Special Damage Type: Varied\nResonance. Chanting cards often possess the Resonance tag, which means that each time they are used, they gain a Resonance Token. The more Resonance Tokens a Chanter possesses, the more effective their abilities.\nBase Cards:"
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Blessings of the Wind",
-    "action_type": "Full.",
-    "tags": [
-      "Magic",
-      "Movement",
-      "Resonance",
-      "Spoken"
-    ],
-    "text": "You entreat spirits of wind to speed your allies, choosing any 3 targets within 3 squares, which can include yourself, and increasing their movement speeds by 2 until the start of your next turn. A creature who uses all of their movement and bonus movement before hitting a creature with a Melee strike deals bonus damage equal to your Total Level, plus your Resonance Token count."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Flame Shield",
-    "action_type": "Full",
-    "tags": [
-      "Cold",
-      "Defensive",
-      "Fire",
-      "Magic",
-      "Resonance",
-      "Spoken"
-    ],
-    "text": "You speak into existence a barrier against either Cold or Fire which guards a creature of your choice within 3 squares by shielding them with the opposite element until the end of Combat. They reduce any of that damage taken by ten times your Total Level plus your RT Count. Additionally, any creature who hits them with Melee damage takes damage of the shielding type equal to your 1d4 + Your Total Level."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Magic Weapon",
-    "action_type": "Full.",
-    "tags": [
-      "Enchanted",
-      "Magic",
-      "Movement",
-      "Resonance",
-      "Spoken"
-    ],
-    "text": "You weave a spell upon a Weapon within 3 squares, allowing it to ignore the first stack of the Disarmed condition, and causing it to be Enchanted. While Enchanted in this way, the bonus damage dealt is increased by your Resonance count.\n2nd Level Cards:\nPoison Shield\nDaggers\nAssociated Special Damage Type: Negative\nBase Cards:"
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Backstab",
-    "action_type": "Full",
-    "tags": [
-      "Attack",
-      "Dagger",
-      "Melee",
-      "Physical"
-    ],
-    "text": "You stab a target in an adjacent space for 1d4 + Total Level. If you have an ally in a space also adjacent to the target, you deal 1d6 + Total Level instead. If the ally is directly opposite you on the target’s other side, the damage is increased to 1d10 + Total Level."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Dagger Throw",
-    "action_type": "Full.",
-    "tags": [
-      "Attack",
-      "Bleeding Dagger",
-      "Physical",
-      "Ranged"
-    ],
-    "text": "With a flick of your wrist, you hurl your weapon towards a target within 3 squares (granting the weapon used two stacks of Disarmed). The target takes 1d6 + Total Level. Before rolling this damage, you can choose to gamble by aiming for a small weakspot on your target. Roll a d20. On an 11 or higher, you hit, dealing 2d6 + Total Level instead and grant the target Bleeding Stacks equal to the value rolled on the dice. However, on a 10 or lower, the dagger misses, and no damage is dealt."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Slash and Slide",
-    "action_type": "Full.",
-    "tags": [
-      "Attack",
-      "Dagger",
-      "Melee",
-      "Movement",
-      "Physical",
-      "Sneaky"
-    ],
-    "text": "You slash a target in an adjacent space for 1d6 + Total Level, and can then Sneakily slide through their space to any other space adjacent to that target–assuming that space wouldn’t be further away than your base movement speed.\n2nd Level Cards:\nEvocation\nAssociated Special Damage Type: Varied\nWhen a card has the Metamagic Tage, it means you can discard this card as part of using another Evocation Card to change its area of effect, or damage type to those of this spell.\nBase Cards:"
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Fireball",
-    "action_type": "Full",
-    "tags": [
-      "Evocation Focus",
-      "Area Effect",
-      "Fire",
-      "Magical",
-      "Metamagic",
-      "Evocation"
-    ],
-    "text": "You huck a brilliant bead of energy towards a square of four spaces, the furthest of which must be within 6 spaces of you, where it explodes in a wave of flames. Those within take 1d6 + TL fire damage."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Icy Cloud",
-    "action_type": "Full.",
-    "tags": [
-      "Evocation Focus",
-      "Area Effect",
-      "Fire",
-      "Magical",
-      "Metamagic",
-      "Evocation"
-    ],
-    "text": "You cast a wave of rolling mist across the floor in a 6 square cone extending from you. Creatures in that area take 1d4 + TL cold damage. Creatures who start their next turn in that area take an Temporary Vulnerable Stack."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Lightning Bolt",
-    "action_type": "Full.",
-    "tags": [
-      "Evocation Focus",
-      "Area Effect",
-      "Fire",
-      "Magical",
-      "Metamagic",
-      "Evocation"
-    ],
-    "text": "You loose a bolt of lightning through a line of 5 spaces extending out from you. Creatures in that area take 1d8 + TL lightning damage.\n2nd Level Cards:\nFencing\nAssociated Special Damage Type: Ice\nFencing Marks. Some Fencing Cards apply Marks to a target which can then be utilized by later cards–if a Marked target dies without its Marks being consumed, you gain Shield Points equal to your Total Level per Mark.\nBase Cards:"
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Cobra Stance",
-    "action_type": "Full and Reaction a target moves into or out of an adjacent space",
-    "tags": [
-      "Fencing Weapon",
-      "Mark",
-      "Melee",
-      "Physical",
-      "Restrained"
-    ],
-    "text": "You take a defensive stance, ready to strike when your opponents leave themselves open. When a target moves into or out of a space adjacent to you, you can choose to deal 1d8 + TL damage to them and end that target’s movement for that turn as though they’d gained 3 Stacks of the Restrained Condition, which then vanish at the end of their turn. If that target was Marked, you can choose to consume the marks on them to deal additional damage equal to 3 per Mark."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Deflect and Dart",
-    "action_type": "Reaction when you take damage from an adjacent creature",
-    "tags": [
-      "Fencing Weapon",
-      "Mark",
-      "Melee",
-      "Physical"
-    ],
-    "text": "You deftly use your weapon to deflect some of the damage (reducing it by 1d6 + TL), then can either apply 1 Mark to the target or dart in a direction of your choice. Specifically, you can move one space, or you can choose to rush into a target in an adjacent space, causing them to be Temporary Vulnerable while you bounce back into your initial space."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Shieldbreaker",
-    "action_type": "Full",
-    "tags": [
-      "Fencing Weapon",
-      "Mark",
-      "Melee",
-      "Physical"
-    ],
-    "text": "You lunge at a foe, targeting their weak points with impeccable precision, dealing 1d8 + Total Level damage. This damage is doubled against Shield Points. If the target doesn’t have any Shield Points and takes this damage, they gain 1 Mark..\n2nd Level Cards:\nHealing\nAssociated Special Damage Type: Poison\nMedicine. Healing Cards usually deal with specific conditions, removing or adding stacks–when a healing card is used on a creature who doesn’t possess those stacks, one with the Medicine Tag instead restores Stamina Points equal to a value described below the card’s main description. Alternately, cards with the Alternative Medicine tag do any number of things, but mostly apply conditions or deal damage.\nBase Cards:"
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Antidote",
-    "action_type": "Full",
-    "tags": [
-      "Healing",
-      "Healing Kit",
-      "Medicine",
-      "Physical"
-    ],
-    "text": "You apply an antitoxin, removing up to 10 Stacks of the Poisoned condition from an adjacent ally.\nMedicine. Restore 1d6 + TL SP."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Cauterize",
-    "action_type": "Full",
-    "tags": [
-      "Attack Alternative Medicine",
-      "Healing Kit",
-      "Physical"
-    ],
-    "text": "You apply a searing press to a wound, removing up to 10 Stacks of the Bleeding condition from an adjacent ally.\nAlternative Medicine. You deal fire damage to the target equal to 1d4 + TL, and it gains a stack of the Burning Condition."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Snap out of it!",
-    "action_type": "Full",
-    "tags": [
-      "Healing",
-      "Healing Kit",
-      "Medicine",
-      "Physical or Spoken"
-    ],
-    "text": "You call a nervous ally back to reality, removing a stack of the Frightened Condition from an adjacent ally, or an ally within 3 spaces.\nMedicine. Adjacent target only. Restore 1d6 + TL SP.\n2nd Level Cards:"
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Smelling Salts",
-    "action_type": "Full",
-    "tags": [
-      "Healing",
-      "Healing Kit",
-      "Medicine",
-      "Physical"
-    ],
-    "text": "With chemical aid, you remove a stack of the Charmed or Slowed Condition from an adjacent Ally.\nAlternative Medicine. You grant an ally a Stack of the Excited or Hastened Condition.\nHeavy Weapons\nAssociated Special Damage Type: Fire\nExploding. Combat Cards in the Heavy Weapon Fighting Style have the Exploding Tag–this doesn’t mean that your sword bursts or your enemies combust, but rather that whenever you roll dice, any dice which roll their maximum value are rerolled, the second roll added to the initial result. The value next to the Exploding Tag represents the maximum amount a dice can be rerolled as part of a single attack, applied to the roll as a whole and not individual dice. So for example, if a card was Exploding 1, and two involved dice rolled the maximum value, only one could be rerolled. If bonus dice are applied to the damage dealt by a card with this tag, they can also Explode.\nStrain and Rest. Heavy Weapon Combat Cards also often come with Stain Tokens, which represent the exhaustion which comes with swinging around such a large weapon. When a creature gains 3 Strain Tokens, they are then Slowed until the end of their next turn, and while slowed in this way they cannot take Actions or Reactions. The amount of Strain a card grants is noted beside its tag.\nBase Cards:"
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Cleave!",
-    "action_type": "Full",
-    "tags": [
-      "Area",
-      "Exploding 1",
-      "Heavy Weapon",
-      "Melee",
-      "Physical",
-      "Strain 1"
-    ],
-    "text": "You take a heroic, powerful swing which affects up to 3 adjacent squares each of which must be adjacent to you. Targets within take 1d8 + TL damage, increased to 1d10 + TL if two spaces are targeted, or 1d12 + TL if just one space is targeted."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Helmsplitter",
-    "action_type": "Full",
-    "tags": [
-      "Attack",
-      "Exploding 2",
-      "Heavy Weapon",
-      "Melee",
-      "Physical",
-      "Strain 1"
-    ],
-    "text": "You cleave downwards with murderous intent at a target in an adjacent space. It takes 2d6 + TL damage. If one of the dice would be rerolled because of the Exploding tag, you can forgo rerolling to instead have the attack grant the target a stack of the Weakened condition."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Smash",
-    "action_type": "Full",
-    "tags": [
-      "Attack",
-      "Exploding 1",
-      "Heavy Weapon",
-      "Melee",
-      "Physical",
-      "Strain 1"
-    ],
-    "text": "You strike a foe with incredible impact aimed at their center of mass, targeting a creature in an adjacent space. They take 1d10 + TL damage, and are Pushed 1 space.\n2nd Level Cards:"
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Crescent Slash",
-    "action_type": "Full",
-    "tags": [
-      "Area",
-      "Exploding 2",
-      "Heavy Weapon",
-      "Ranged",
-      "Physical",
-      "Strain 1"
-    ],
-    "text": "You sweep your blade in a direction, sending a crescent of martial energy in a 3 space cone. Targets within that area take 2d6 + TL damage."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Irresponsible Swing",
-    "action_type": "Full",
-    "tags": [
-      "Attack",
-      "Exploding 2",
-      "Heavy Weapon",
-      "Melee",
-      "Physical",
-      "Strain 1"
-    ],
-    "text": "You strike a target in an adjacent space, then follow through to hit an inanimate target such as a floor, wall, or load-bearing column adjacent to both you and the target. The initial target takes 1d12 + TL damage, and the inanimate collateral takes double that."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Raised Blade",
-    "action_type": "Full",
-    "tags": [
-      "Heavy Weapon",
-      "Physical"
-    ],
-    "text": "You raise your blade, calming your mind and steadying your body in preparation for your next attack. You lose one Strain Token, and your next Heavy Weapon Card deals additional damage equal to your TL.\n3rd Level Cards:\nIdeas:\nDuck! A free action which allows an ally to ignore the damage dealt by one of your cards. They can still count as being targeted for the purpose of cards which affect targets adjacent to other targets.\nFollow Through. A free action which can be used to deal damage to a secondary target if a first one is reduced to 0 SP.\nPommel Hammer. A stunning blow made with the hilt or pommel of the blade.\nLeaping Crescent. A slash which targets multiple spaces vertically, dealing bonus damage if the target takes up more than one of those spaces.\nBarreling Blow. You crash into your target, pushing them back and then moving into the emptied space.\nFull Moon Slash. You deal damage to all spaces around you.\nOverswing. You deal damage to a target which cannot be reduced or dodged by movement.\nUnicorn Slash. An overhead swing which attacks targets on either side of you.\nSilver Blade. An attack which uses small damage dice to maximize the chances of exploding dice.\nGolden Blade.\nDiamond Blade.\nHeavy Breath. Reduces strain and restores SP with the chance to have those restorative dice explode.\nFrustrated Blade. An attack with a large damage die which is returned to the hand on use if its die doesn’t explode. Each time it’s returned to the hand in this way, it deals an additional die of damage.\nBonfire. Reduces strain, and also lights the user’s blade on fire.\nPolearm\nAssociated Special Damage Type: Lightning\nBase Cards:"
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Charge",
-    "action_type": "Full",
-    "tags": [
-      "Attack",
-      "Melee",
-      "Movement",
-      "Physical",
-      "Polearm"
-    ],
-    "text": "You unleash a roaring charge, moving up to 3 spaces in a straight line towards a target up to 2 spaces away from your ending point, dealing 1d8 + TL damage, plus an additional 2 damage for each space moved on your turn thus far (including movement taken before this card’s use."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Lancing Strike",
-    "action_type": "Full",
-    "tags": [
-      "Area",
-      "Melee",
-      "Physical",
-      "Polearm"
-    ],
-    "text": "You unleash a potent blow straight through a target, affecting both an adjacent space and the space directly behind it from you. Targets in those spaces take 1d8 + TL damage.."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Set Spear",
-    "action_type": "Reaction when a creature moves into a space adjacent to you.",
-    "tags": [
-      "Attack",
-      "Melee",
-      "Movement",
-      "Physical",
-      "Polearm"
-    ],
-    "text": "You strike the approaching creature for 1d8 + TL damage, plus an additional 2 damage for each space it moved in a direct line towards you on its turn.\nSword and Shield\nAssociated Special Damage Type: Light\nSword and Shield cards often contain two potential actions–when you play one, you pick which option you’re using. The other is ignored for that usage.\nBase Cards:"
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Bash and Slash",
-    "action_type": "Full",
-    "tags": [
-      "Attack",
-      "Melee",
-      "Physical",
-      "Sword or Shield"
-    ],
-    "text": "Shield. You crash into a target in an adjacent space, dealing 1d6 damage + Total Level and causing the target to be Slowed.\nSword. You slash at a target for .1d6 + TL damage. If the target is Slowed, you deal an additional 1d6 damage."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Block and Bait",
-    "action_type": "Reaction, when a creature  in an adjacent space is targeted by an attack",
-    "tags": [
-      "Attack",
-      "Melee",
-      "Physical",
-      "Sword or Shield"
-    ],
-    "text": "Shield. You leap between the target and its attacker, forcing the attack to target yourself instead and reducing the damage taken by 1d6 + Total Level. As part of this, you can also choose to switch spaces with the targeted creature.\nSword.  You slash at the attacker, dealing 1d6 + TL damage before their attack lands. If this damage reduces them to 0 Stamina, their action is prevented."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Guarded Strike",
-    "action_type": "Full",
-    "tags": [
-      "Attack",
-      "Melee",
-      "Physical",
-      "Sword and Shield"
-    ],
-    "text": "Making a cautious strike, you lash out towards a creature in an adjacent space–that creature takes 1d6 + Total Level damage, and you gain Shield Points equal to 1d6 + Total Level.\n2nd Level Cards:\nStaff\nAssociated Special Damage Type: Sonic\nCapitalization. Staff cards often take advantage of conditions on other creatures to deal bonus damage or condition stacks.\nBase Cards:"
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Double Strike",
-    "action_type": "Full",
-    "tags": [
-      "Attack",
-      "Capitalization",
-      "Melee",
-      "Physical",
-      "Staff",
-      "Temporary Vulnerable"
-    ],
-    "text": "You strike a target in an adjacent space with both ends of your staff in rapid succession, dealing 2d3 + TL damage and granting it one stack of the Vulnerable condition which lasts until the end of your next turn.\nBlinded Capitalization. If the target had any Stacks of the Blinded or Dazzled Condition, you can either deal an additional 2d3 damage or refresh the duration of its Vulnerable condition."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Vital Strike",
-    "action_type": "Full",
-    "tags": [
-      "Attack",
-      "Dazzling",
-      "Capitalization",
-      "Melee",
-      "Physical",
-      "Staff"
-    ],
-    "text": "You whack a target in an adjacent space right in the face or eyes, dealing 1d6 + TL damage and granting it one stack of the Dazzled condition..\nSlowed Capitalization. If the target had any stacks of the Slowed or Restrained Condition, you can choose to deal an additional 1d6 damage or to apply a second stack of the Blinded condition."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Tripping Strike",
-    "action_type": "Full.",
-    "tags": [
-      "Attack",
-      "Capitalization",
-      "Melee",
-      "Physical",
-      "Slowed",
-      "Staff"
-    ],
-    "text": "You strike a target in an adjacent space for 1d6 + TL damage, and grant it one stack of the Slowed condition.\nVulnerable Capitalization. If the target was Vulnerable, you can deal an additional 1d6 damage, or inflict an additional stack of the Slowed condition.\nTwin Blades\nAssociated Special Damage Type: Lifedrain\nExertion. Twin Blade cards can often trade personal pain for immediate gain, with characters spending Stamina Points for additional effects.\nBase Cards:"
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Spinning Defense",
-    "action_type": "Full",
-    "tags": [
-      "Attack",
-      "Defense",
-      "Exertion",
-      "Melee",
-      "Physical",
-      "Twin Blades"
-    ],
-    "text": "You whirl your blades defensively, catching blows and deflecting arrows–until the start of your next turn, all Physical damage you take is reduced by 1d6 + TL..\nExertion. At the cost of 4 SP, each time you reduce damage from an adjacent source, you can also choose to deal 1d6 damage to that target."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Twin Strike",
-    "action_type": "Full.",
-    "tags": [
-      "Attack",
-      "Exertion",
-      "Melee",
-      "Physical",
-      "Twin Blades"
-    ],
-    "text": "You strike a target in an adjacent space with each weapon, dealing 2d4 + TL damage.\nExertion. At the cost of 4 SP, you can instead make two attacks–possibly against two separate targets–for 1d8 + TL each."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Wolf Fangs",
-    "action_type": "Reaction when a target in an adjacent space takes an Attack",
-    "tags": [
-      "Attack",
-      "Exertion",
-      "Melee",
-      "Physical",
-      "Twin Blades"
-    ],
-    "text": "You opportunistically slash at a distracted target in an adjacent space, dealing 2d6 + TL damage.\nExertion. At the cost of 4 SP, you can reduce the damage they deal with that Attack by 50%..\nUnarmed\nAssociated Special Damage Type:\nStances. Many Unarmed cards put you into Stances, which grant additional benefits until your Stance changes.\nBase Cards:"
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Arms Up",
-    "action_type": "Full",
-    "tags": [
-      "Attack",
-      "Melee",
-      "Physical",
-      "Stance",
-      "Unarmed"
-    ],
-    "text": "You fire off a quick jab at a target in an adjacent space, dealing 1d6 + TL damage and then taking a Defensive Stance.\nDefensive Stance. You reduce all damage you take by 1 + TL."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Grapple",
-    "action_type": "Full",
-    "tags": [
-      "Effect",
-      "Melee",
-      "Physical",
-      "Restrained",
-      "Stance",
-      "Unarmed"
-    ],
-    "text": "You hurl yourself towards a target in an adjacent space, granting them a stack of the Restrained Condition. While restraining a creature in this way, you can choose to move along with a creature who moves. You then enter the Pinning Stance.\nPinning Stance. At the start of each of the grappled creature’s turns, you can choose to either deal 1d6 + TL damage, or an additional Stack of the Restrained condition."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Flying Knee",
-    "action_type": "Full.",
-    "tags": [
-      "Attack",
-      "Melee",
-      "Movement",
-      "Physical",
-      "Stance",
-      "Unarmed"
-    ],
-    "text": "You leap up to 2 spaces, then strike a target in a then adjacent space for 1d6 + TL damage. You then enter the Mobile Stance.\nMobile Stance. Your movement speed is increased by 1.\nWildcard\nA rather unique fighting style, when you choose this option you gain only a single Base Card–you then choose three different fighting styles and pick one card from each, also gaining a weapon token of your choice from each. Each successive level, you roll twice to randomly determine two fighting styles, picking a card from each. Though this will leave you with far more cards than your average player character, their synergy is no guarantee.\nBase Card:\nArsenal.\nPassive.\nEquipment, Self.\nYou can hold ready a number of weapons equal to the number of fighting styles you have cards from plus 2 at one time. This ignores the usual limit of 2.\nWords of Power\nAssociated Special Damage Type: Varied\nBase Cards:"
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Barrier",
-    "action_type": "Reaction, when a target (including yourself) within 4 spaces would be damaged.",
-    "tags": [
-      "Spoken"
-    ],
-    "text": "You demand the air itself protect your target, reducing the damage dealt by 1d6 plus your Total Level. This barrier–occupying one side of the target’s space, remains in place until the start of your next turn, reducing any further damage which would pass through it by the same amount."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Crack",
-    "action_type": "Full",
-    "tags": [
-      "Spoken"
-    ],
-    "text": "You demand a target who can hear you (they need not understand, the noise must merely reach them) within 4 squares to break, dealing 1d6 + TL magic damage to the target."
-  },
-  {
-    "class": "Wizard",
-    "level": "2nd Level",
-    "name": "Stop",
-    "action_type": "Full",
-    "tags": [
-      "Spoken"
-    ],
-    "text": "You demand a target who can hear you (they need not understand, the noise must merely reach them) within 4 squares cease to move–they become Restrained until the end of your next turn. For each Total Level above 1st, you may target one additional creature with this card. A creature who continues to move while restrained in this way takes psychic damage equal to your Total Level for each space moved.\nQuirks\nTraits which are lesser, but still help to flesh out and define characters by offering tertiary Abilities, able to be used in a similar freeform manner. While some offer straightforward benefits, some also come conjoined with potential penalties.\nSome come close to the domain of Class Abilities, but they should be considered lesser in all regards–to use two which are similar for the same purpose, the DC of a Quirk check would almost always be higher. In reverse, where these Quirks come close to treading the same territory as a Secondary Ability, a more specific Quirk would have lower DCs than that of a Secondary Ability.\nYou add your Total Level to any rolls to use these Quirks.\nPhysical\nAthlete. You’re a physically fit specimen with a talent for elegant exertion and a great deal of practice in doing so. However, people tend to see you more for your body than your mind or personality.\nUse Cases: Doing a flip over a chasm, hefting a heavy burden, impressing people with your physique.\nPenalty Cases: People are likely to overlook your opinion on matters of science and philosophy.\nBig. You are a specimen of significant size, be it height or musculature, which lends you aid both in the physical sense, but also in intimidating smaller sorts.\nUse Cases: Reaching something from a high shelf, opening a tightly sealed jar, and frightening an accountant.\nPenalty Cases: You are too large to squeeze through a gap, or too intimidating to get a child to stop crying.\nContortionist. You’re able to squeeze yourself through surprisingly small gaps for your size, and into uncomfortably tight spaces.\nUse Cases: Squeezing through crevasses, hiding in a cupboard, or performing as an actual contortionist.\nPenalty Cases: Your lithe build makes it difficult to be physically intimidating.\nGorgeous. A beauty among beauties, you have a natural talent for maintaining your appearance, and though not all beholders envision the same lovely sights, your batting average is undeniably impressive.\nUse Cases: Being a distraction by merit of beauty, serving as a model, or knowledge of cosmetics and fashion.\nPenalty Cases: People tend to assume you’re a bit vapid and vain.\nUgly. A rather foul sort, people tend to be frightened or put off by your visage, which can be to your advantage. Sometimes. Probably.\nUse Cases: Fitting in with a rather rough crowd, startling people.\nPenalty Cases: You would have a hard time as a face model.\nSocial\nBlueblood. Even bedraggled in rags, you still manifest an aura of pride and dignity that can turn heads and change minds. People see you as a noble, and are included to treat you as such and usually seek to earn your favor.\nUse Cases: Blending in with the upper crust, intimidating the proletariat, or identifying fineries such as wine or paintings.\nCharlatan. You have a talent for trickery and sleight of hand, and can be quite the showman where making false claims is concerned.\nUse Cases: Fooling rubes, puffing up products, or palming cards and other small objects.\nEarnest. You strike people as an honest sort, mostly because you are. People tend to believe you when you’re telling the truth.\nUse Cases: Convincing someone of a real danger, protesting your innocence, or trying to win the favor of another honest fellow.\n5. Foolish. You have a natural buffoonery about you which can earn you favor among those who like to laugh–and often scorn among those who don’t.\nUse Cases: Being forgiven for a gaff or mistake, making someone laugh, or entertaining a group by clowning about.\nFolksy. You were raised away from the rigors of high society, and it’s usually apparent. The common folk tend to like you, and your societal betters tend to think they can use you.\nUse Cases: Convincing a farmer to let you stay in their barn or share a meal, knowledge of rural affairs, or charming members of high society with your rustic appeal.\nScamp. You have a mischievous nature, worn on your sleeves in the form of wry smiles, giggling, or a twinkle in your eye. People tend to let you get away with little quips, and might even enjoy your antics.\nUse Cases: Making a fool of a disliked judge, winning a flyting contest with a bard, making friends with children.\nPenalty Cases: An arbiter of justice discounting your perspective.\nShady. You have a suspect aura about you, naturally blending in among lowlives and criminals.\nUse Cases: Frightening innocents into leaving you be, finding centers of criminal activity such as fences or thieves’ guilds, or estimating how much you could fence goods for without attracting attention from authorities.\nStoic. Your expression rarely reads on your face, making your bluffs more believable. However, you also don’t emote much even when you are being genuine, leaving many guessing as to your intentions even when you’re being true.\nUse Cases: Convincing a detective you saw nothing, feigning disinterest in a pile of gold, convincing others that you aren’t afraid.\nPenalty Cases: Trying to drum up sympathy by crying, expressing your anger wordlessly.\nKnowledge\nArcanist. You’ve spent a good deal of time in study and research regarding magic, which helps you to present yourself as learned and well informed on the subject.\nUse Cases: Identifying Magical Items, arcane rituals, and summoned creatures.\nDungeoneer. You’re familiar with the many threats and monsters common to dungeons, which is to say abandoned ruins and wizard crafted labyrinths and the like.\nMathematician. You have a head for numbers, able to make calculations and derive odds on the fly.\nUse Cases: Solving a complex equation, calculating a trebuchet’s trajectory, or finding inconsistencies in ledgers.\nPhysician. You’ve spent time with medically focused minds, apothecaries and surgeons who have imparted some of their training to you.\nUse Cases: Discovering a creature’s cause of death, identifying medicines and poisons, or treating illnesses.\nSpecial Interest. Pick a subject with your DM’s input–the more specific, the more potent your knowledge of it, though the less broadly applicable. In a way, this is how all Knowledge Quirks work, so feel free to use this as an excuse to make your own!\nUse Cases: A mastery of cartography, knowledge of fighting styles from the west, the intricacies of draconic anatomy.\nTheologian. You’ve spent time learning from monks or in temples studying the secrets to be found within religious texts, familiarizing yourself with deities and devils alike.\nUse Cases: Identifying religious rites, cult symbols, and creatures from higher and lower planes.\nWell Read. Growing up in a library, or spending time in your parent’s study, or even simply listening to every story the elders of your community could impart, has left you filled to the brim with a variety of information on a variety of subjects, though that knowledge is often somewhat shallow and true experience is lacking.\nUse Cases: Recalling general information about any subject.\nPenalty Cases: Effectively an inferior version of all other Knowledge Quirks, with DCs doubled.\nTrade\nArtisan. Pick a trade–you’ve practiced it. Carpentry, pottery, painting, locksmithing, scribing–just about anything you can imagine making a living doing could be presented by this option. This is effectively how all Trade Quirks work, so feel free to use this as an excuse to create options not presented here!\nUse Cases: Constructing a shelter using your carpentry training, singing a ballad using your training in operatics, cooking a meal using your training as a chef.\nInquisitor. You have training in investigations, finding and interpreting evidence, and calculating the motives of those you speak with.\nUse Cases: Deducing the position of a murder victim by blood splatter, discovering a hidden compartment in a desk, recognizing when a butcher is lying.\nMerchant. You have a talent for making money through trade and barter, able to secure discounts and sell at a profit.\nUse Cases: Convincing a potion salesman to give you a discount for promise of repeat business, talking a farmer into buying a sword, convincing a guard that he isn’t paid enough to waste time searching your wares.\nPenalties: People assume you’re only in it for the money.\nSailor. You’ve spent time on the sea, comfortable with boats, ships, and among the mariners who travel aboard them.\nUse Cases: Finding work in shipyards or aboard vessels, handling the efforts of keeping a ship running, or navigating by starlight.\nSmithy. You’ve worked with metal before, and are ready to do so again, able to mend armor and note the quality of metals and ore.\nUse Cases: Determining the quality and value of weaponry and armor, determining the purity and nature of metals, or crafting such equipment.\nSoldier. You have a background in warfare and battles, lending you an air of authority regarding tactics and weaponry.\nUse Cases: Identifying flaws in military formations and tactics, commanding other soldiers with authority, maintaining weapons and armor.\nOther\nAllowance. Perhaps by inheritance, perhaps by wise investment, you have a steady and significant source of income–5,000 Pennies (5 Gold Coins) a month.\nUse Cases: You could use this money to bribe, buy, or even bludgeon.\nLinguist. You have a talent for picking up languages, being able to speak two more of your choice, and being able to learn quickly to rudimentally communicate in others.\nUse Cases: Decoding or encoding a message, communicating with those who don’t speak familiar languages, or recognizing existing languages.\nLucky. In matters of chance, you have an indecipherable advantage. Though applicable to almost any situation, the DCs for this Quirk are dependent on the frequency of its success as well as the likelihood of such a lucky occurrence. The more recent bad luck, the more likely a Lucky roll is to succeed.\nUse Cases: Happening upon a useful tool, finding a door left unlocked, or choosing an unpoisoned chalice from among many.\nPious. Faithful to divine forces and obviously so, you can easily find common ground with other believers–and even rebuke some evil.\nUse Cases: Finding shelter among other members of your faith or associated churches, convincing others that you maintain oaths of your order, and casting evil spirits out of the afflicted.\nCombat and Cards\nThe combat of Cornerstone isn’t a realistic simulation of battle in a fantasy setting, but rather a game intended to be entertaining while presenting a partially metaphorical version of narrative combat. This shouldn’t stop players and the DM from taking actions which they feel better suit the desires of their characters, and roleplay should be rewarded–if not with mechanical benefits, then with narrative flourishes.\nAttacks and Effects. An Attack involves the targeting of one or more individuals, while an Effect affects creatures within an area–which might be selectively targeted or ignored. The distinctions are largely apparent, and can affect certain reactions.\nMovement. Most creatures can move 3 spaces per turn. If they wish, a creature can forgo using a Combat Card or Improvised Action in order to move two additional spaces, or their speed if that would be lower. A creature’s movement is determined by their race, with most being limited to moving along suitable ground. Additionally, movement can be split around other actions–a creature with 2 spaces of movement could move one, use an Action, then move another.\nDifficult Terrain. Some spaces are more difficult to move through, requiring climbing or swimming or otherwise slowing travel. Generally, these halve a creature’s movement, rounded up, though some races provide exceptions to such rules.\nFalling.  A creature who ends their turn with their weight unsupported falls up to 6 spaces. A creature who falls 1 or 2 spaces takes no damage on landing–one who falls 3 takes 10 points of damage dependent on the surface to which they fall. This damage is increased by 10 for each space they fall, counting from when they first began to fall.\nFlying. A creature with a Flying Speed can move without the need for a floor to support their weight. A flying creature who has their Flying speed reduced falls a number of spaces equal to that reduction at the end of each of their turns–a creature whose Flying speed has been reduced to 0 falls as though they didn’t possess the speed.\nHazardous Terrain. Some terrain is difficult to move through, requiring creatures to spend an additional space of movement in order to move through it, effectively halving the speed by which they traverse the area. Alternately, some terrain might cause a creature damage when they pass through it or end their turn within.\nJumping. By default, a creature with at least 2 spaces of movement can leap over 1 space as part of that movement. When attempting to leap over an occupied space, a DM may ask a character to make a Might or Alacrity check to leap over the presented obstacle. When jumping over or out of a space as part of a Combat Card, you ignore any penalties associated with that space, but otherwise you must usually slog through.\nSneaky Movement. Some enemies and cards can attack creatures who move within or out of their range, but movement categorized as Sneaky or moving Sneakily does not trigger such cards or actions–unless they specifically say otherwise.\nWalking or Running. Basic movement can be interchangeably referred to as a Walking or Running speed, and inherently requires a surface on which to move unless otherwise specified.\nCombat Cards. A creature can use combat cards gained from any source unless hindered by a condition or some other effect.\nAction Type. Combat Cards come in three forms–Full Action Cards, only one of which can be used during the creature’s turn, Reaction Cards, which are used during the turns of others as specified by the card’s conditions, and Free Action Cards.\nHeld Action. On their turn, a creature who wishes to delay taking an action until the time is right can declare the Action as Held. This can be the delay of a Combat Card or Improvised Action. When they wish, the player can use this Held Action. Unless you have a special ability to do so, you cannot Hold Movement, though you can Hold cards which involve movement.\nFree Actions. Some actions are too small to be considered an Improvised Action–drawing weapons, opening unlocked doors, recovering potions from pouches, and speaking, for example. These are generally ignored, able to be accomplished alongside the other actions you take on your turn without note. In regard to cards, a character can take as many Free Actions on their turn as they have the cards to take.\nReactions. Generally speaking, you can take as many Reactions as you have the cards to take.\nCard Requirements. Many cards imply the use of certain tools–weapons, largely. While it is typically assumed that a player character possesses such items, in a situation in which they have been deprived of them they cannot use these cards. A character who obtains an improvised version of their usual tool–a crowbar in place of a sword or hammer, a pair of scissors instead of a dagger, and so on–can use combat cards, but each time such an item is used it has a 1 in 5 chance of breaking or being lost in some fashion.\nEnemy Information. Unless the information is being intentionally obscured, the Stamina Points of enemies are known to players. Other information, such as their actions and features, can be gleaned through Ability Checks made as free Actions as suits the context of the enemy.\nExample. A murder gremlin ambushes the adventurers. On their Ranger’s turn, he makes an Insight check, gleaning that the creature has no armor, and that his coloration and build suggest that he will likely attempt to slink back into the shadows before attempting more attacks from his hiding place.\nFleeing. In many Combat scenarios, fleeing is usually a valid option and occurs automatically if all party members agree to flee, but comes at a cost, usually failing to accomplish whatever the fight was meant to do. If the adventurers were seeking to get past a monster, they would be forced to retreat back the way they came. If seeking a dragon’s treasure, they would find themselves unable to retrieve anything. If trying to rescue a princess, she would be left in shackles. And so on. Sometimes, fleeing might come at an additional cost, such as leaving behind an ally or equipment, at the DM’s discretion. As a note to potential DMs, remember that the purpose of the game is to have fun–a Player Character shouldn’t be left behind without their agreement that it would be a sensible cost, and that it’s best to abandon Party Members who won’t be able to make it to the next game–or who want to make a new character.\nOf course, there are scenarios in which fleeing is not an option–when the adventures are cornered, or retreat would mean certain doom. It is up to the DM to determine whether or not fleeing is feasible.\nImprovised Actions. An improvised action could be just about anything–shooting a chandelier’s rope to cause it to fall on an unsuspecting foe, knocking free a brace of barrels to tumble towards your enemies, or something as simple as stopping to recover a dropped weapon. An Improvised Action generally shouldn’t be used to replicate the effects of a card one of the party members possesses, but there’s a bit of leeway when none of your party possesses a card that does something similar. Even in that case, the effects of an Improvised Action are typically inferior to the card. Examples of Improvised Actions:\nUsing oil to light an arrow on fire then fire it at a target, inflicting the Burning Condition.\nLocking a door.\nOpening a Chest.\nTrying to calm a spooked horse.\nRecovering an item from your inventory.\nLength. Combat lasts as long as it needs to–though a DM might decide to cut it short if the outcome is obviously biased in the adventurers’ favor and would drag out in a boring fashion. Generally speaking, combat lasts longer the more difficult the encounter, so you might plan out the usage of your Combat Cards and items accordingly.\nEasy Encounter: 2-4 Rounds\nAverage Encounter: 4-7 Rounds\nDifficult Encounter: 8-12 Rounds\nBoss Encounter: 10-20+ Rounds.\nSpaces. Unless otherwise specified, most creatures take up one Space. The size of a space is intentionally somewhat ill defined, and can be altered to reflect the sort of game a DM wants to run. A game about speedy ninjas might have spaces reflect 20 feet, while a more traditional dungeon crawl might have a space be about 5 feet. A creature cannot move through the space of an unwilling creature who occupies that space–at least, not without using some kind of Improvised Action to wriggle or bowl through. Some creatures are large enough to take up multiple spaces, and some are too small to count as occupying one, thought they still are positioned within that space for purposes of range and effects.\nTurn Order. When in combat, each creature rolls Alacrity to determine their position in combat–the higher their score, the earlier they take their turn. In the case of a tie, player characters always go ahead of NPCs and Monsters, and players who tie can choose which they’d prefer to go first. A creature’s turn consists of two parts: movement, and actions; either the use of Combat Cards or an Improvised Action.\nSurprise. In the case of a sufficiently sudden start to combat–simply drawing your weapon and attacking someone who can see you rarely counts–those with the advantage roll Alacrity twice and take the better of their results, while those without roll twice and take the lower of their results.\nCard Deck\nA player’s deck of combat cards grows with their character. At 1st level, a player’s deck contains any cards from their Race or Quirks, plus the Base Cards from their Class and the Base Cards from their Fighting Style. From there, each time a character gains a level, the player can choose one new card from their Class, one from their Fighting Style, and one from either to add to their deck. Additionally, they can choose to return one card from their Class or Fighting Style in order to take one more new card from the same source. Alternatively, they can return that single card and not take a replacement in order to tidy their deck. Some cards can only be added in this way once prerequisites have been met–typically needing a character to be of a higher level.\nDrawing Cards. When Combat begins, as directed by the DM, you draw a full hand of cards, determined primarily by your level. At the start of each of your turns after that, you draw one additional card.\nDiscard and Draw. Once on each of your turns, you can move one of your cards from your hand into your Discard Pile in order to draw an additional card. You cannot discard Penalty Cards in this way unless otherwise stated.\nDrawing At Zero. When you start your turn with zero cards in your hand, you draw 2 cards instead of the usual 1.\nOther Means. Many features and cards also allow you to draw, discard, or pick cards from your deck. Unless otherwise stated, if you end your turn with more cards than can fit in your hand, you discard cards of your choice down to your hand size.\nSurprised. Characters who are surprised by combat, ambushed or otherwise taken off-guard, instead of drawing one card at the start of their turn, they wait until the start of their turn to draw their full hand.\nHand Size. At first Level, you have a hand of 4 cards. This increases as you gain Total Levels, to 5 at 2nd Level, 6 at 4th Level, and 7 at 7th Level. If you end your turn with more cards than can fit in your hand, you discard cards of your choice down to your hand size.\nPassive Cards. Some cards–including many Racial and Item cards–are marked as Passive Cards. These are kept separate from your main deck, and aren’t drawn and discarded like normal cards. Rather, you can choose to add a Passive Card to your hand when you begin Combat, where it remains and takes up a slot like a normal card, but even when used it remains in your hand unless otherwise stated. If you possess a Passive Card but don’t wish to use it, it is considered Exiled at the start of Combat.\nExample. The Deathrender is a magic sword which grants its wielder the passive card Reap Life. If the wielder has the blade removed from his grip by another creature’s attack, they also lose the passive card Reap Life. Picking the blade up again would then restore the card to their hand–where it would displace another card of their choice if their hand was full.\nQuickdraw Cards. Some cards will include a line of text which defines them as Quickdraw Cards–this means that when combat begins, you can go through your deck and choose to put those cards into your initial hand without having to draw them by random means.\nFreedraw Cards. A card with this quality is left in the deck, but at the start of your turn you can forgo drawing a card normally to instead search through and find it, adding it to your hand, discarding excess, and reshuffling the deck.\nGravedraw Cards. A card with this tag can be drawn from the Discard Pile. At the start of your turn, you can choose to forgo drawing a card normally to instead draw this card from your Discard Pile.\nDiscarding. Once a card has been used, it is discarded (unless otherwise stated in its text). A discarded card is placed into a Discard Pile. Once your deck has been fully depleted, you take your discard pile, shuffle it at least once, and use it as your new deck.\nConsumed. A card that is Consumed is discarded permanently, unable to ever be used again unless obtained from a new source. Potions and disposable equipment are the most common sources of Consumed cards.\nExiled. A card that is Exiled upon use doesn’t enter the discard pile, but is rather unable to be used for the duration of the combat. Once combat ends, it is returned to its previous position unless otherwise stated.\nUsing Cards Outside of Combat. Theoretically, Combat Cards represent your character’s abilities in general, so you are free to use them in a looser fashion when outside of combat scenarios.\nCard Tags\nCombat Cards have a variety of tags which mean they follow certain rules, as listed here:\nAlchemical. This tag implies the card’s effects are caused by alchemical means.\nArea. This tag implies the card affects an area.\nDefensive. This tag implies the card reduces damage in some way.\nElemental. This tag implies the card deals with an elemental effect, such as dark, fire, cold, lightning, or radiance.\nEthereal. This tag implies the card deals with a less than physical effect, such as sound, lifedrain, magic, and psychic energies.\nHealing. This tag implies the card restores Stamina Points.\nMagic. This tag implies the card uses magical means to accomplish its effects.\nMelee. This tag implies the action is done by means of contact with the target. If no weapon is specified, any the user possesses can be used to deal damage dealt by the card.\nMovement. This tag implies the user moves as part of the card’s use.\nMusical. This tag implies the use of sound meant to be heard, audible within 5 spaces.\nNatural. This tag implies the card makes use of a creature’s innate properties–claws, tails, those sorts of things.\nPenetrating. This tag implies the effect bypasses Shield Points to affect Stamina Points directly.\nPhysical. This tag implies the effect is accomplished through physical means, acid, slashing, piercing, or bludgeoning.\nRanged. This tag implies the effect is accomplished at range, without immediate contact with the target.\nSelf. This tag implies at least part of the effects only apply to the user. Often used in conjunction with other tags to clarify which effects.\nShielding. This tag implies the effect grants Shield Points.\nSpoken. This tag means the user must be able to speak aloud in order to use it–though they can be spoken somewhat quietly, they must be spoken clearly, so even when whispered a creature within 2 squares can hear its use.\nSummoning. This tag implies a creature is summoned as part of its use, typically from another realm.\nSurprise. This tag means the card’s effect is a surprise to the target, concealed until the moment of its use, shockingly quick, and so on.\nTeleport. This tag implies that the card incorporates instantaneous travel between spaces of some kind.\nVisual. This tag means that the card relies on being seen–creatures without eyes, or who have enough stacks of the Blinded condition aren’t affected by such cards.\nWeapon Flexible. This tag means the card can be used when a creature is wielding any weapon–or when unarmed. If used when unarmed, any dice used are reduced to d4s, unless d4s were already being used–in which case, they are reduced to d3s.\nMelee Weapon. This card can be used when the creature is wielding any melee weapon, or can be made using an unarmed strike, as above.\nRanged Weapon. This card can be used when the creature is wielding any ranged weapon.\nWeapon Type Specific. If a card has this tag–or more specifically, a tag such as “Sword” or “Fencing” or “Archery”, then it can only be used with that category of weapon. Some objects might be used in place of those weapons in an improvised fashion–a chair serving as a club, a broken bottle as a dagger, and so on. In this case, any damage dice dealt by the player are reduced by one size category, from d20s to d12s to d10s to d8s to d6s to d4s."
-  }
-]
+{
+  "source": "03f67fcf-95c8-4f25-b5ba-d66faec8f8eb.docx",
+  "card_count": 130,
+  "cards": [
+    {
+      "type": "class",
+      "group": "Ascetic",
+      "level": "Base",
+      "name": "Disarming Strike",
+      "action_type": "Full (Steps)",
+      "tags": [
+        "Attack",
+        "Ascetic",
+        "Melee",
+        "Physical"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Ascetic"
+    },
+    {
+      "type": "class",
+      "group": "Ascetic",
+      "level": "Base",
+      "name": "You strike with the intent to stymie an opponent’s ability to fight back. You target a creature in an adjacent space:\nStep One. The next time the target deals damage to another, the damage dealt is reduced by 1d4 + AL",
+      "action_type": "Full (Steps)",
+      "tags": [],
+      "text": "",
+      "sections": {},
+      "class": "Ascetic"
+    },
+    {
+      "type": "class",
+      "group": "Ascetic",
+      "level": "Base",
+      "name": "Ascetic",
+      "action_type": "Full (Steps)",
+      "tags": [
+        "Quickdraw",
+        "Attack",
+        "Ascetic",
+        "Melee",
+        "Physical",
+        "You strike hard and fast",
+        "using momentum to your advantage. You target a creature in an adjacent space:\nStep One. You deal 1d4 + AL bludgeoning damage"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Ascetic"
+    },
+    {
+      "type": "class",
+      "group": "Ascetic",
+      "level": "Base",
+      "name": "Step Two. You deal 1d6 + AL bludgeoning damage",
+      "action_type": "Full (Steps)",
+      "tags": [
+        "Ascetic",
+        "Movement"
+      ],
+      "text": "You dart across the battlefield:",
+      "sections": {
+        "Step One": "You move 1 space.",
+        "Step Two": "You move 1 space Sneakily.",
+        "Step Three": "You move 2 spaces Sneakily."
+      },
+      "class": "Ascetic"
+    },
+    {
+      "type": "class",
+      "group": "Ascetic",
+      "level": "2nd Level",
+      "name": "Rushing Wave",
+      "action_type": "Full (Steps)",
+      "tags": [
+        "Attack",
+        "Ascetic",
+        "Melee",
+        "Physical"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Ascetic"
+    },
+    {
+      "type": "class",
+      "group": "Ascetic",
+      "level": "2nd Level",
+      "name": "You sweep across the battlefield towards an enemy.\nStep One. You move 1 space towards a hostile target Sneakily",
+      "action_type": "Reaction when you take damage from an Attack",
+      "tags": [
+        "Step Three. You move 1 space towards a hostile target Sneakily and become and deal 1d6 + 2AL to the target",
+        "and can push the target 1 space",
+        "Attack",
+        "Ascetic",
+        "Melee",
+        "Physical",
+        "Shielding"
+      ],
+      "text": "You grant yourself 1d6 + AL Shield Points before taking the attack’s damage, and can then use the Step One of an Ascetic Card currently in your hand. This card is discarded, but the follow-up is not.",
+      "sections": {},
+      "class": "Ascetic"
+    },
+    {
+      "type": "class",
+      "group": "Ascetic",
+      "level": "3rd Level",
+      "name": "Crane’s Wings",
+      "action_type": "Full (Steps)",
+      "tags": [
+        "Attack",
+        "Ascetic",
+        "Melee",
+        "Physical"
+      ],
+      "text": "You make a dynamic, gravity defying leap.",
+      "sections": {
+        "Step One": "You leap 1 space. If you would end this movement in an occupied space, you can then leap 1 additional space to an unoccupied space.",
+        "Step Two": "You leap up to 2 spaces If you would move over a target as part of this movement, they are granted the Taunted Condition.",
+        "Step Three": "You leap up to 2 spaces If you would move over a target as part of this movement, they are granted the Vulnerable Condition."
+      },
+      "class": "Ascetic"
+    },
+    {
+      "type": "class",
+      "group": "Barbarian",
+      "level": "Base",
+      "name": "Callous Taunt",
+      "action_type": "Full + Reaction",
+      "tags": [
+        "Attack",
+        "Barbarian",
+        "Melee Weapon",
+        "Physical",
+        "Taunting"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Barbarian"
+    },
+    {
+      "type": "class",
+      "group": "Barbarian",
+      "level": "Base",
+      "name": "Rather than throwing a blow, you hurtle an insult at a creature within 6 squares of you, causing the creature to be Taunted. You can then choose to hold onto this card to use it’s Reaction: If the creature moves into a space adjacent to you before the start of your next turn, you can deal 1d8 + BL damage to it as a Reaction–if it doesn’t, you can gain a Rage Token at the start of your next turn",
+      "action_type": "Full",
+      "tags": [
+        "Attack",
+        "Barbarian",
+        "Melee Weapon",
+        "Physical",
+        "Self Healing"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Barbarian"
+    },
+    {
+      "type": "class",
+      "group": "Barbarian",
+      "level": "Base",
+      "name": "Channeling your inner rage to both attack and bolster yourself, you strike at a creature in an adjacent square. That creature takes 1d8 + BL damage and you regain 1d4 + BL Stamina Points. You can also then spend Rage Points to regain an additional 2 SP per Rage Token spent",
+      "action_type": "Free",
+      "tags": [
+        "Frightening",
+        "Barbarian",
+        "Spoken",
+        "Ranged"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Barbarian"
+    },
+    {
+      "type": "class",
+      "group": "Barbarian",
+      "level": "Base",
+      "name": "You gain stacks of the Permanently Exposed Condition equal to twice your level, but also gain stacks of the Permanently Strengthened Condition equal to four times your Level. This card then becomes a Passive Card, which you can discard as a Free Action on your turns going forwards to lose both Conditions",
+      "action_type": "Full",
+      "tags": [
+        "Attack",
+        "Barbarian",
+        "Melee Weapon",
+        "Physical",
+        "Self Damaging"
+      ],
+      "text": "Forgoing caution, you strike heedless of damage to come at a creature in an adjacent square. That creature takes 2d12 + BL damage. However, the next time you take damage from an Attack before the end of your next turn, you take an additional 1d6 + BL damage but gain a Rage Token.",
+      "sections": {},
+      "class": "Barbarian"
+    },
+    {
+      "type": "class",
+      "group": "Barbarian",
+      "level": "2nd Level",
+      "name": "Throw Weapon",
+      "action_type": "",
+      "tags": [],
+      "text": "Free Action, next Attack gains a range at the cost of disarming the weapon.",
+      "sections": {},
+      "class": "Barbarian"
+    },
+    {
+      "type": "class",
+      "group": "Barbarian",
+      "level": "2nd Level",
+      "name": "Throw Anything",
+      "action_type": "",
+      "tags": [],
+      "text": "Full Action, deals minor damage but applies both the Temporary Vulnerable and Stunned conditions. The stun ends when they lose the Vulnerable condition.",
+      "sections": {},
+      "class": "Barbarian"
+    },
+    {
+      "type": "class",
+      "group": "Barbarian",
+      "level": "10th Level",
+      "name": "Roaring Execution",
+      "action_type": "Full",
+      "tags": [
+        "Attack",
+        "Barbarian",
+        "Melee Weapon",
+        "Physical"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Barbarian"
+    },
+    {
+      "type": "class",
+      "group": "Barbarian",
+      "level": "10th Level",
+      "name": "You tear into a target in an adjacent space, dealing 10d12 + BL damage. Any damage bonus gained from Rage Tokens is tripled for this ability. If this damage reduces its target to 0 SP, you double your current Rage Tokens. If the target survives, they gain 2 Stacks of the Demoralized condition. This card is then Exiled unless you expend all of your Rage Tokens (including those gained from this card) to cause it to simply be Discarded",
+      "action_type": "Free",
+      "tags": [
+        "Barbarian",
+        "Melee",
+        "Physical"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Barbarian"
+    },
+    {
+      "type": "class",
+      "group": "Barbarian",
+      "level": "10th Level",
+      "name": "Until the end of your next turn, all damage you would have taken is reduced to 0. If that damage would have been dealt by a creature in an adjacent space, you instead deal damage to them equal to the damage that would have been dealt to you. Any creature who takes damage in this way gains 1 Stack of the Demoralized Condition, though they can only gain one stack in this way per turn. Additionally, you gain 5 Rage Tokens. This card is then Exiled",
+      "action_type": "Full",
+      "tags": [
+        "Area Effect",
+        "Barbarian",
+        "Melee Weapon",
+        "Physical"
+      ],
+      "text": "You slam your weapon into the earth with such ferocity that it cracks and breaks, sending chunks of stone and rock crashing into your enemies. Creatures within 3 spaces take 5d12 + TL bludgeoning damage, take a stack of the Demoralized condition, and are Slowed. Additionally, you can spend 5 Rage Tokens to cause them to gain a second stack of Slowed, and 5 more for a third. This card is then Exiled.",
+      "sections": {},
+      "class": "Barbarian"
+    },
+    {
+      "type": "class",
+      "group": "Comrade",
+      "level": "Base",
+      "name": "Kind Words",
+      "action_type": "Full",
+      "tags": [
+        "Quickdraw",
+        "Blessed",
+        "Comrade",
+        "Healing",
+        "Spoken"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Comrade"
+    },
+    {
+      "type": "class",
+      "group": "Comrade",
+      "level": "Base",
+      "name": "You call out words of support to a target within 5 spaces. They regain 1d8 + CL SP",
+      "action_type": "Full",
+      "tags": [
+        "Comrade",
+        "Temporary Vulnerable",
+        "You spill a flask of oil at the feet of a target in an adjacent space",
+        "granting it the Temporary Vulnerable condition",
+        "Trick. You toss out the remainder of the oil",
+        "which grants the Temporary Vulnerable condition"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Comrade"
+    },
+    {
+      "type": "class",
+      "group": "Comrade",
+      "level": "Base",
+      "name": "Pan Strike",
+      "action_type": "Full",
+      "tags": [
+        "Attack",
+        "Comrade",
+        "Item",
+        "Melee",
+        "Physical"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Comrade"
+    },
+    {
+      "type": "class",
+      "group": "Comrade",
+      "level": "Base",
+      "name": "You strike a foe with some common household object currently carried, drawing it as part of this action if not already equipped. A target in an adjacent space takes 1d4 + CL, and is Stunned until the end of its next turn",
+      "action_type": "Free",
+      "tags": [
+        "Comrade",
+        "Improvised"
+      ],
+      "text": "You take an Improvised Action!.",
+      "sections": {},
+      "class": "Comrade"
+    },
+    {
+      "type": "class",
+      "group": "Entertainers",
+      "level": "Base",
+      "name": "Crashing Chord",
+      "action_type": "Full",
+      "tags": [
+        "Area Effect",
+        "Entertainer",
+        "Ethereal",
+        "Instrument",
+        "Magic",
+        "Musical"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Entertainers"
+    },
+    {
+      "type": "class",
+      "group": "Entertainers",
+      "level": "Base",
+      "name": "You release a cacophony of noise which blasts away a creature of your choice in an adjacent space, dealing sonic damage equal to your EL and pushing them 1 space. If you had an ongoing performance, you can choose to end it to deal either a bonus 1d10 damage, or to have the chord target all spaces adjacent to you",
+      "action_type": "Full",
+      "tags": [
+        "Entertainer",
+        "Ethereal",
+        "Frightened",
+        "Instrument",
+        "Magic",
+        "Musical",
+        "Ranged Effect"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Entertainers"
+    },
+    {
+      "type": "class",
+      "group": "Entertainers",
+      "level": "Base",
+      "name": "An enemy of your choice within 5 spaces takes 1d6 + EL Psychic damage, and is Frightened.\nFrightening Performance. Enemies who start their turn within 2 spaces of you must choose to either be Frightened until the end of their turn or take Psychic damage equal to your EL",
+      "action_type": "Free",
+      "tags": [
+        "Quickdraw",
+        "Entertainer",
+        "Self",
+        "Pick one Entertainer card you’ve used this turn–rather than being discarded",
+        "it is returned to your hand"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Entertainers"
+    },
+    {
+      "type": "class",
+      "group": "Entertainers",
+      "level": "Base",
+      "name": "Invigorating Medley",
+      "action_type": "Full",
+      "tags": [
+        "Area Effect",
+        "Entertainer",
+        "Excited",
+        "Instrument",
+        "Magic",
+        "Musical"
+      ],
+      "text": "Allies of your choice (including yourself) within 3 spaces are invigorated, gaining the Stamina Points equal to 1d6 + EL as well as the Excited Condition, the latter of which they lose after successfully drawing an additional card by it.",
+      "sections": {
+        "Exciting Performance": "Allies who start their turn within 2 spaces of you can choose to be Excited until the end of their turn or to regain SP equal to your EL."
+      },
+      "class": "Entertainers"
+    },
+    {
+      "type": "class",
+      "group": "Entertainers",
+      "level": "2nd Level",
+      "name": "Alluring Note",
+      "action_type": "Full",
+      "tags": [
+        "Charmed",
+        "Entertainer",
+        "Ethereal",
+        "Musical",
+        "Ranged Effect"
+      ],
+      "text": "An enemy of your choice within 3 spaces is Charmed by you–and so distracted that the next time it takes damage, it takes additional damage of that type equal to 1d6 per Entertainer Level.",
+      "sections": {
+        "Charming Performance": "Enemies who start their turn within 2 spaces of you must choose to either be Charmed until the end of their turn or take Psychic damage equal to 2 + EL."
+      },
+      "class": "Entertainers"
+    },
+    {
+      "type": "class",
+      "group": "Entertainers",
+      "level": "10th Level",
+      "name": "Crescendo",
+      "action_type": "Full",
+      "tags": [
+        "Entertainer",
+        "Ethereal",
+        "Instrument",
+        "Musical",
+        "Ranged Effect"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Entertainers"
+    },
+    {
+      "type": "class",
+      "group": "Entertainers",
+      "level": "10th Level",
+      "name": "You put on a performance to fully stop the show, unleashing a sonic cataclysm towards a target within 5 spaces. They take 10d8 + EL damage and take 2 Stacks of the Enchanted condition. If you had an ongoing Performance, it ends, but its effect is triggered on your target Three times in a row. This card is then Exiled",
+      "action_type": "Full",
+      "tags": [
+        "Quickdraw",
+        "Entertainer",
+        "Self"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Entertainers"
+    },
+    {
+      "type": "class",
+      "group": "Entertainers",
+      "level": "10th Level",
+      "name": "Spectral instruments and ghostly notes join your own performance, countless melodies harmonizing into one indescribable sound. For the duration of Combat, you can maintain any number of Performances simultaneously. If using two Performances which would grant the same condition, only one stack is granted in this way. Should multiple Performances cause damage or healing, those effects do stack. As part of using this card, pick two performances found on your cards–you begin those performances immediately.\nThis card is then Exiled",
+      "action_type": "Full",
+      "tags": [
+        "Area Effect",
+        "Entertainer",
+        "Ethereal",
+        "Healing",
+        "Instrument",
+        "Musical"
+      ],
+      "text": "For a moment, you draw the world into silence–then, with impossibly bombastic renewed effort, you strike a cosmic chord. Targets of your choice (including yourself) within 10 squares regain 10d6 + EL Stamina Points, and lose up to 10 Stacks of Negative Conditions currently affecting them. These targets can also choose to shuffle their Discard Pile and hand back into their Deck, then redraw their hand as though Combat were only beginning, possibly pulling out Quickdraw Cards.\nThis Card is then Exiled.",
+      "sections": {},
+      "class": "Entertainers"
+    },
+    {
+      "type": "class",
+      "group": "Illusionist",
+      "level": "Base",
+      "name": "Duplication",
+      "action_type": "Full",
+      "tags": [
+        "Quickdraw",
+        "Duplication",
+        "Illusionist",
+        "Magical",
+        "Miscellaneous"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Illusionist"
+    },
+    {
+      "type": "class",
+      "group": "Illusionist",
+      "level": "Base",
+      "name": "You briefly transform into a translucent duplicate of a creature within 5 spaces, repeating their last taken Full Action from your own space. If damage is dealt, it is halved, and if a Condition is inflicted, it lasts only until the start of your next turn unless it would otherwise be shorter",
+      "action_type": "Full",
+      "tags": [
+        "Bonus Damage",
+        "Illusionist",
+        "Magical"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Illusionist"
+    },
+    {
+      "type": "class",
+      "group": "Illusionist",
+      "level": "Base",
+      "name": "You conjure some ghostly noise or a phantom sensation over the shoulder of a target within 5 spaces–that target is distracted, taking additional damage equal to 1d8 + Il the next time it is hit by an Attack",
+      "action_type": "Full",
+      "tags": [
+        "Defensive",
+        "Illusionist",
+        "Magical"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Illusionist"
+    },
+    {
+      "type": "class",
+      "group": "Illusionist",
+      "level": "Base",
+      "name": "You duplicate a target within 3 spaces, creating two copies which share their space. If targeted by an Attack while at least one persists, the Attack has a 50% chance of striking one of the copies, dealing no damage but destroying that illusion",
+      "action_type": "Full",
+      "tags": [
+        "Frightened",
+        "Illusionist",
+        "Magical"
+      ],
+      "text": "For a moment, you adopt a horrific visage which causes a target within 3 spaces to take 1d6 + IL psychic damage and gain a Stack of the Frightened Condition.",
+      "sections": {},
+      "class": "Illusionist"
+    },
+    {
+      "type": "class",
+      "group": "Knight",
+      "level": "Base",
+      "name": "Oath of Odium",
+      "action_type": "Free",
+      "tags": [
+        "Bonus Damage",
+        "Frightened",
+        "Knight",
+        "Spoken"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Knight"
+    },
+    {
+      "type": "class",
+      "group": "Knight",
+      "level": "Base",
+      "name": "You call out a threat to a target within 5 spaces, swearing your righteous wrath will befall them. They gain a stack of the Frightened Condition and are marked as your Sworn Enemy. As your Sworn Enemy, you are Safeguarded against all stacks of the Frightened or Charmed condition they might apply to you",
+      "action_type": "Full",
+      "tags": [
+        "Knight",
+        "Shielding",
+        "Spoken",
+        "Total Ward"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Knight"
+    },
+    {
+      "type": "class",
+      "group": "Knight",
+      "level": "Base",
+      "name": "You swear to protect an ally within 5 spaces, designating them your Sworn Charge. They are Totally Warded for a value equal to your Knight Level while your Sworn Charge, and gain Shield Points equal to 1d6 + KL whenever you end your turn adjacent to them",
+      "action_type": "Full",
+      "tags": [
+        "Attack",
+        "Knight",
+        "Melee Weapon",
+        "Physical",
+        "Shielding"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Knight"
+    },
+    {
+      "type": "class",
+      "group": "Knight",
+      "level": "Base",
+      "name": "You release a brave strike against an adjacent target, dealing 1d6 + KL damage and gaining 1d6 + KL Shield Points. If your Sworn Charge is adjacent to you or the target, they also gain those Shield Points",
+      "action_type": "Full",
+      "tags": [
+        "Attack",
+        "Knight",
+        "Melee Weapon",
+        "Physical",
+        "Shielding"
+      ],
+      "text": "You release a dignified strike against an adjacent target, dealing 1d6 + KL damage. If targeting your Sworn enemy, this Strike instead deals 2d6 + 2 (KL).",
+      "sections": {},
+      "class": "Knight"
+    },
+    {
+      "type": "class",
+      "group": "Monks",
+      "level": "Base",
+      "name": "Divination",
+      "action_type": "Full",
+      "tags": [
+        "Quickdraw",
+        "Monk",
+        "Scry"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Monks"
+    },
+    {
+      "type": "class",
+      "group": "Monks",
+      "level": "Base",
+      "name": "You Scry 3. You can choose to play any of these cards–that aren’t Reactions–in addition to the usual Scrying options",
+      "action_type": "Full",
+      "tags": [
+        "Magic",
+        "Monk",
+        "Scry",
+        "Spoken"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Monks"
+    },
+    {
+      "type": "class",
+      "group": "Monks",
+      "level": "Base",
+      "name": "You restore 2d8 + ML SP to an adjacent target",
+      "action_type": "Full",
+      "tags": [
+        "Magic",
+        "Monk",
+        "Spoken",
+        "Total Ward"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Monks"
+    },
+    {
+      "type": "class",
+      "group": "Monks",
+      "level": "Base",
+      "name": "You grant a target within 3 spaces Stacks of the Totally Warded Condition equal to 2 + ML, which last until the start of your next turn. Whenever they would be dealt damage in that time, the dealer also takes 2 + ML Dark or Radiant damage (your choice when you use this card)",
+      "action_type": "Full (or Free)",
+      "tags": [
+        "Magic",
+        "Monk",
+        "Scry",
+        "Spoken"
+      ],
+      "text": "You encant a spell of protection over your allies–targets of your choice within 2 spaces of you reduce the next instance of damage they take by 1d6 + ML. You can then Scry 2.",
+      "sections": {},
+      "class": "Monks"
+    },
+    {
+      "type": "class",
+      "group": "Necromancer",
+      "level": "Base",
+      "name": "Bone-Min",
+      "action_type": "Full",
+      "tags": [
+        "Quickdraw",
+        "Attack (Minion)",
+        "Magic",
+        "Movement (Minion)",
+        "Necromancer",
+        "Summoning"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Necromancer"
+    },
+    {
+      "type": "class",
+      "group": "Necromancer",
+      "level": "Base",
+      "name": "You call on forces of death to summon a skeletal minion, who has hit points equal to 5 + NL, a level equal to your own. The Bone-Min appears in an unoccupied space within 2 spaces of you, and as part of this card he can either move 2 spaces or Attack a creature in an adjacent space for 1d6 + NL slashing damage.\nUndead Minion. Your minion can move up to 2 spaces and Attack a creature in an adjacent space for 1d6 + NL damage",
+      "action_type": "Full",
+      "tags": [
+        "Attack",
+        "Healing",
+        "Magic",
+        "Necromancer",
+        "Shield (Minion)"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Necromancer"
+    },
+    {
+      "type": "class",
+      "group": "Necromancer",
+      "level": "Base",
+      "name": "You reach out to a target in an adjacent space, dealing 1d6 + NL lifedrain damage and regain Stamina Points equal to the damage dealt.\nUndead Minion. Your minion can move up to 2 spaces and guard an ally–any damage they take until the start of your next turn is reduced by 1d6, and the Minion can choose to reduce the damage to 0 by taking the damage itself. If the minion perishes, the protection ends",
+      "action_type": "Reaction when you are hit by an Attack",
+      "tags": [
+        "Defensive",
+        "Magic",
+        "Necromancer"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Necromancer"
+    },
+    {
+      "type": "class",
+      "group": "Necromancer",
+      "level": "Base",
+      "name": "If one of your Undead Minions is within 2 spaces of you, they can leap into the way of the blow, reducing the damage dealt to 0 at the cost of taking double the damage that would have been dealt to you",
+      "action_type": "Full",
+      "tags": [
+        "Attack",
+        "Magic",
+        "Necromancer",
+        "Ranged",
+        "Restrained (+ Minion)"
+      ],
+      "text": "You send out your shadow to cling to the legs of a creature within 3 spaces, dealing 1d6 + NL dark damage and causing them to take a stack of the Restrained Condition until the start of your next turn. If the creature moves while it has this stack, you can deal damage to it equal to your Necromancer Level",
+      "sections": {
+        "Undead Minion": "Your minion can move up to 2 spaces and cause an enemy to take a stack of the Restrained Condition so long as it is adjacent to this minion."
+      },
+      "class": "Necromancer"
+    },
+    {
+      "type": "class",
+      "group": "Potioneer",
+      "level": "Base",
+      "name": "Catalyze",
+      "action_type": "Free",
+      "tags": [
+        "Quickdraw",
+        "Alchemical",
+        "Potioneer"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Potioneer"
+    },
+    {
+      "type": "class",
+      "group": "Potioneer",
+      "level": "Base",
+      "name": "You transform a Reagent you possess into a Blinding, Burning, Excited, Hastened, Slowed, Sickened, Strengthened 5, or Weakened Reagent. If you currently possess no reagents, you instead create a Generic Reagent",
+      "action_type": "Full",
+      "tags": [
+        "Alchemical",
+        "Area",
+        "Potioneer",
+        "Slowing"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Potioneer"
+    },
+    {
+      "type": "class",
+      "group": "Potioneer",
+      "level": "Base",
+      "name": "You retrieve a satchel of sticky glue that detonates upon impact, throwing it to a space within 5 spaces, where it fills that space with adhesive. By spending a Generic Reagent, you can instead cause it to fill that space and all adjacent spaces. Creatures who start their turn in, or move into one of the spaces on their turn, are Slowed by the glue, and do not lose stacks of that condition if they end their turn within the affected area.\nSticky Reagent. You gain a reagent which can be used to apply the Slowed condition",
+      "action_type": "Full or Reaction when an ally starts their turn",
+      "tags": [
+        "Alchemical",
+        "Healing",
+        "Potioneer"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Potioneer"
+    },
+    {
+      "type": "class",
+      "group": "Potioneer",
+      "level": "Base",
+      "name": "You draw a simple restorative potion from your pouch, either drinking it yourself or tossing it to an ally within 5 spaces, who can drink it immediately as a free action. The consumer regains Stamina Points equal to 1d8 plus your Potioneer Level.\nPanacea. You can spend Positive Condition Reagents to also apply that condition alongside the SP granted by this card. By spending a Generic Reagent as part of this card’s use, the Consumer can also remove one Card from their hand, including Penatly Cards",
+      "action_type": "Full",
+      "tags": [
+        "Alchemical",
+        "Attack",
+        "Potioneer"
+      ],
+      "text": "Without taking the time to properly formulate a destructive bomb, you hurl a vial filled with unbound reagents towards a target within 5 spaces. They take damage equal to 1d6 + PL. Roll an additional d6. This roll determines the type of damage dealt.\nStench.\nSonic.\nCold.\nFire.\nLightning.\nShrapnel.",
+      "sections": {
+        "Moldable": "You can spend a Condition Reagent on this card to cause it to apply a stack of that condition in addition to damage.",
+        "Bomb Residue": "You gain a Generic Reagent."
+      },
+      "class": "Potioneer"
+    },
+    {
+      "type": "class",
+      "group": "Ranger",
+      "level": "Base",
+      "name": "Closing Fangs",
+      "action_type": "Full",
+      "tags": [
+        "Attack",
+        "Melee (Weapon + Natural)",
+        "Physical",
+        "Ranger"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Ranger"
+    },
+    {
+      "type": "class",
+      "group": "Ranger",
+      "level": "Base",
+      "name": "Both you and your beast strike at targets in spaces adjacent to each of you, possibly even the same target. You deal 1d6 + RL damage, and your companion deals 1d6 + RL damage",
+      "action_type": "Reaction at the Start of your own Turn",
+      "tags": [
+        "Magic",
+        "Ranger",
+        "Strengthened",
+        "Weakened"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Ranger"
+    },
+    {
+      "type": "class",
+      "group": "Ranger",
+      "level": "Base",
+      "name": "Either you, your beast, or both take two stacks of the Weakened Condition until the start of your next turn, at which time those afflicted lose the condition and gain the Double Strength Condition",
+      "action_type": "Full",
+      "tags": [
+        "Attack",
+        "Movement",
+        "Physical",
+        "Ranger"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Ranger"
+    },
+    {
+      "type": "class",
+      "group": "Ranger",
+      "level": "Base",
+      "name": "Either you or your beast move one space–if you are adjacent, you can switch spaces. After this movement, you or your beast can attack an adjacent enemy for 1d8 + RL damage",
+      "action_type": "Full",
+      "tags": [
+        "Dazed",
+        "Movement",
+        "Physical",
+        "Ranger",
+        "Either you or your beast move two spaces–as part of this movement",
+        "you can make one target you are or become adjacent Dazed"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Ranger"
+    },
+    {
+      "type": "class",
+      "group": "Thief",
+      "level": "Base",
+      "name": "Calculate",
+      "action_type": "Full or Free (Burned Bridge)",
+      "tags": [
+        "Quickdraw",
+        "Thief",
+        "Temporarily Quickened"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Thief"
+    },
+    {
+      "type": "class",
+      "group": "Thief",
+      "level": "Base",
+      "name": "You dedicate your turn to plotting your next move. You draw an additional card and gain the Quickened and Hastened 2 conditions at the start of your next turn, losing both at the end of your next turn",
+      "action_type": "Reaction upon taking damage",
+      "tags": [
+        "Defensive",
+        "Sneaky Movement",
+        "Thief"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Thief"
+    },
+    {
+      "type": "class",
+      "group": "Thief",
+      "level": "Base",
+      "name": "You minimize the damage of a blow by rolling with it, or rolling mostly out of the way, reducing the damage taken by 1d8 + ThL and Sneakily moving 1 space",
+      "action_type": "Full",
+      "tags": [
+        "Blinded",
+        "Bonus Damage",
+        "Melee",
+        "Physical",
+        "Sneaky Movement",
+        "Thief"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Thief"
+    },
+    {
+      "type": "class",
+      "group": "Thief",
+      "level": "Base",
+      "name": "You whip a handful of dirt or sand into the face of a target, inflicting a stack of the Blinded Condition. The next time that creature takes damage while Blinded in this way, they take an additional 1d6 + ThL",
+      "action_type": "Full",
+      "tags": [
+        "Backup Plan. You simply toss the sand to cover your escape",
+        "Sneakily moving 1 space",
+        "Disarmed",
+        "Melee",
+        "Physical",
+        "Thief"
+      ],
+      "text": "Pairing a quick strike with a quick hand, you deal 1d6 + ThL, then either grant an item on their person the Disarmed Condition or steal an item from the target’s Action Belt, or their Coin Purse.",
+      "sections": {
+        "Backup Plan": "You cause one of the weapons of a target in an Adjacent space to gain two stacks of Disarmed."
+      },
+      "class": "Thief"
+    },
+    {
+      "type": "class",
+      "group": "Thief",
+      "level": "2nd Level",
+      "name": "Drench Blade",
+      "action_type": "",
+      "tags": [],
+      "text": "Applies bonus damage to attacks with a weapon.",
+      "sections": {},
+      "class": "Thief"
+    },
+    {
+      "type": "class",
+      "group": "Thief",
+      "level": "2nd Level",
+      "name": "Envenom",
+      "action_type": "",
+      "tags": [],
+      "text": "Applies the poison condition.",
+      "sections": {},
+      "class": "Thief"
+    },
+    {
+      "type": "class",
+      "group": "Thief",
+      "level": "2nd Level",
+      "name": "Smoke Bomb",
+      "action_type": "",
+      "tags": [],
+      "text": "Applies the Unseen condition.",
+      "sections": {},
+      "class": "Thief"
+    },
+    {
+      "type": "class",
+      "group": "Thief",
+      "level": "Higher Level",
+      "name": "Nightblade",
+      "action_type": "",
+      "tags": [],
+      "text": "Deals bonus damage to restrained targets.",
+      "sections": {},
+      "class": "Thief"
+    },
+    {
+      "type": "class",
+      "group": "Thief",
+      "level": "Higher Level",
+      "name": "Shadow Meld",
+      "action_type": "",
+      "tags": [],
+      "text": "Become one with the shadows to become invisible.",
+      "sections": {},
+      "class": "Thief"
+    },
+    {
+      "type": "class",
+      "group": "Thief",
+      "level": "Higher Level",
+      "name": "Vanishing Act",
+      "action_type": "",
+      "tags": [],
+      "text": "Utilizing the chaos of battle to become effectively invisible.",
+      "sections": {},
+      "class": "Thief"
+    },
+    {
+      "type": "class",
+      "group": "Warlord",
+      "level": "Base",
+      "name": "Call to Arms",
+      "action_type": "Full",
+      "tags": [
+        "Attack",
+        "Melee Weapon",
+        "Physical",
+        "Warlord"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Warlord"
+    },
+    {
+      "type": "class",
+      "group": "Warlord",
+      "level": "Base",
+      "name": "You slash at an adjacent foe, directing allies to follow suit; you deal 1d10 + WaL damage, and the creature gains a stack of the Vulnerable Condition until the start of your next turn.\nCommand. You command an ally to strike at a creature, dealing 1d10 + WaL damage to it with the type and range determined by any of their Base Cards, Class or Fighting Style. This damage type can be chosen from one of the Base Cards of their Fighting Style. The next time you deal damage to it, it takes additional damage as though it had a stack of the Vulnerable Condition",
+      "action_type": "Free",
+      "tags": [
+        "Predicted",
+        "Warlord"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Warlord"
+    },
+    {
+      "type": "class",
+      "group": "Warlord",
+      "level": "Base",
+      "name": "You cause a target within 5 spaces to gain the Predicted Condition",
+      "action_type": "Full",
+      "tags": [
+        "Quickdraw"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Warlord"
+    },
+    {
+      "type": "class",
+      "group": "Warlord",
+      "level": "Base",
+      "name": "Warlord",
+      "action_type": "Full",
+      "tags": [
+        "Quickdraw",
+        "Attack",
+        "Melee Weapon",
+        "Physical",
+        "Warlord"
+      ],
+      "text": "You slash a creature in an adjacent space, dealing 1d8 + WaL damage. If the damage is reduced in any way–including being blocked by Shield Points–you can also cause a weapon on the target to be Disarmed.",
+      "sections": {
+        "Command": "You command an Ally to Attack a target in an adjacent space, dealing 1d8 + WaL damage."
+      },
+      "class": "Warlord"
+    },
+    {
+      "type": "class",
+      "group": "Wizard",
+      "level": "Base",
+      "name": "Bursting Magelight",
+      "action_type": "Full (or Free)",
+      "tags": [
+        "Attack",
+        "Blinded",
+        "Wizard",
+        "Spoken"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Wizard"
+    },
+    {
+      "type": "class",
+      "group": "Wizard",
+      "level": "Base",
+      "name": "Creating a potent illuminating sphere, you hurl it towards a target within 5 spaces, who is Blinded. You can then choose to spend a Mana Token to detonate the sphere, either in a burst of radiance or searing light. With the former, creatures in adjacent spaces are also Blinded, and with the latter the creature takes 1d6 + WiL Light damage.\nGather Mana. Alternatively, as a Free Action you can discard this card to gather 1 Mana Token",
+      "action_type": "Full (or Free)",
+      "tags": [
+        "Magic",
+        "Spoken",
+        "Wizard"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Wizard"
+    },
+    {
+      "type": "class",
+      "group": "Wizard",
+      "level": "Base",
+      "name": "You speak life into a tome and hurl it towards a target within 3 squares. They take 1d6 + WiL bludgeoning damage before it returns to your possession. By spending one or more Mana Tokens, you can cause it to remain animated to harass the target, dealing an additional 1d6 bludgeoning damage whenever it takes a Full Action or Moves (you decide which when you spend the mana Tokens). It remains for a number of their turns equal to the Mana Tokens you spend, then returns to your possession.\nGather Mana. Alternatively, as a Free Action you can discard this card to gather 1 Mana Token",
+      "action_type": "Full (or Free)",
+      "tags": [
+        "Attack",
+        "Magic",
+        "Wizard",
+        "Spoken"
+      ],
+      "text": "",
+      "sections": {},
+      "class": "Wizard"
+    },
+    {
+      "type": "class",
+      "group": "Wizard",
+      "level": "Base",
+      "name": "You conjure a shower of sparks which set a target within 3 spaces ablaze, dealing 1d8 + WiL fire damage. By spending a Mana Token, you can cause the target to have the Burning (1d6) Condition.\nGather Mana. Alternatively, as a Free Action you can discard this card to gather 1 Mana Token",
+      "action_type": "Reaction upon taking Damage (or Free)",
+      "tags": [
+        "Magic",
+        "Wizard",
+        "Shielding",
+        "Spoken"
+      ],
+      "text": "You conjure a magic barrier, granting yourself 1d6 + WiL Shield Points before taking the provoking damage. You can also gain an additional 5 ShP for each Mana Token you spend as part of using this card–you can take Free Actions to discard Wizard Cards as part of this reaction.",
+      "sections": {
+        "Gather Mana": "Alternatively, as a Free Action you can discard this card to gather 1 Mana Token."
+      },
+      "class": "Wizard"
+    },
+    {
+      "type": "class",
+      "group": "Wizard",
+      "level": "2nd Level",
+      "name": "Rushing Gale",
+      "action_type": "Full",
+      "tags": [
+        "Quickdraw",
+        "Area",
+        "Pushing",
+        "Spoken",
+        "Wizard"
+      ],
+      "text": "You conjure a gale to blow creatures away, targeting three adjacent spaces all of which must be within 5 spaces of you. Creatures in those spaces are all blown the same direction. If pushed into a wall or another creature not affected by this card, they take 1d6 + WL bludgeoning (or CS) damage. If pushed into a creature, the damage is split equally between the two, extra in favor of the pushed creature.",
+      "sections": {
+        "Gather Mana": "Alternatively, as a Full Action you can discard this card to gather 3 Mana Tokens."
+      },
+      "class": "Wizard"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Archery",
+      "level": "Base",
+      "name": "Deft Aim",
+      "action_type": "Full",
+      "tags": [
+        "Archery",
+        "Attack",
+        "Ranged",
+        "Physical"
+      ],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Archery",
+      "associated_special_damage_type": "Varied"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Archery",
+      "level": "Base",
+      "name": "You aim around the defenses of a target within 5 spaces, dealing 1d8 + TL damage which deals double damage to Shield Points. If you expend an Ammunition Token, it instead either deals triple damage to Shield Points or bypasses them, your choice",
+      "action_type": "Full",
+      "tags": [
+        "Archery",
+        "Sneaky Movement",
+        "You take a deft Sneaky movement 1 space",
+        "then gain 1 Ammunition Token. If you choose not to move",
+        "you can instead gain 2 Ammunition Tokens"
+      ],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Archery",
+      "associated_special_damage_type": "Varied"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Archery",
+      "level": "Third Base",
+      "name": "Long Shot",
+      "action_type": "Full",
+      "tags": [
+        "Archery",
+        "Attack",
+        "Ranged",
+        "Physical"
+      ],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Archery",
+      "associated_special_damage_type": "Varied"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Archery",
+      "level": "Third Base",
+      "name": "You loose an arrow at a distant target within 10 spaces, dealing 1d6 + TL damage. If you expend an Ammunition Token, it deals an additional point of damage for each space between you and the target",
+      "action_type": "Full",
+      "tags": [
+        "Area",
+        "Archery",
+        "Ranged",
+        "Physical"
+      ],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Archery",
+      "associated_special_damage_type": "Varied"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Archery",
+      "level": "Third Base",
+      "name": "You loose a powerful arrow in a line up to five spaces long extending from you. The first two creatures in that line take 1d6 + TL damage. For each Ammunition Token you expend, you can affect the next creature in that line",
+      "action_type": "Full",
+      "tags": [
+        "Archery",
+        "Attack",
+        "Melee",
+        "Physical",
+        "You loose an arrow at an adjacent target",
+        "dealing 1d10 + TL damage. If you expend an Ammunition Token",
+        "it deals an additional 1d10 damage"
+      ],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Archery",
+      "associated_special_damage_type": "Varied"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Bumbling",
+      "level": "Base",
+      "name": "Accidental Defence",
+      "action_type": "Reaction when you or an ally takes damage from an attack",
+      "tags": [
+        "Any Object"
+      ],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Bumbling",
+      "associated_special_damage_type": "Psychic"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Bumbling",
+      "level": "Base",
+      "name": "Lunging forward, perhaps intending to attack, perhaps by accident, you partially parry the damage, reducing the damage by 1d6 + Total Level. If a weapon was used, you can choose for it to become briefly stuck in whatever object you used, granting it a Disarmed stack, in return for your own object being destroyed",
+      "action_type": "Full",
+      "tags": [
+        "Any Object"
+      ],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Bumbling",
+      "associated_special_damage_type": "Psychic"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Bumbling",
+      "level": "Base",
+      "name": "You huck an object from your pack or person at a target within 3 spaces, dealing 1d4 + Total Level and causing them to be Temporary Vulnerable. Additionally, the next time the target takes damage from an ally of yours before the start of your next turn, they take an additional damage equal to your Total Level, and gain a second stack of the Temporary Vulnerable condition",
+      "action_type": "Reaction on taking damage",
+      "tags": [
+        "Unarmed"
+      ],
+      "text": "Dodging damage more by happenstance than intent, you reduce damage taken by 1d6 + Total Level. In return for taking a stack of the Temporary Vulnerable Condition, you can also choose to Sneakily move 1 space.",
+      "sections": {},
+      "fighting_style": "Bumbling",
+      "associated_special_damage_type": "Psychic"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Chanting",
+      "level": "Base",
+      "name": "Blessings of the Wind",
+      "action_type": "Full",
+      "tags": [
+        "Magic",
+        "Movement",
+        "Resonance",
+        "Spoken"
+      ],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Chanting",
+      "associated_special_damage_type": "Varied"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Chanting",
+      "level": "Base",
+      "name": "You entreat spirits of wind to speed your allies, choosing any 3 targets within 3 squares, which can include yourself, and increasing their movement speeds by 2 until the start of your next turn. A creature who uses all of their movement and bonus movement before hitting a creature with a Melee strike deals bonus damage equal to your Total Level, plus your Resonance Token count",
+      "action_type": "Full",
+      "tags": [
+        "Cold",
+        "Defensive",
+        "Fire",
+        "Magic",
+        "Resonance",
+        "Spoken"
+      ],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Chanting",
+      "associated_special_damage_type": "Varied"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Chanting",
+      "level": "Base",
+      "name": "You speak into existence a barrier against either Cold or Fire which guards a creature of your choice within 3 squares by shielding them with the opposite element until the end of Combat. They reduce any of that damage taken by ten times your Total Level plus your RT Count. Additionally, any creature who hits them with Melee damage takes damage of the shielding type equal to your 1d4 + Your Total Level",
+      "action_type": "Full",
+      "tags": [
+        "Enchanted",
+        "Magic",
+        "Movement",
+        "Resonance",
+        "Spoken"
+      ],
+      "text": "You weave a spell upon a Weapon within 3 squares, allowing it to ignore the first stack of the Disarmed condition, and causing it to be Enchanted. While Enchanted in this way, the bonus damage dealt is increased by your Resonance count.",
+      "sections": {},
+      "fighting_style": "Chanting",
+      "associated_special_damage_type": "Varied"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Daggers",
+      "level": "Base",
+      "name": "Backstab",
+      "action_type": "Full",
+      "tags": [
+        "Attack",
+        "Dagger",
+        "Melee",
+        "Physical"
+      ],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Daggers",
+      "associated_special_damage_type": "Negative"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Daggers",
+      "level": "Base",
+      "name": "You stab a target in an adjacent space for 1d4 + Total Level. If you have an ally in a space also adjacent to the target, you deal 1d6 + Total Level instead. If the ally is directly opposite you on the target’s other side, the damage is increased to 1d10 + Total Level",
+      "action_type": "Full",
+      "tags": [
+        "Attack",
+        "Bleeding Dagger",
+        "Physical",
+        "Ranged"
+      ],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Daggers",
+      "associated_special_damage_type": "Negative"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Daggers",
+      "level": "Base",
+      "name": "With a flick of your wrist, you hurl your weapon towards a target within 3 squares (granting the weapon used two stacks of Disarmed). The target takes 1d6 + Total Level. Before rolling this damage, you can choose to gamble by aiming for a small weakspot on your target. Roll a d20. On an 11 or higher, you hit, dealing 2d6 + Total Level instead and grant the target Bleeding Stacks equal to the value rolled on the dice. However, on a 10 or lower, the dagger misses, and no damage is dealt",
+      "action_type": "Full",
+      "tags": [
+        "Attack",
+        "Dagger",
+        "Melee",
+        "Movement",
+        "Physical",
+        "Sneaky"
+      ],
+      "text": "You slash a target in an adjacent space for 1d6 + Total Level, and can then Sneakily slide through their space to any other space adjacent to that target–assuming that space wouldn’t be further away than your base movement speed.",
+      "sections": {},
+      "fighting_style": "Daggers",
+      "associated_special_damage_type": "Negative"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Evocation",
+      "level": "Base",
+      "name": "Fireball",
+      "action_type": "Full",
+      "tags": [
+        "Evocation Focus",
+        "Area Effect",
+        "Fire",
+        "Magical",
+        "Metamagic",
+        "Evocation"
+      ],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Evocation",
+      "associated_special_damage_type": "Varied"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Evocation",
+      "level": "Base",
+      "name": "You huck a brilliant bead of energy towards a square of four spaces, the furthest of which must be within 6 spaces of you, where it explodes in a wave of flames. Those within take 1d6 + TL fire damage",
+      "action_type": "Full",
+      "tags": [
+        "Evocation Focus",
+        "Area Effect",
+        "Fire",
+        "Magical",
+        "Metamagic",
+        "Evocation"
+      ],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Evocation",
+      "associated_special_damage_type": "Varied"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Evocation",
+      "level": "Base",
+      "name": "You cast a wave of rolling mist across the floor in a 6 square cone extending from you. Creatures in that area take 1d4 + TL cold damage. Creatures who start their next turn in that area take an Temporary Vulnerable Stack",
+      "action_type": "Full",
+      "tags": [
+        "Evocation Focus",
+        "Area Effect",
+        "Fire",
+        "Magical",
+        "Metamagic",
+        "Evocation"
+      ],
+      "text": "You loose a bolt of lightning through a line of 5 spaces extending out from you. Creatures in that area take 1d8 + TL lightning damage.",
+      "sections": {},
+      "fighting_style": "Evocation",
+      "associated_special_damage_type": "Varied"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Fencing",
+      "level": "Base",
+      "name": "Cobra Stance",
+      "action_type": "Full and Reaction a target moves into or out of an adjacent space",
+      "tags": [
+        "Fencing Weapon",
+        "Mark",
+        "Melee",
+        "Physical",
+        "Restrained"
+      ],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Fencing",
+      "associated_special_damage_type": "Ice"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Fencing",
+      "level": "Base",
+      "name": "You take a defensive stance, ready to strike when your opponents leave themselves open. When a target moves into or out of a space adjacent to you, you can choose to deal 1d8 + TL damage to them and end that target’s movement for that turn as though they’d gained 3 Stacks of the Restrained Condition, which then vanish at the end of their turn. If that target was Marked, you can choose to consume the marks on them to deal additional damage equal to 3 per Mark",
+      "action_type": "Reaction when you take damage from an adjacent creature",
+      "tags": [
+        "Fencing Weapon",
+        "Mark",
+        "Melee",
+        "Physical"
+      ],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Fencing",
+      "associated_special_damage_type": "Ice"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Fencing",
+      "level": "Base",
+      "name": "You deftly use your weapon to deflect some of the damage (reducing it by 1d6 + TL), then can either apply 1 Mark to the target or dart in a direction of your choice. Specifically, you can move one space, or you can choose to rush into a target in an adjacent space, causing them to be Temporary Vulnerable while you bounce back into your initial space",
+      "action_type": "Full",
+      "tags": [
+        "Fencing Weapon",
+        "Mark",
+        "Melee",
+        "Physical"
+      ],
+      "text": "You lunge at a foe, targeting their weak points with impeccable precision, dealing 1d8 + Total Level damage. This damage is doubled against Shield Points. If the target doesn’t have any Shield Points and takes this damage, they gain 1 Mark..",
+      "sections": {},
+      "fighting_style": "Fencing",
+      "associated_special_damage_type": "Ice"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Healing",
+      "level": "Base",
+      "name": "Antidote",
+      "action_type": "Full",
+      "tags": [
+        "Healing",
+        "Healing Kit",
+        "Medicine",
+        "Physical",
+        "You apply an antitoxin",
+        "removing up to 10 Stacks of the Poisoned condition from an adjacent ally"
+      ],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Healing",
+      "associated_special_damage_type": "Poison"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Healing",
+      "level": "Base",
+      "name": "Medicine. Restore 1d6 + TL SP",
+      "action_type": "Full",
+      "tags": [
+        "Attack Alternative Medicine",
+        "Healing Kit",
+        "Physical",
+        "You apply a searing press to a wound",
+        "removing up to 10 Stacks of the Bleeding condition from an adjacent ally",
+        "Alternative Medicine. You deal fire damage to the target equal to 1d4 + TL",
+        "and it gains a stack of the Burning Condition"
+      ],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Healing",
+      "associated_special_damage_type": "Poison"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Healing",
+      "level": "Base",
+      "name": "Snap out of it!",
+      "action_type": "Full",
+      "tags": [
+        "Healing",
+        "Healing Kit",
+        "Medicine",
+        "Physical or Spoken",
+        "You call a nervous ally back to reality",
+        "removing a stack of the Frightened Condition from an adjacent ally",
+        "or an ally within 3 spaces"
+      ],
+      "text": "",
+      "sections": {
+        "Medicine": "Adjacent target only. Restore 1d6 + TL SP."
+      },
+      "fighting_style": "Healing",
+      "associated_special_damage_type": "Poison"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Healing",
+      "level": "2nd Level",
+      "name": "Smelling Salts",
+      "action_type": "Full",
+      "tags": [
+        "Healing",
+        "Healing Kit",
+        "Medicine",
+        "Physical",
+        "With chemical aid",
+        "you remove a stack of the Charmed or Slowed Condition from an adjacent Ally"
+      ],
+      "text": "",
+      "sections": {
+        "Alternative Medicine": "You grant an ally a Stack of the Excited or Hastened Condition."
+      },
+      "fighting_style": "Healing",
+      "associated_special_damage_type": "Poison"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Heavy Weapons",
+      "level": "Base",
+      "name": "Cleave!",
+      "action_type": "Full",
+      "tags": [
+        "Area",
+        "Exploding 1",
+        "Heavy Weapon",
+        "Melee",
+        "Physical",
+        "Strain 1"
+      ],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Heavy Weapons",
+      "associated_special_damage_type": "Fire"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Heavy Weapons",
+      "level": "Base",
+      "name": "You take a heroic, powerful swing which affects up to 3 adjacent squares each of which must be adjacent to you. Targets within take 1d8 + TL damage, increased to 1d10 + TL if two spaces are targeted, or 1d12 + TL if just one space is targeted",
+      "action_type": "Full",
+      "tags": [
+        "Attack",
+        "Exploding 2",
+        "Heavy Weapon",
+        "Melee",
+        "Physical",
+        "Strain 1"
+      ],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Heavy Weapons",
+      "associated_special_damage_type": "Fire"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Heavy Weapons",
+      "level": "Base",
+      "name": "You cleave downwards with murderous intent at a target in an adjacent space. It takes 2d6 + TL damage. If one of the dice would be rerolled because of the Exploding tag, you can forgo rerolling to instead have the attack grant the target a stack of the Weakened condition",
+      "action_type": "Full",
+      "tags": [
+        "Attack",
+        "Exploding 1",
+        "Heavy Weapon",
+        "Melee",
+        "Physical",
+        "Strain 1"
+      ],
+      "text": "You strike a foe with incredible impact aimed at their center of mass, targeting a creature in an adjacent space. They take 1d10 + TL damage, and are Pushed 1 space.",
+      "sections": {},
+      "fighting_style": "Heavy Weapons",
+      "associated_special_damage_type": "Fire"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Heavy Weapons",
+      "level": "2nd Level",
+      "name": "Crescent Slash",
+      "action_type": "Full",
+      "tags": [
+        "Area",
+        "Exploding 2",
+        "Heavy Weapon",
+        "Ranged",
+        "Physical",
+        "Strain 1",
+        "You sweep your blade in a direction",
+        "sending a crescent of martial energy in a 3 space cone. Targets within that area take 2d6 + TL damage"
+      ],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Heavy Weapons",
+      "associated_special_damage_type": "Fire"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Heavy Weapons",
+      "level": "2nd Level",
+      "name": "Irresponsible Swing",
+      "action_type": "Full",
+      "tags": [
+        "Attack",
+        "Exploding 2",
+        "Heavy Weapon",
+        "Melee",
+        "Physical",
+        "Strain 1"
+      ],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Heavy Weapons",
+      "associated_special_damage_type": "Fire"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Heavy Weapons",
+      "level": "2nd Level",
+      "name": "You strike a target in an adjacent space, then follow through to hit an inanimate target such as a floor, wall, or load-bearing column adjacent to both you and the target. The initial target takes 1d12 + TL damage, and the inanimate collateral takes double that",
+      "action_type": "Full",
+      "tags": [
+        "Heavy Weapon",
+        "Physical"
+      ],
+      "text": "You raise your blade, calming your mind and steadying your body in preparation for your next attack. You lose one Strain Token, and your next Heavy Weapon Card deals additional damage equal to your TL.",
+      "sections": {},
+      "fighting_style": "Heavy Weapons",
+      "associated_special_damage_type": "Fire"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Heavy Weapons",
+      "level": "3rd Level",
+      "name": "Follow Through",
+      "action_type": "",
+      "tags": [],
+      "text": "A free action which can be used to deal damage to a secondary target if a first one is reduced to 0 SP.",
+      "sections": {},
+      "fighting_style": "Heavy Weapons",
+      "associated_special_damage_type": "Fire"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Heavy Weapons",
+      "level": "3rd Level",
+      "name": "Pommel Hammer",
+      "action_type": "",
+      "tags": [],
+      "text": "A stunning blow made with the hilt or pommel of the blade.",
+      "sections": {},
+      "fighting_style": "Heavy Weapons",
+      "associated_special_damage_type": "Fire"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Heavy Weapons",
+      "level": "3rd Level",
+      "name": "Leaping Crescent",
+      "action_type": "",
+      "tags": [],
+      "text": "A slash which targets multiple spaces vertically, dealing bonus damage if the target takes up more than one of those spaces.",
+      "sections": {},
+      "fighting_style": "Heavy Weapons",
+      "associated_special_damage_type": "Fire"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Heavy Weapons",
+      "level": "3rd Level",
+      "name": "Barreling Blow",
+      "action_type": "",
+      "tags": [],
+      "text": "You crash into your target, pushing them back and then moving into the emptied space.",
+      "sections": {},
+      "fighting_style": "Heavy Weapons",
+      "associated_special_damage_type": "Fire"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Heavy Weapons",
+      "level": "3rd Level",
+      "name": "Full Moon Slash",
+      "action_type": "",
+      "tags": [],
+      "text": "You deal damage to all spaces around you.",
+      "sections": {},
+      "fighting_style": "Heavy Weapons",
+      "associated_special_damage_type": "Fire"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Heavy Weapons",
+      "level": "3rd Level",
+      "name": "Overswing",
+      "action_type": "",
+      "tags": [],
+      "text": "You deal damage to a target which cannot be reduced or dodged by movement.",
+      "sections": {},
+      "fighting_style": "Heavy Weapons",
+      "associated_special_damage_type": "Fire"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Heavy Weapons",
+      "level": "3rd Level",
+      "name": "Unicorn Slash",
+      "action_type": "",
+      "tags": [],
+      "text": "An overhead swing which attacks targets on either side of you.",
+      "sections": {},
+      "fighting_style": "Heavy Weapons",
+      "associated_special_damage_type": "Fire"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Heavy Weapons",
+      "level": "3rd Level",
+      "name": "Silver Blade",
+      "action_type": "",
+      "tags": [],
+      "text": "An attack which uses small damage dice to maximize the chances of exploding dice.",
+      "sections": {},
+      "fighting_style": "Heavy Weapons",
+      "associated_special_damage_type": "Fire"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Heavy Weapons",
+      "level": "3rd Level",
+      "name": "Heavy Breath",
+      "action_type": "",
+      "tags": [],
+      "text": "Reduces strain and restores SP with the chance to have those restorative dice explode.",
+      "sections": {},
+      "fighting_style": "Heavy Weapons",
+      "associated_special_damage_type": "Fire"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Heavy Weapons",
+      "level": "3rd Level",
+      "name": "Frustrated Blade",
+      "action_type": "",
+      "tags": [],
+      "text": "An attack with a large damage die which is returned to the hand on use if its die doesn’t explode. Each time it’s returned to the hand in this way, it deals an additional die of damage.",
+      "sections": {},
+      "fighting_style": "Heavy Weapons",
+      "associated_special_damage_type": "Fire"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Heavy Weapons",
+      "level": "3rd Level",
+      "name": "Bonfire",
+      "action_type": "",
+      "tags": [],
+      "text": "Reduces strain, and also lights the user’s blade on fire.",
+      "sections": {},
+      "fighting_style": "Heavy Weapons",
+      "associated_special_damage_type": "Fire"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Polearm",
+      "level": "Base",
+      "name": "Charge",
+      "action_type": "Full",
+      "tags": [
+        "Attack",
+        "Melee",
+        "Movement",
+        "Physical",
+        "Polearm"
+      ],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Polearm",
+      "associated_special_damage_type": "Lightning"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Polearm",
+      "level": "Base",
+      "name": "You unleash a roaring charge, moving up to 3 spaces in a straight line towards a target up to 2 spaces away from your ending point, dealing 1d8 + TL damage, plus an additional 2 damage for each space moved on your turn thus far (including movement taken before this card’s use",
+      "action_type": "Full",
+      "tags": [
+        "Area",
+        "Melee",
+        "Physical",
+        "Polearm"
+      ],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Polearm",
+      "associated_special_damage_type": "Lightning"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Polearm",
+      "level": "Base",
+      "name": "You unleash a potent blow straight through a target, affecting both an adjacent space and the space directly behind it from you. Targets in those spaces take 1d8 + TL damage",
+      "action_type": "Reaction when a creature moves into a space adjacent to you",
+      "tags": [
+        "Attack",
+        "Melee",
+        "Movement",
+        "Physical",
+        "Polearm",
+        "You strike the approaching creature for 1d8 + TL damage",
+        "plus an additional 2 damage for each space it moved in a direct line towards you on its turn",
+        "Sword and Shield"
+      ],
+      "text": "Associated Special Damage Type: Light\nSword and Shield cards often contain two potential actions–when you play one, you pick which option you’re using. The other is ignored for that usage.",
+      "sections": {},
+      "fighting_style": "Polearm",
+      "associated_special_damage_type": "Lightning"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Polearm",
+      "level": "Base",
+      "name": "Bash and Slash",
+      "action_type": "Full",
+      "tags": [
+        "Attack",
+        "Melee",
+        "Physical",
+        "Sword or Shield"
+      ],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Polearm",
+      "associated_special_damage_type": "Lightning"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Polearm",
+      "level": "Base",
+      "name": "Shield. You crash into a target in an adjacent space, dealing 1d6 damage + Total Level and causing the target to be Slowed.\nSword. You slash at a target for .1d6 + TL damage. If the target is Slowed, you deal an additional 1d6 damage",
+      "action_type": "Reaction, when a creature  in an adjacent space is targeted by an attack",
+      "tags": [
+        "Attack",
+        "Melee",
+        "Physical",
+        "Sword or Shield"
+      ],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Polearm",
+      "associated_special_damage_type": "Lightning"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Polearm",
+      "level": "Base",
+      "name": "Shield. You leap between the target and its attacker, forcing the attack to target yourself instead and reducing the damage taken by 1d6 + Total Level. As part of this, you can also choose to switch spaces with the targeted creature.\nSword.  You slash at the attacker, dealing 1d6 + TL damage before their attack lands. If this damage reduces them to 0 Stamina, their action is prevented",
+      "action_type": "Full",
+      "tags": [
+        "Attack",
+        "Melee",
+        "Physical",
+        "Sword and Shield"
+      ],
+      "text": "Making a cautious strike, you lash out towards a creature in an adjacent space–that creature takes 1d6 + Total Level damage, and you gain Shield Points equal to 1d6 + Total Level.",
+      "sections": {},
+      "fighting_style": "Polearm",
+      "associated_special_damage_type": "Lightning"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Staff",
+      "level": "Base",
+      "name": "Double Strike",
+      "action_type": "Full",
+      "tags": [
+        "Attack",
+        "Capitalization",
+        "Melee",
+        "Physical",
+        "Staff",
+        "Temporary Vulnerable"
+      ],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Staff",
+      "associated_special_damage_type": "Sonic"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Staff",
+      "level": "Base",
+      "name": "You strike a target in an adjacent space with both ends of your staff in rapid succession, dealing 2d3 + TL damage and granting it one stack of the Vulnerable condition which lasts until the end of your next turn",
+      "action_type": "Full",
+      "tags": [
+        "Attack",
+        "Dazzling",
+        "Capitalization",
+        "Melee",
+        "Physical",
+        "Staff",
+        "You whack a target in an adjacent space right in the face or eyes",
+        "dealing 1d6 + TL damage and granting it one stack of the Dazzled condition"
+      ],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Staff",
+      "associated_special_damage_type": "Sonic"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Staff",
+      "level": "Base",
+      "name": "Slowed Capitalization. If the target had any stacks of the Slowed or Restrained Condition, you can choose to deal an additional 1d6 damage or to apply a second stack of the Blinded condition",
+      "action_type": "Full",
+      "tags": [
+        "Attack",
+        "Capitalization",
+        "Melee",
+        "Physical",
+        "Slowed",
+        "Staff"
+      ],
+      "text": "You strike a target in an adjacent space for 1d6 + TL damage, and grant it one stack of the Slowed condition.\nVulnerable Capitalization. If the target was Vulnerable, you can deal an additional 1d6 damage, or inflict an additional stack of the Slowed condition.",
+      "sections": {},
+      "fighting_style": "Staff",
+      "associated_special_damage_type": "Sonic"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Twin Blades",
+      "level": "Base",
+      "name": "Spinning Defense",
+      "action_type": "Full",
+      "tags": [
+        "Attack",
+        "Defense",
+        "Exertion",
+        "Melee",
+        "Physical",
+        "Twin Blades"
+      ],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Twin Blades",
+      "associated_special_damage_type": "Lifedrain"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Twin Blades",
+      "level": "Base",
+      "name": "You whirl your blades defensively, catching blows and deflecting arrows–until the start of your next turn, all Physical damage you take is reduced by 1d6 + TL",
+      "action_type": "Full",
+      "tags": [
+        "Exertion. At the cost of 4 SP",
+        "each time you reduce damage from an adjacent source",
+        "you can also choose to deal 1d6 damage to that target",
+        "Attack",
+        "Exertion",
+        "Melee",
+        "Physical",
+        "Twin Blades"
+      ],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Twin Blades",
+      "associated_special_damage_type": "Lifedrain"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Twin Blades",
+      "level": "Base",
+      "name": "You strike a target in an adjacent space with each weapon, dealing 2d4 + TL damage.\nExertion. At the cost of 4 SP, you can instead make two attacks–possibly against two separate targets–for 1d8 + TL each",
+      "action_type": "Reaction when a target in an adjacent space takes an Attack",
+      "tags": [
+        "Attack",
+        "Exertion",
+        "Melee",
+        "Physical",
+        "Twin Blades",
+        "You opportunistically slash at a distracted target in an adjacent space",
+        "dealing 2d6 + TL damage",
+        "Exertion. At the cost of 4 SP",
+        "you can reduce the damage they deal with that Attack by 50%",
+        "Unarmed"
+      ],
+      "text": "Associated Special Damage Type:\nStances. Many Unarmed cards put you into Stances, which grant additional benefits until your Stance changes.",
+      "sections": {},
+      "fighting_style": "Twin Blades",
+      "associated_special_damage_type": "Lifedrain"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Twin Blades",
+      "level": "Base",
+      "name": "Arms Up",
+      "action_type": "Full",
+      "tags": [
+        "Attack",
+        "Melee",
+        "Physical",
+        "Stance",
+        "Unarmed",
+        "You fire off a quick jab at a target in an adjacent space",
+        "dealing 1d6 + TL damage and then taking a Defensive Stance"
+      ],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Twin Blades",
+      "associated_special_damage_type": "Lifedrain"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Twin Blades",
+      "level": "Base",
+      "name": "Defensive Stance. You reduce all damage you take by 1 + TL",
+      "action_type": "Full",
+      "tags": [
+        "Effect",
+        "Melee",
+        "Physical",
+        "Restrained",
+        "Stance",
+        "Unarmed"
+      ],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Twin Blades",
+      "associated_special_damage_type": "Lifedrain"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Twin Blades",
+      "level": "Base",
+      "name": "You hurl yourself towards a target in an adjacent space, granting them a stack of the Restrained Condition. While restraining a creature in this way, you can choose to move along with a creature who moves. You then enter the Pinning Stance",
+      "action_type": "Full",
+      "tags": [
+        "Attack",
+        "Melee",
+        "Movement",
+        "Physical",
+        "Stance",
+        "Unarmed"
+      ],
+      "text": "You leap up to 2 spaces, then strike a target in a then adjacent space for 1d6 + TL damage. You then enter the Mobile Stance.\nMobile Stance. Your movement speed is increased by 1.\nWildcard\nA rather unique fighting style, when you choose this option you gain only a single Base Card–you then choose three different fighting styles and pick one card from each, also gaining a weapon token of your choice from each. Each successive level, you roll twice to randomly determine two fighting styles, picking a card from each. Though this will leave you with far more cards than your average player character, their synergy is no guarantee.",
+      "sections": {},
+      "fighting_style": "Twin Blades",
+      "associated_special_damage_type": "Lifedrain"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Words of Power",
+      "level": "Base",
+      "name": "Barrier",
+      "action_type": "Reaction, when a target (including yourself) within 4 spaces would be damaged",
+      "tags": [],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Words of Power",
+      "associated_special_damage_type": "Varied"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Words of Power",
+      "level": "Base",
+      "name": "Spoken",
+      "action_type": "Full",
+      "tags": [],
+      "text": "",
+      "sections": {},
+      "fighting_style": "Words of Power",
+      "associated_special_damage_type": "Varied"
+    },
+    {
+      "type": "fighting_style",
+      "group": "Words of Power",
+      "level": "Base",
+      "name": "Spoken",
+      "action_type": "Full",
+      "tags": [],
+      "text": "Spoken.\nYou demand a target who can hear you (they need not understand, the noise must merely reach them) within 4 squares cease to move–they become Restrained until the end of your next turn. For each Total Level above 1st, you may target one additional creature with this card. A creature who continues to move while restrained in this way takes psychic damage equal to your Total Level for each space moved.",
+      "sections": {},
+      "fighting_style": "Words of Power",
+      "associated_special_damage_type": "Varied"
+    }
+  ]
+}
