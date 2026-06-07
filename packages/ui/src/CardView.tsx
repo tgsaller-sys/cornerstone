@@ -97,6 +97,9 @@ function CardGlyph({ card }: { readonly card: Card }) {
 }
 
 export function CardView({ card, selected = false, disabled = false, onClick }: CardViewProps) {
+  const classLabel = card.classTitle ?? card.classId ?? "";
+  const tagsLabel = card.tags?.join(" - ") ?? "";
+  const titleText = [classLabel, tagsLabel, card.longDescription].filter((text) => text.length > 0).join("\n");
   const tapAndHoverProps = disabled
     ? {}
     : {
@@ -116,16 +119,26 @@ export function CardView({ card, selected = false, disabled = false, onClick }: 
       onClick={() => onClick?.(card)}
       aria-pressed={selected}
       aria-label={card.title}
-      title={card.longDescription}
+      title={titleText}
     >
       <svg viewBox="0 0 120 168" role="img" aria-hidden="true">
         <rect x="2" y="2" width="116" height="164" rx="10" />
         <text x="60" y="24" className="cornerstone-card-title" textAnchor="middle">
           {card.title}
         </text>
-        <g transform="translate(0 18) scale(0.62)">
+        {classLabel.length > 0 ? (
+          <text x="60" y="36" className="cornerstone-card-class" textAnchor="middle">
+            {classLabel}
+          </text>
+        ) : null}
+        <g transform="translate(0 23) scale(0.58)">
           <CardGlyph card={card} />
         </g>
+        {tagsLabel.length > 0 ? (
+          <foreignObject x="11" y="96" width="98" height="19">
+            <p className="cornerstone-card-tags">{tagsLabel}</p>
+          </foreignObject>
+        ) : null}
         <text x="60" y="122" className="cornerstone-card-short" textAnchor="middle">
           {card.shortDescription}
         </text>

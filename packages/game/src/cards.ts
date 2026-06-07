@@ -90,6 +90,8 @@ const generatedClassCards = classCards.map((card, cardIndex): Card => {
     id: cardId,
     deckId: `class-${classId}`,
     classId,
+    classTitle: card.class,
+    tags: card.tags,
     title: card.name,
     shortDescription: `${card.level} - ${card.action_type}`,
     longDescription: card.text,

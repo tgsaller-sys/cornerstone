@@ -87,10 +87,32 @@
   font-weight: 900;
 }
 
+.cornerstone-card-class {
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: 6px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
 .cornerstone-card-short {
   font-family: Inter, ui-sans-serif, system-ui, sans-serif;
-  font-size: 9px;
+  font-size: 8px;
   font-weight: 900;
+}
+
+.cornerstone-card-tags {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  color: #70512f;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: 4.8px;
+  font-weight: 900;
+  line-height: 1.05;
+  text-align: center;
+  text-transform: uppercase;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .cornerstone-card-long {

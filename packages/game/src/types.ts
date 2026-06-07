@@ -10,6 +10,8 @@ export interface Card {
   readonly id: CardId;
   readonly deckId: DeckId;
   readonly classId?: ClassId;
+  readonly classTitle?: string;
+  readonly tags?: readonly string[];
   readonly title: string;
   readonly shortDescription: string;
   readonly longDescription: string;
