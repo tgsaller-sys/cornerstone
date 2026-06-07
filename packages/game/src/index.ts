@@ -1,11 +1,15 @@
 export {
   compareCardsForPlay,
   createAllCards,
+  createClassDeck,
   createDeck,
   createDeckForPlayerIndex,
+  getAvailableClasses,
   getAvailableDecks,
+  getDefaultClassIds,
   getDefaultDeckId,
   highestCardForPlay,
+  normalizeClassIds,
   sortCardsForPlay
 } from "./cards";
 export {
@@ -30,6 +34,8 @@ export type {
   Card,
   CardArt,
   CardId,
+  ClassDefinition,
+  ClassId,
   DeckDefinition,
   DeckId,
   GameAction,

@@ -4,15 +4,35 @@
   aspect-ratio: 120 / 168;
   border: 0;
   padding: 0;
-  border-radius: 10px;
+  border-radius: 11px;
   background: transparent;
   cursor: pointer;
-  filter: drop-shadow(0 12px 18px rgb(20 26 35 / 0.2));
+  filter: drop-shadow(0 14px 18px rgb(50 33 21 / 0.24));
   transform-origin: center;
+}
+
+.cornerstone-card::before {
+  position: absolute;
+  inset: -0.9rem;
+  z-index: -1;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle, rgb(255 238 177 / 0.5), rgb(255 238 177 / 0.16) 42%, transparent 70%);
+  content: "";
+  opacity: 0;
+  transform: scale(0.78);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
 }
 
 .cornerstone-card:disabled {
   cursor: default;
+}
+
+.cornerstone-card.is-selected::before {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .cornerstone-card svg {
@@ -22,30 +42,36 @@
 }
 
 .cornerstone-card rect {
-  fill: #fffdf8;
-  stroke: #20242c;
+  fill: #fff5dc;
+  stroke: #3a2a1b;
   stroke-width: 3px;
 }
 
 .cornerstone-card.is-selected rect {
-  fill: #fff9da;
-  stroke: #d79526;
+  fill: #fff2bd;
+  stroke: #a47a2b;
+}
+
+.cornerstone-card.is-selected {
+  filter:
+    drop-shadow(0 22px 28px rgb(50 33 21 / 0.34))
+    drop-shadow(0 0 20px rgb(216 170 61 / 0.24));
 }
 
 .cornerstone-card-sword {
-  color: #9b2635;
+  color: #9f2d3d;
 }
 
 .cornerstone-card-shield {
-  color: #1e5d8f;
+  color: #245b82;
 }
 
 .cornerstone-card-bow {
-  color: #8a5a20;
+  color: #7b5626;
 }
 
 .cornerstone-card-winged-shoe {
-  color: #336b52;
+  color: #2f7256;
 }
 
 .cornerstone-card text {
@@ -56,7 +82,7 @@
 }
 
 .cornerstone-card-title {
-  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-family: Georgia, "Times New Roman", ui-serif, serif;
   font-size: 14px;
   font-weight: 900;
 }
@@ -69,7 +95,7 @@
 
 .cornerstone-card-long {
   margin: 0;
-  color: #3e4856;
+  color: #503c28;
   font-family: Inter, ui-sans-serif, system-ui, sans-serif;
   font-size: 6px;
   font-weight: 800;
@@ -94,7 +120,7 @@
 }
 
 .cornerstone-card-glyph-metal {
-  fill: #f8f3e7;
+  fill: #f4e8cd;
   stroke: currentColor;
   stroke-linejoin: round;
   stroke-width: 6px;

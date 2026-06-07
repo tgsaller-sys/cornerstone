@@ -1,5 +1,5 @@
 import { createShuffledDeck, shuffleDeck } from "./deck";
-import { createDeck, createDeckForPlayerIndex } from "./cards";
+import { createClassDeck, createDeck, createDeckForPlayerIndex, normalizeClassIds } from "./cards";
 import { allOtherPlayersSkipped, nextEligiblePlayerId, nextPlayerId } from "./turns";
 import { setPlayerConnection, upsertPlayer } from "./state";
 import { validatePlay, validateSkip } from "./rules";
@@ -66,8 +66,11 @@ function dealPlayerDecks(
 
   players.forEach((player, playerIndex) => {
     let deckTemplate = createDeckForPlayerIndex(playerIndex);
+    const chosenClassIds = normalizeClassIds(player.classIds ?? []);
 
-    if (player.deckId !== undefined) {
+    if (chosenClassIds.length > 0) {
+      deckTemplate = createClassDeck(chosenClassIds);
+    } else if (player.deckId !== undefined) {
       try {
         deckTemplate = createDeck(player.deckId);
       } catch {

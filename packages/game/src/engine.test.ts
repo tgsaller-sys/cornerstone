@@ -1,7 +1,9 @@
 import { describe, expect, it } from "vitest";
 import {
   assertValidTransition,
+  createClassDeck,
   createDeck,
+  getAvailableClasses,
   createInitialGameState,
   reduceGameAction,
   shuffleDeck,
@@ -62,6 +64,21 @@ describe("custom card catalog", () => {
     expect(deck[4]?.art).toBe("bow");
     expect(deck[5]?.art).toBe("winged-shoe");
   });
+
+  it("creates a deck by combining selected classes from cards.json", () => {
+    const classes = getAvailableClasses();
+    const firstClass = classes[0];
+    const secondClass = classes[1];
+
+    expect(firstClass).toBeDefined();
+    expect(secondClass).toBeDefined();
+
+    const deck = createClassDeck([firstClass?.id ?? "", secondClass?.id ?? ""]);
+
+    expect(deck).toHaveLength((firstClass?.cardCount ?? 0) + (secondClass?.cardCount ?? 0));
+    expect(deck.some((card) => card.classId === firstClass?.id)).toBe(true);
+    expect(deck.some((card) => card.classId === secondClass?.id)).toBe(true);
+  });
 });
 
 describe("shuffling", () => {
@@ -121,6 +138,30 @@ describe("starting a game", () => {
     );
 
     expect(state.hands["player-a"]?.every((card) => card.deckId === "numbers")).toBe(true);
+    expect(state.hands["player-b"]?.every((card) => card.deckId === "numbers")).toBe(true);
+  });
+
+  it("uses each player's chosen classes before falling back to old deck choices", () => {
+    const classes = getAvailableClasses();
+    const chosenClassId = classes[0]?.id ?? "";
+    const game = [
+      {
+        id: "player-a",
+        name: "Ada",
+        deckId: "numbers",
+        classIds: [chosenClassId],
+        connected: true,
+        joinedAt: "2026-01-01T00:00:00.000Z"
+      },
+      { id: "player-b", name: "Ben", deckId: "numbers", connected: true, joinedAt: "2026-01-01T00:01:00.000Z" }
+    ].reduce((state, player) => {
+      return assertValidTransition(reduceGameAction(state, { type: "join", player }));
+    }, createInitialGameState("chosen-class-decks"));
+    const state = assertValidTransition(
+      reduceGameAction(game, { type: "start", actorId: "player-a", seed: 42, startingHandSize: 3 })
+    );
+
+    expect(state.hands["player-a"]?.every((card) => card.classId === chosenClassId)).toBe(true);
     expect(state.hands["player-b"]?.every((card) => card.deckId === "numbers")).toBe(true);
   });
 });

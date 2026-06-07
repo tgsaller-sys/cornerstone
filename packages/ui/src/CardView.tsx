@@ -108,10 +108,10 @@ export function CardView({ card, selected = false, disabled = false, onClick }: 
     <motion.button
       layout
       {...tapAndHoverProps}
-      animate={{ scale: selected ? 1.75 : 1, y: 0 }}
+      animate={{ scale: selected ? 1.95 : 1, y: selected ? -44 : 0 }}
       className={`cornerstone-card cornerstone-card-${card.art} ${selected ? "is-selected" : ""}`}
       disabled={disabled}
-      style={{ zIndex: selected ? 10 : 1 }}
+      style={{ zIndex: selected ? 30 : 1 }}
       type="button"
       onClick={() => onClick?.(card)}
       aria-pressed={selected}

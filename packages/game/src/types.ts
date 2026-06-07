@@ -4,9 +4,12 @@ export type CardId = string;
 
 export type DeckId = string;
 
+export type ClassId = string;
+
 export interface Card {
   readonly id: CardId;
   readonly deckId: DeckId;
+  readonly classId?: ClassId;
   readonly title: string;
   readonly shortDescription: string;
   readonly longDescription: string;
@@ -18,12 +21,19 @@ export interface DeckDefinition {
   readonly title: string;
 }
 
+export interface ClassDefinition {
+  readonly id: ClassId;
+  readonly title: string;
+  readonly cardCount: number;
+}
+
 export type PlayerId = string;
 
 export interface Player {
   readonly id: PlayerId;
   readonly name: string;
   readonly deckId?: DeckId;
+  readonly classIds?: readonly ClassId[];
   readonly connected: boolean;
   readonly joinedAt: string;
 }

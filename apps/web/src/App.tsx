@@ -1,14 +1,17 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { Play, RefreshCw, RotateCcw, Search, Send, Shuffle, SkipForward, Users } from "lucide-react";
+import { Copy, Play, RefreshCw, RotateCcw, Search, Send, Shuffle, SkipForward, Users } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { CardView } from "@cornerstone3/ui";
 import {
-  getAvailableDecks,
-  getDefaultDeckId,
+  createClassDeck,
+  getAvailableClasses,
+  getDefaultClassIds,
   isBombPlay,
+  normalizeClassIds,
   reduceGameAction,
   sortCardsForPlay,
   type CardId,
+  type GameEvent,
   type GameAction,
   type GameState,
   type Player
@@ -52,6 +55,33 @@ function getErrorMessage(caught: unknown, fallback: string): string {
   return fallback;
 }
 
+function joinCardTitles(cardTitles: readonly string[]): string {
+  if (cardTitles.length <= 1) {
+    return cardTitles[0] ?? "a card";
+  }
+
+  return `${cardTitles.slice(0, -1).join(", ")} and ${cardTitles.at(-1)}`;
+}
+
+function describeGameEvent(event: GameEvent, playerName: string, cardTitle?: string): string {
+  switch (event.type) {
+    case "play":
+      return `${playerName} plays ${joinCardTitles(event.cardTitles)}.`;
+    case "draw":
+      return `${playerName} draws a card.`;
+    case "shuffle-deck":
+      return `${playerName} shuffles their deck.`;
+    case "recycle-discard":
+      return `${playerName} shuffles their discard pile into their deck.`;
+    case "search-deck":
+      return `${playerName} searches their deck for ${cardTitle ?? "a card"}.`;
+    case "search-discard":
+      return `${playerName} searches their discard pile for ${cardTitle ?? "a card"}.`;
+    case "skip":
+      return `${playerName} ends their turn.`;
+  }
+}
+
 interface OpponentHandProps {
   readonly cardCount: number;
   readonly isSkipped: boolean;
@@ -92,8 +122,8 @@ export function App() {
   const localPlayerId = useUiStore((state) => state.localPlayerId);
   const playerName = useUiStore((state) => state.playerName);
   const setPlayerName = useUiStore((state) => state.setPlayerName);
-  const selectedDeckId = useUiStore((state) => state.selectedDeckId);
-  const setSelectedDeckId = useUiStore((state) => state.setSelectedDeckId);
+  const selectedClassIds = useUiStore((state) => state.selectedClassIds);
+  const toggleSelectedClassId = useUiStore((state) => state.toggleSelectedClassId);
   const maxCardsPerPlayer = useUiStore((state) => state.maxCardsPerPlayer);
   const setMaxCardsPerPlayer = useUiStore((state) => state.setMaxCardsPerPlayer);
   const lobbyCode = useUiStore((state) => state.lobbyCode);
@@ -107,16 +137,29 @@ export function App() {
   const [syncMode, setSyncMode] = useState<"local" | "remote">("local");
   const [actionStatus, setActionStatus] = useState<string | null>(null);
   const [passNotice, setPassNotice] = useState<string | null>(null);
+  const [playLog, setPlayLog] = useState<readonly string[]>([]);
+  const [tableAnimationCue, setTableAnimationCue] = useState<GameEvent["type"] | null>(null);
+  const [copyStatus, setCopyStatus] = useState<string | null>(null);
   const [deckSearchCardId, setDeckSearchCardId] = useState<CardId>("letters-a");
   const [discardSearchCardId, setDiscardSearchCardId] = useState<CardId>("letters-a");
   const lastPassNoticeKey = useRef<string | null>(null);
-  const availableDecks = useMemo(() => getAvailableDecks(), []);
-  const effectiveSelectedDeckId = availableDecks.some((deck) => deck.id === selectedDeckId)
-    ? selectedDeckId
-    : getDefaultDeckId();
+  const availableClasses = useMemo(() => getAvailableClasses(), []);
+  const effectiveSelectedClassIds = useMemo(() => {
+    const normalizedClassIds = normalizeClassIds(selectedClassIds);
+    return normalizedClassIds.length > 0 ? normalizedClassIds : getDefaultClassIds();
+  }, [selectedClassIds]);
+  const selectedDeckPreview = useMemo(
+    () => sortCardsForPlay(createClassDeck(effectiveSelectedClassIds)),
+    [effectiveSelectedClassIds]
+  );
+  const selectedDeckTitle = availableClasses
+    .filter((classDefinition) => effectiveSelectedClassIds.includes(classDefinition.id))
+    .map((classDefinition) => classDefinition.title)
+    .join(" + ");
+  const playerChoices = useMemo(() => ({ classIds: effectiveSelectedClassIds }), [effectiveSelectedClassIds]);
   const preferredPlayerName = playerName.trim() || `Player ${localPlayerId.slice(0, 4)}`;
   const [game, setGame] = useState(() =>
-    createDemoGame(localPlayerId, preferredPlayerName, createLobbyCode(), effectiveSelectedDeckId)
+    createDemoGame(localPlayerId, preferredPlayerName, createLobbyCode(), playerChoices)
   );
   const localPlayer = game.players.find((player) => player.id === localPlayerId) ?? game.players[0];
   const activePlayerId = localPlayer?.id ?? "";
@@ -135,6 +178,11 @@ export function App() {
   );
   const isActiveTurn = game.currentTurn === activePlayerId;
   const isRemoteLobby = syncMode === "remote";
+  const tableModeLabel = isRemoteLobby
+    ? `Online Lobby ${lobbyCode || game.id}`
+    : game.players.length <= 1
+      ? "Local Solo Table"
+      : "Local Table";
   const currentTurnName =
     game.currentTurn === null
       ? "Waiting"
@@ -147,8 +195,8 @@ export function App() {
         : isRemoteLobby && game.phase === "lobby"
           ? `In lobby ${lobbyCode} with ${game.players.length} player${game.players.length === 1 ? "" : "s"}`
           : syncMode === "local"
-            ? "Local demo"
-            : `Connected to lobby ${lobbyCode}`;
+            ? tableModeLabel
+            : tableModeLabel;
   const connectionLabel =
     !supabaseConfig.hasUrl || !supabaseConfig.hasAnonKey
       ? "Setup needed"
@@ -169,6 +217,16 @@ export function App() {
     () => sortedActiveHand.filter((card) => selectedCardIds.includes(card.id)),
     [selectedCardIds, sortedActiveHand]
   );
+  const knownCardsById = useMemo(() => {
+    const knownCards = [
+      ...activeHand,
+      ...activeDeck,
+      ...activeDiscardPile,
+      ...game.discardPile.flatMap((playedSet) => playedSet.cards)
+    ];
+
+    return new Map(knownCards.map((card) => [card.id, card]));
+  }, [activeDeck, activeDiscardPile, activeHand, game.discardPile]);
   const showBombCallout =
     game.currentLeadingPlay !== null && isBombPlay(game.currentLeadingPlay.cards) && game.currentLeadingPlay.cards.length > 1;
   const visibleDiscardPlay = game.currentLeadingPlay ?? game.discardPile.at(-1) ?? null;
@@ -178,13 +236,11 @@ export function App() {
       : (game.players.find((player) => player.id === game.winnerId)?.name ?? game.winnerId);
   const turnCalloutText =
     game.phase === "playing" && game.currentTurn !== null
-      ? isActiveTurn
-        ? "Your turn!"
-        : `${currentTurnName}'s turn`
+      ? `${currentTurnName}'s Turn`
       : null;
 
   useEffect(() => {
-    if (game.lastEvent?.type !== "skip" && game.lastEvent?.type !== "play") {
+    if (game.lastEvent === null) {
       return undefined;
     }
 
@@ -197,14 +253,22 @@ export function App() {
     lastPassNoticeKey.current = noticeKey;
     const actingPlayerName =
       game.players.find((player) => player.id === game.lastEvent?.playerId)?.name ?? "A player";
+    const event = game.lastEvent;
+    const searchedCardTitle =
+      event.type === "search-deck" || event.type === "search-discard"
+        ? knownCardsById.get(event.cardId)?.title
+        : undefined;
+    const eventText = describeGameEvent(event, actingPlayerName, searchedCardTitle);
 
-    if (game.lastEvent.type === "play") {
-      setPassNotice(`${actingPlayerName} plays ${game.lastEvent.cardTitles.join(", ")}.`);
-      return undefined;
+    setPlayLog((entries) => [eventText, ...entries].slice(0, 8));
+    setPassNotice(eventText);
+
+    if (event.type === "play" || event.type === "draw" || event.type === "recycle-discard") {
+      setTableAnimationCue(event.type);
     }
 
-    setPassNotice(`${actingPlayerName} ends their turn.`);
-  }, [game.id, game.lastEvent, game.players, game.version]);
+    return undefined;
+  }, [game.id, game.lastEvent, game.players, game.version, knownCardsById]);
 
   useEffect(() => {
     if (passNotice === null) {
@@ -217,6 +281,30 @@ export function App() {
 
     return () => window.clearTimeout(timeoutId);
   }, [passNotice]);
+
+  useEffect(() => {
+    if (tableAnimationCue === null) {
+      return undefined;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setTableAnimationCue(null);
+    }, 900);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [tableAnimationCue]);
+
+  useEffect(() => {
+    if (copyStatus === null) {
+      return undefined;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setCopyStatus(null);
+    }, 1600);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [copyStatus]);
 
   useEffect(() => {
     const firstSearchableCardId = searchableCardIds[0];
@@ -294,12 +382,40 @@ export function App() {
     }
   }
 
-  function startGame() {
-    void dispatch({ type: "start", actorId: activePlayerId, seed: Date.now(), startingHandSize: maxCardsPerPlayer });
+  async function startGame() {
+    const joinAction: GameAction = {
+      type: "join",
+      player: createPlayer(localPlayerId, preferredPlayerName, playerChoices)
+    };
+    const startAction: GameAction = {
+      type: "start",
+      actorId: activePlayerId,
+      seed: Date.now(),
+      startingHandSize: maxCardsPerPlayer
+    };
+
+    try {
+      setActionStatus("Starting game...");
+
+      if (syncMode === "remote") {
+        const joinedGame = await dispatchValidatedRemoteAction(game, joinAction);
+        const startedGame = await dispatchValidatedRemoteAction(joinedGame, startAction);
+        setGame(startedGame);
+      } else {
+        setGame((state) => applyAction(applyAction(state, joinAction), startAction));
+      }
+
+      clearSelection();
+      setActionStatus(null);
+      setError(null);
+    } catch (caught) {
+      setActionStatus(null);
+      setError(getErrorMessage(caught, "Could not start game."));
+    }
   }
 
   function savePlayerName() {
-    void dispatch({ type: "join", player: createPlayer(localPlayerId, preferredPlayerName, effectiveSelectedDeckId) });
+    void dispatch({ type: "join", player: createPlayer(localPlayerId, preferredPlayerName, playerChoices) });
   }
 
   function playSelectedCards() {
@@ -319,6 +435,13 @@ export function App() {
   }
 
   function shuffleDiscardIntoDeck() {
+    if (
+      activeDiscardPile.length >= 3 &&
+      !window.confirm(`Shuffle ${activeDiscardPile.length} cards from your discard pile into your deck?`)
+    ) {
+      return;
+    }
+
     void dispatch({ type: "shuffle-discard-into-deck", actorId: activePlayerId, seed: Date.now() });
   }
 
@@ -333,8 +456,29 @@ export function App() {
   function resetDemo() {
     clearSelection();
     setError(null);
+    setPlayLog([]);
     setSyncMode("local");
-    setGame(createDemoGame(localPlayerId, preferredPlayerName, createLobbyCode(), effectiveSelectedDeckId));
+    setGame(createDemoGame(localPlayerId, preferredPlayerName, createLobbyCode(), playerChoices));
+  }
+
+  function newGame() {
+    resetDemo();
+  }
+
+  async function copyLobbyCode() {
+    const codeToCopy = lobbyCode.trim() || game.id;
+
+    if (codeToCopy.length === 0) {
+      setCopyStatus("No code yet");
+      return;
+    }
+
+    try {
+      await window.navigator.clipboard.writeText(codeToCopy);
+      setCopyStatus("Copied");
+    } catch {
+      setCopyStatus(codeToCopy);
+    }
   }
 
   async function createLobby() {
@@ -343,17 +487,18 @@ export function App() {
     try {
       clearSelection();
       setError(null);
+      setPlayLog([]);
       setActionStatus("Creating lobby...");
       setLobbyCode(nextCode);
 
       if (authStatus !== "anonymous") {
         setSyncMode("local");
-        setGame(createDemoGame(localPlayerId, preferredPlayerName, nextCode, effectiveSelectedDeckId));
+        setGame(createDemoGame(localPlayerId, preferredPlayerName, nextCode, playerChoices));
         setActionStatus(null);
         return;
       }
 
-      const nextGame = createLobbyGame(localPlayerId, preferredPlayerName, window.crypto.randomUUID(), effectiveSelectedDeckId);
+      const nextGame = createLobbyGame(localPlayerId, preferredPlayerName, window.crypto.randomUUID(), playerChoices);
       const remoteGame = await createRemoteGame(nextCode, nextGame);
       setSyncMode("remote");
       setGame(remoteGame);
@@ -375,12 +520,13 @@ export function App() {
     try {
       clearSelection();
       setError(null);
+      setPlayLog([]);
       setActionStatus("Joining lobby...");
       setLobbyCode(nextCode);
 
       if (authStatus !== "anonymous") {
         setSyncMode("local");
-        setGame(createDemoGame(localPlayerId, preferredPlayerName, nextCode, effectiveSelectedDeckId));
+        setGame(createDemoGame(localPlayerId, preferredPlayerName, nextCode, playerChoices));
         setActionStatus(null);
         return;
       }
@@ -397,7 +543,7 @@ export function App() {
         existingPlayer === undefined
           ? {
               type: "join",
-              player: createPlayer(localPlayerId, preferredPlayerName, effectiveSelectedDeckId)
+              player: createPlayer(localPlayerId, preferredPlayerName, playerChoices)
             }
           : {
               type: "set-connection",
@@ -426,7 +572,11 @@ export function App() {
           </div>
           <div className="status-cluster" aria-label="Game status">
             <span>{connectionLabel}</span>
-            <span>{isRemoteLobby ? `Lobby ${lobbyCode}` : "Demo table"}</span>
+            <span>{tableModeLabel}</span>
+            <button className="copy-code-button" type="button" onClick={() => void copyLobbyCode()}>
+              <Copy size={16} aria-hidden="true" />
+              {copyStatus ?? "Copy Code"}
+            </button>
             <span>
               {game.players.length} player{game.players.length === 1 ? "" : "s"}
             </span>
@@ -453,155 +603,304 @@ export function App() {
 
         {game.phase === "lobby" ? (
           <section className="lobby-controls" aria-label="Lobby controls">
-            <input
-              className="player-name-input"
-              value={playerName}
-              maxLength={24}
-              onChange={(event) => setPlayerName(event.target.value)}
-              placeholder="Your name"
-              aria-label="Your name"
-            />
-            <button type="button" onClick={savePlayerName}>
-              Save Name
-            </button>
-            <label className="deck-choice-control">
-              <span>Deck</span>
-              <select
-                value={effectiveSelectedDeckId}
-                onChange={(event) => setSelectedDeckId(event.currentTarget.value)}
-                aria-label="Deck"
-              >
-                {availableDecks.map((deck) => (
-                  <option key={deck.id} value={deck.id}>
-                    {deck.title}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <button type="button" onClick={() => void createLobby()}>
-              Create Lobby
-            </button>
-            <input
-              className="lobby-code-input"
-              value={lobbyCode}
-              maxLength={8}
-              onChange={(event) => setLobbyCode(event.target.value)}
-              placeholder="CODE"
-              aria-label="Lobby code"
-            />
-            <button type="button" onClick={() => void joinLobby()}>
-              Join
-            </button>
-            <label className="max-cards-control">
-              <span>Starting cards</span>
+            <div className="lobby-control-group">
+              <span className="control-kicker">Player</span>
               <input
-                type="number"
-                min={1}
-                max={52}
-                step={1}
-                value={maxCardsPerPlayer}
-                onChange={(event) => setMaxCardsPerPlayer(event.currentTarget.valueAsNumber)}
-                aria-label="Starting cards per player"
+                className="player-name-input"
+                value={playerName}
+                maxLength={24}
+                onChange={(event) => setPlayerName(event.target.value)}
+                placeholder="Your name"
+                aria-label="Your name"
               />
-            </label>
+              <button type="button" onClick={savePlayerName}>
+                Save Name
+              </button>
+            </div>
+            <div className="lobby-control-group">
+              <span className="control-kicker">Table</span>
+              <fieldset className="class-choice-control">
+                <legend>Classes</legend>
+                <div className="class-choice-grid">
+                  {availableClasses.map((classDefinition) => {
+                    const isSelected = effectiveSelectedClassIds.includes(classDefinition.id);
+
+                    return (
+                      <button
+                        key={classDefinition.id}
+                        className={`class-choice-button ${isSelected ? "is-selected" : ""}`}
+                        type="button"
+                        onClick={() => toggleSelectedClassId(classDefinition.id)}
+                        aria-pressed={isSelected}
+                      >
+                        <span>{classDefinition.title}</span>
+                        <strong>{classDefinition.cardCount}</strong>
+                      </button>
+                    );
+                  })}
+                </div>
+              </fieldset>
+              <label className="max-cards-control">
+                <span>Starting cards</span>
+                <input
+                  type="number"
+                  min={1}
+                  max={52}
+                  step={1}
+                  value={maxCardsPerPlayer}
+                  onChange={(event) => setMaxCardsPerPlayer(event.currentTarget.valueAsNumber)}
+                  aria-label="Starting cards per player"
+                />
+              </label>
+              <button className="primary-action" type="button" onClick={startGame}>
+                <Play size={18} aria-hidden="true" />
+                Start Game
+              </button>
+            </div>
+            <div className="lobby-control-group">
+              <span className="control-kicker">Online</span>
+              <button type="button" onClick={() => void createLobby()}>
+                Create Lobby
+              </button>
+              <input
+                className="lobby-code-input"
+                value={lobbyCode}
+                maxLength={8}
+                onChange={(event) => setLobbyCode(event.target.value)}
+                placeholder="CODE"
+                aria-label="Lobby code"
+              />
+              <button type="button" onClick={() => void joinLobby()}>
+                Join
+              </button>
+              <button type="button" onClick={() => void copyLobbyCode()}>
+                <Copy size={18} aria-hidden="true" />
+                {copyStatus ?? "Copy Code"}
+              </button>
+            </div>
           </section>
         ) : null}
 
-        <section className="center-table" aria-label="Table">
-          <AnimatePresence mode="popLayout">
-            {winnerName !== null ? (
-              <motion.div
-                key="winner"
-                className="winner-callout"
-                initial={{ opacity: 0, scale: 0.72, y: 18 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ type: "spring", stiffness: 360, damping: 24 }}
-              >
-                {winnerName} wins!
-              </motion.div>
-            ) : showBombCallout ? (
-              <motion.div
-                key="bomb"
-                className="bomb-callout"
-                initial={{ opacity: 0, scale: 0.76, y: 12 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-              >
-                BOMB!
-              </motion.div>
-            ) : turnCalloutText !== null ? (
-              <motion.div
-                key={`turn-${game.currentTurn ?? "waiting"}`}
-                className="turn-callout"
-                initial={{ opacity: 0, scale: 0.76, y: 12 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-              >
-                {turnCalloutText}
-              </motion.div>
-            ) : null}
-          </AnimatePresence>
-          <AnimatePresence>
-            {passNotice !== null ? (
-              <motion.div
-                key={passNotice}
-                className="pass-callout"
-                initial={{ opacity: 0, y: 12, scale: 0.94 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -10, scale: 0.96 }}
-                transition={{ type: "spring", stiffness: 380, damping: 30 }}
-              >
-                {passNotice}
-              </motion.div>
-            ) : null}
-          </AnimatePresence>
-          <div className="table-focus">
-            <div className="opponents-panel" aria-label="Other players">
-              <AnimatePresence initial={false}>
-                {opponents.map((player) => (
-                  <OpponentHand
-                    key={player.id}
-                    player={player}
-                    cardCount={game.hands[player.id]?.length ?? 0}
-                    isTurn={game.currentTurn === player.id}
-                    isSkipped={game.skippedPlayers.includes(player.id)}
-                  />
-                ))}
-              </AnimatePresence>
-            </div>
+        {error !== null ? <p className="error-text">{error}</p> : null}
 
-            <div className="discard-zone" aria-label="Discard pile">
-              <AnimatePresence mode="popLayout">
-                {visibleDiscardPlay === null ? (
-                  <motion.div
-                    layout
-                    key="empty-discard"
-                    className="discard-placeholder"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                  >
-                    Discard pile
-                  </motion.div>
-                ) : (
-                  visibleDiscardPlay.cards.map((card) => (
-                    <motion.div
-                      layout
-                      key={card.id}
-                      initial={{ opacity: 0, y: 60, rotate: -8 }}
-                      animate={{ opacity: 1, y: 0, rotate: 0 }}
-                      exit={{ opacity: 0, scale: 0.8 }}
-                    >
-                      <CardView card={card} disabled />
-                    </motion.div>
-                  ))
-                )}
-              </AnimatePresence>
+        <section className="center-table" aria-label="Table">
+          {game.phase === "lobby" ? (
+            <div className="lobby-preview">
+              <div className="preview-copy">
+                <p className="eyebrow">Ready Room</p>
+                <h2>Set your table, pick a deck, then start.</h2>
+                <p>{isRemoteLobby ? `Share lobby ${lobbyCode} with another player.` : "Play solo locally or create a lobby for friends."}</p>
+              </div>
+              <div className="preview-stats" aria-label="Lobby summary">
+                <span>
+                  <strong>{selectedDeckTitle}</strong>
+                  Deck
+                </span>
+                <span>
+                  <strong>{maxCardsPerPlayer}</strong>
+                  Starting cards
+                </span>
+                <span>
+                  <strong>{game.players.length}</strong>
+                  Players
+                </span>
+                <div className="deck-preview-card" aria-label={`${selectedDeckTitle} preview`}>
+                  <div>
+                    <strong>{selectedDeckPreview.length}</strong>
+                    Cards
+                  </div>
+                  <div className="deck-preview-hand">
+                    {selectedDeckPreview.slice(0, 3).map((card) => (
+                      <CardView key={card.id} card={card} disabled />
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
+          ) : (
+            <>
+              <AnimatePresence mode="popLayout">
+                {winnerName !== null ? (
+                  <motion.div
+                    key="winner"
+                    className="winner-callout"
+                    initial={{ opacity: 0, scale: 0.72, y: 18 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ type: "spring", stiffness: 360, damping: 24 }}
+                  >
+                    <span>{winnerName} wins!</span>
+                    <button type="button" onClick={newGame}>
+                      <RotateCcw size={18} aria-hidden="true" />
+                      New Game
+                    </button>
+                  </motion.div>
+                ) : showBombCallout ? (
+                  <motion.div
+                    key="bomb"
+                    className="bomb-callout"
+                    initial={{ opacity: 0, scale: 0.76, y: 12 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                  >
+                    BOMB!
+                  </motion.div>
+                ) : turnCalloutText !== null ? (
+                  <motion.div
+                    key={`turn-${game.currentTurn ?? "waiting"}`}
+                    className="turn-callout"
+                    initial={{ opacity: 0, scale: 0.94, x: -32, y: 12 }}
+                    animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.96, x: 28 }}
+                  >
+                    {turnCalloutText}
+                  </motion.div>
+                ) : null}
+              </AnimatePresence>
+              <AnimatePresence>
+                {passNotice !== null ? (
+                  <motion.div
+                    key={passNotice}
+                    className="pass-callout"
+                    initial={{ opacity: 0, y: 12, scale: 0.94 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -10, scale: 0.96 }}
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  >
+                    {passNotice}
+                  </motion.div>
+                ) : null}
+              </AnimatePresence>
+              <AnimatePresence>
+                {tableAnimationCue !== null ? (
+                  <motion.div
+                    key={`${tableAnimationCue}-${game.version}`}
+                    className={`table-motion-card table-motion-card-${tableAnimationCue}`}
+                    initial={{ opacity: 0, scale: 0.76, x: 0, y: 0, rotate: -8 }}
+                    animate={{ opacity: 1, scale: 1, x: 0, y: 0, rotate: 0 }}
+                    exit={{ opacity: 0, scale: 0.72, x: tableAnimationCue === "draw" ? -170 : 150, y: 95, rotate: 10 }}
+                    transition={{ duration: 0.72, ease: "easeInOut" }}
+                  />
+                ) : null}
+              </AnimatePresence>
+              <div className="table-focus">
+                <div className="opponents-panel" aria-label="Other players">
+                  <AnimatePresence initial={false}>
+                    {opponents.map((player) => (
+                      <OpponentHand
+                        key={player.id}
+                        player={player}
+                        cardCount={game.hands[player.id]?.length ?? 0}
+                        isTurn={game.currentTurn === player.id}
+                        isSkipped={game.skippedPlayers.includes(player.id)}
+                      />
+                    ))}
+                  </AnimatePresence>
+                </div>
+
+                <div className="table-zones" aria-label="Card table zones">
+                  <section
+                    className={`card-table-zone pile-zone ${tableAnimationCue === "draw" ? "is-drawing" : ""} ${
+                      tableAnimationCue === "recycle-discard" ? "is-recycling" : ""
+                    }`}
+                    aria-label="Deck"
+                  >
+                    <div className="table-zone-label">
+                      <span>Deck</span>
+                      <strong>{activeDeck.length}</strong>
+                    </div>
+                    <div className="card-stack-visual" aria-hidden="true">
+                      <span />
+                      <span />
+                      <span />
+                    </div>
+                  </section>
+
+                  <section
+                    className={`card-table-zone pile-zone ${tableAnimationCue === "recycle-discard" ? "is-recycling" : ""}`}
+                    aria-label="Discard"
+                  >
+                    <div className="table-zone-label">
+                      <span>Discard</span>
+                      <strong>{activeDiscardPile.length}</strong>
+                    </div>
+                    <div className="card-stack-visual discard-stack-visual" aria-hidden="true">
+                      <span />
+                      <span />
+                      <span />
+                    </div>
+                  </section>
+
+                  <section
+                    className={`card-table-zone played-zone ${tableAnimationCue === "play" ? "is-playing" : ""}`}
+                    aria-label="Played Cards"
+                  >
+                    <div className="table-zone-label">
+                      <span>Played Cards</span>
+                      <strong>{visibleDiscardPlay?.cards.length ?? 0}</strong>
+                    </div>
+                    <div className="played-card-zone">
+                      <AnimatePresence mode="popLayout">
+                        {visibleDiscardPlay === null ? (
+                          <motion.div
+                            layout
+                            key="empty-played"
+                            className="discard-placeholder"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                          >
+                            No cards played
+                          </motion.div>
+                        ) : (
+                          visibleDiscardPlay.cards.map((card) => (
+                            <motion.div
+                              layout
+                              key={card.id}
+                              initial={{ opacity: 0, y: 60, rotate: -8 }}
+                              animate={{ opacity: 1, y: 0, rotate: 0 }}
+                              exit={{ opacity: 0, scale: 0.8 }}
+                            >
+                              <CardView card={card} disabled />
+                            </motion.div>
+                          ))
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  </section>
+                </div>
+
+                <aside className="play-log-panel" aria-label="Play log">
+                  <div className="play-log-heading">
+                    <span>Play Log</span>
+                    <strong>{playLog.length}</strong>
+                  </div>
+                  {playLog.length === 0 ? (
+                    <p className="play-log-empty">Actions will appear here.</p>
+                  ) : (
+                    <ol className="play-log-list">
+                      <AnimatePresence initial={false}>
+                        {playLog.map((entry, index) => (
+                          <motion.li
+                            key={`${entry}-${index}`}
+                            initial={{ opacity: 0, x: 18 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -18 }}
+                            transition={{ duration: 0.18 }}
+                          >
+                            {entry}
+                          </motion.li>
+                        ))}
+                      </AnimatePresence>
+                    </ol>
+                  )}
+                </aside>
+              </div>
+            </>
+          )}
         </section>
 
+        {game.phase !== "lobby" ? (
         <section className="hand-panel" aria-label="Your hand">
           <div className="hand-layout">
             <motion.div layout className="hand">
@@ -618,23 +917,14 @@ export function App() {
 
             <aside className="turn-controls" aria-label="Turn controls">
               <div className="hand-actions">
-                {game.phase === "lobby" ? (
-                  <button type="button" onClick={startGame}>
-                    <Play size={18} aria-hidden="true" />
-                    Start
-                  </button>
-                ) : (
-                  <>
-                    <button type="button" disabled={!isActiveTurn || selectedCards.length === 0} onClick={playSelectedCards}>
-                      <Send size={18} aria-hidden="true" />
-                      Play {selectedCards.length}
-                    </button>
-                    <button type="button" disabled={!isActiveTurn} onClick={skipTurn}>
-                      <SkipForward size={18} aria-hidden="true" />
-                      End Turn
-                    </button>
-                  </>
-                )}
+                <button type="button" disabled={!isActiveTurn || selectedCards.length === 0} onClick={playSelectedCards}>
+                  <Send size={18} aria-hidden="true" />
+                  Play {selectedCards.length}
+                </button>
+                <button type="button" disabled={!isActiveTurn} onClick={skipTurn}>
+                  <SkipForward size={18} aria-hidden="true" />
+                  End Turn
+                </button>
                 {syncMode === "local" ? (
                   <button type="button" onClick={resetDemo} aria-label="Reset demo">
                     <RotateCcw size={18} aria-hidden="true" />
@@ -644,8 +934,24 @@ export function App() {
 
               {game.phase === "playing" ? (
                 <section className="deck-actions" aria-label="Deck actions">
-                  <span className="zone-count">Deck {activeDeck.length}</span>
-                  <span className="zone-count">Discard {activeDiscardPile.length}</span>
+                  <span className="zone-count zone-stack-count">
+                    <span className="mini-stack" aria-hidden="true">
+                      <span />
+                      <span />
+                      <span />
+                    </span>
+                    <span>Deck</span>
+                    <strong>{activeDeck.length}</strong>
+                  </span>
+                  <span className="zone-count zone-stack-count">
+                    <span className="mini-stack mini-discard-stack" aria-hidden="true">
+                      <span />
+                      <span />
+                      <span />
+                    </span>
+                    <span>Discard</span>
+                    <strong>{activeDiscardPile.length}</strong>
+                  </span>
                   <button type="button" disabled={!isActiveTurn || activeDeck.length === 0} onClick={drawCard}>
                     <RefreshCw size={18} aria-hidden="true" />
                     Draw
@@ -706,9 +1012,9 @@ export function App() {
               ) : null}
             </aside>
           </div>
-          {error !== null ? <p className="error-text">{error}</p> : null}
           {game.winnerId !== null ? <p className="winner-text">Winner: {game.winnerId}</p> : null}
         </section>
+        ) : null}
       </section>
     </main>
   );
