@@ -17,16 +17,30 @@ interface CatalogDeck {
 }
 
 interface ClassCatalogCard {
-  readonly class: string;
-  readonly level: string;
+  readonly class?: string;
+  readonly group?: string;
+  readonly level?: string;
   readonly name: string;
-  readonly action_type: string;
-  readonly tags: readonly string[];
-  readonly text: string;
+  readonly action_type?: string;
+  readonly tags?: readonly string[];
+  readonly text?: string;
+}
+
+interface ClassCatalog {
+  readonly cards?: readonly ClassCatalogCard[];
 }
 
 const catalogDecks = cardCatalog.decks as readonly CatalogDeck[];
-const classCards = classCatalog as readonly ClassCatalogCard[];
+const classCards = readClassCards(classCatalog);
+
+function readClassCards(catalog: unknown): readonly ClassCatalogCard[] {
+  if (Array.isArray(catalog)) {
+    return catalog as readonly ClassCatalogCard[];
+  }
+
+  const cards = (catalog as ClassCatalog).cards;
+  return Array.isArray(cards) ? cards : [];
+}
 
 function slugify(value: string): string {
   return value
@@ -40,9 +54,15 @@ function getClassId(className: string): ClassId {
   return slugify(className);
 }
 
+function getCardClassName(card: ClassCatalogCard): string {
+  const className = card.class ?? card.group ?? "Unclassed";
+  const trimmedClassName = className.trim();
+  return trimmedClassName.length > 0 ? trimmedClassName : "Unclassed";
+}
+
 function inferCardArt(card: ClassCatalogCard, classIndex: number, cardIndex: number): CardArt {
-  const tags = new Set(card.tags.map((tag) => tag.toLowerCase()));
-  const actionType = card.action_type.toLowerCase();
+  const tags = new Set((card.tags ?? []).map((tag) => tag.toLowerCase()));
+  const actionType = card.action_type?.toLowerCase() ?? "";
 
   if (tags.has("shielding")) {
     return "shield";
@@ -66,12 +86,13 @@ function inferCardArt(card: ClassCatalogCard, classIndex: number, cardIndex: num
 
 const availableClasses = Array.from(
   classCards.reduce((classes, card) => {
-    const classId = getClassId(card.class);
+    const className = getCardClassName(card);
+    const classId = getClassId(className);
     const existing = classes.get(classId);
 
     classes.set(classId, {
       id: classId,
-      title: card.class,
+      title: className,
       cardCount: (existing?.cardCount ?? 0) + 1
     });
 
@@ -82,7 +103,8 @@ const availableClasses = Array.from(
 const classIndexById = new Map(availableClasses.map((definition, index) => [definition.id, index] as const));
 
 const generatedClassCards = classCards.map((card, cardIndex): Card => {
-  const classId = getClassId(card.class);
+  const className = getCardClassName(card);
+  const classId = getClassId(className);
   const classIndex = classIndexById.get(classId) ?? 0;
   const cardId = `${classId}-${slugify(card.name)}-${cardIndex + 1}`;
 
@@ -90,11 +112,11 @@ const generatedClassCards = classCards.map((card, cardIndex): Card => {
     id: cardId,
     deckId: `class-${classId}`,
     classId,
-    classTitle: card.class,
-    tags: card.tags,
+    classTitle: className,
+    tags: card.tags ?? [],
     title: card.name,
-    shortDescription: `${card.level} - ${card.action_type}`,
-    longDescription: card.text,
+    shortDescription: `${card.level ?? "Card"} - ${card.action_type ?? "Action"}`,
+    longDescription: card.text ?? "",
     art: inferCardArt(card, classIndex, cardIndex)
   };
 });
